@@ -4,7 +4,7 @@ clear all
 size_of_subject=105;
 task=1;
 fast=1;
-
+nn=2;
 if fast
     PCA=load(strcat('Data/PCA_final/task',num2str(task),'/fast/result_PCA'));
 else
@@ -12,9 +12,9 @@ else
 end
 
 if fast
-    SVM=load(strcat('Data/SVM_final/task',num2str(task),'/fast/result_SVM'));
+    SVM=load(strcat('Data/NN_final/nn',num2str(nn),'/task',num2str(task),'/fast/result_SVM'));
 else
-    SVM=load(strcat('Data/SVM_final/task',num2str(task),'/slow/result_SVM'));
+    SVM=load(strcat('Data/NN_final/nn',num2str(nn),'/task',num2str(task),'/slow/result_SVM'));
 end
 
 List_of_subject={'s05','s15','s25','s35','s45','s55','s65','s75','s85','s95'};
@@ -22,7 +22,7 @@ predicted_T1=[]; predicted_T2=[]; predicted_all=[]; labels=[];
 temp=1;
 for sub=1:length(List_of_subject)
     subject=List_of_subject{sub};
-    NN{sub}=loadjson(strcat('Data/NN_final/task',num2str(task),'/predicted_data_for_ROC_',subject,'.json'));
+    NN{sub}=loadjson(strcat('Data/Python_res/NN_final/nn',num2str(nn),'/task',num2str(task),'/predicted_data_for_ROC_',subject,'.json'));
     for fold=1:size(NN{sub}.T1,1)
         for trial=1:size(NN{sub}.T1,2)
             predicted_T1=[predicted_T1 NN{sub}.T1(fold,trial)];

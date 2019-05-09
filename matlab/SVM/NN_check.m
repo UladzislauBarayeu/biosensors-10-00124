@@ -9,10 +9,10 @@ clear all;
 size_of_subject=105;
 task=1;
 
-%List_of_subject={'s05','s15','s25','s35','s45','s55','s65','s75','s85','s95'};
-List_of_subject={'s04','s05','s06','s16','s17','s18'};
+List_of_subject={'s05','s15','s25','s35','s45','s55','s65','s75','s85','s95'};
+%List_of_subject={'s04','s05','s06','s16','s17','s18'};
 fast=1;
-nn=2;
+nn=21;
 fast_check=1;
 
 predict_both_posterior_all=[];
@@ -25,23 +25,23 @@ labels_all=[];
 for subject_i=1:size(List_of_subject,2)
     subject=List_of_subject{subject_i};
     if fast
-        resT1=load(strcat('Data/SVM_results/nn',num2str(nn),'/task',num2str(task),'/fast/T1/',subject,'.mat'));
+        resT1=load(strcat('Data/NN_results/nn',num2str(nn),'/task',num2str(task),'/fast/T1/',subject,'.mat'));
     else
-        resT1=load(strcat('Data/SVM_results/nn',num2str(nn),'/task',num2str(task),'/slow/T1/',subject,'.mat'));
+        resT1=load(strcat('Data/NN_results/nn',num2str(nn),'/task',num2str(task),'/slow/T1/',subject,'.mat'));
     end
     [~,ind_max_T1]=max(resT1.result_accuracy);
     if fast
-        resT2=load(strcat('Data/SVM_results/nn',num2str(nn),'/task',num2str(task),'/fast/T2/',subject,'.mat'));
+        resT2=load(strcat('Data/NN_results/nn',num2str(nn),'/task',num2str(task),'/fast/T2/',subject,'.mat'));
     else
-        resT2=load(strcat('Data/SVM_results/nn',num2str(nn),'/task',num2str(task),'/slow/T2/',subject,'.mat'));
+        resT2=load(strcat('Data/NN_results/nn',num2str(nn),'/task',num2str(task),'/slow/T2/',subject,'.mat'));
     end
     [~,ind_max_T2]=max(resT2.result_accuracy);
 
     %make train model
-    data=loadjson(strcat('Data/SVM/nn',num2str(nn),'/data_for_svm_',subject,'.json'));
-    %data=load(strcat('Data/SVM/task',num2str(task),'/',num2str(subject_i),'.mat'));
+    data=loadjson(strcat('Data/NN_convoluted/nn',num2str(nn),'/data_for_svm_',subject,'.json'));
+    %data=load(strcat('Data/NN_convoluted/task',num2str(task),'/',num2str(subject_i),'.mat'));
     % test
-    %test=loadjson(strcat('Data/NN_test/predicted_data_for_SVM_all_false_subjects_',subject,'.json'));
+    %test=loadjson(strcat('Data/Python_res/NN_test/predicted_data_for_SVM_all_false_subjects_',subject,'.json'));
     
     
     nbFolds = 5;
@@ -344,9 +344,9 @@ ErrI_both=mean(ErrorI_both);ErrII_both=mean(ErrorII_both);
 ErrII_T1_test=mean(ErrorIIT1_test);ErrII_T2_test=mean(ErrorIIT2_test);ErrII_both_test=mean(ErrorIITboth_test);
 %% save
 if fast
-    outputDir = strcat('Data/SVM_final/task',num2str(task),'/fast/');
+    outputDir = strcat('Data/NN_final/task',num2str(task),'/fast/');
 else
-    outputDir = strcat('Data/SVM_final/task',num2str(task),'/slow/');
+    outputDir = strcat('Data/NN_final/task',num2str(task),'/slow/');
 end
 % Check if the folder exists , and if not, make it...
 if ~exist(outputDir, 'dir')

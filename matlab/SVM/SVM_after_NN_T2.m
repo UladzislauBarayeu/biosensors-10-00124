@@ -15,7 +15,7 @@ Size_of_feat=10;
 
 for subject_i=1:size(List_of_subject,2)
     subject=List_of_subject{subject_i};
-    dat=loadjson(strcat('Data/SVM/nn',num2str(nn),'/data_for_svm_',subject,'.json'));
+    dat=loadjson(strcat('Data/NN_convoluted/nn',num2str(nn),'/data_for_svm_',subject,'.json'));
 
     %make train model
 
@@ -121,9 +121,9 @@ for subject_i=1:size(List_of_subject,2)
     end
     %% save
     if fast
-        outputDir = strcat('Data/SVM_results/nn',num2str(nn),'/task',num2str(task),'/fast/T2/');
+        outputDir = strcat('Data/NN_results/nn',num2str(nn),'/task',num2str(task),'/fast/T2/');
     else
-        outputDir = strcat('Data/SVM_results/nn',num2str(nn),'/task',num2str(task),'/slow/T2/');
+        outputDir = strcat('Data/NN_results/nn',num2str(nn),'/task',num2str(task),'/slow/T2/');
     end
     % Check if the folder exists , and if not, make it...
     if ~exist(outputDir, 'dir')

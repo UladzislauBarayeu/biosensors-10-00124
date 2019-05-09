@@ -61,7 +61,7 @@ res_featT2_all=ind2(end:-1:1);
 res_featT1=res_featT1_all(1:10);
 res_featT2=res_featT2_all(1:10);
 
-data=load(strcat('Data/PCA_SVM/task',num2str(task),'/',num2str(1),'.mat'));
+data=load(strcat('Data/PCA_processed/task',num2str(task),'/',num2str(1),'.mat'));
 for i=1:length(res_featT1)
     labels_best_T1{i}=data.Subject.result_label{res_featT1(i)};
     labels_best_T2{i}=data.Subject.result_label{res_featT2(i)};

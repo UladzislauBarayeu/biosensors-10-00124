@@ -15,7 +15,7 @@ modelsSVM={};
 fast=1;%if 1 run without optimization
 
 for subject_i=1:size_of_sub
-    load(strcat('Data/PCA_SVM/task',num2str(task),'/',num2str(subject_i),'.mat'));
+    load(strcat('Data/PCA_processed/task',num2str(task),'/',num2str(subject_i),'.mat'));
     
     
     X=Subject.T2;
