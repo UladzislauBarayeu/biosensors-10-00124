@@ -3,19 +3,18 @@ clear all;
 
 
 
-%List_of_subject={'s05','s15','s25','s35','s45','s55','s65','s75','s85','s95'};
+List_of_subject={'s05','s15','s25','s35','s45','s55','s65','s75','s85','s95'};
 %List_of_subject={'s04','s05','s06','s16','s17','s18','s25','s35','s45'};
-List_of_subject={'s25'};
 task=1;
 KernelSVM='linear';%'rbf' or 'linear' optional
 fast=1;%if 1 run without optimization
-nn=2;%set type of NN
+nn=21;%set type of NN
 
 Size_of_feat=10;
     
 for subject_i=1:size(List_of_subject,2)
     subject=List_of_subject{subject_i};
-    dat=loadjson(strcat('Data/SVM/nn',num2str(nn),'/data_for_svm_',subject,'.json'));
+    dat=loadjson(strcat('Data/NN_convoluted/nn',num2str(nn),'/data_for_svm_',subject,'.json'));
 
     %make train model
 
@@ -121,9 +120,9 @@ for subject_i=1:size(List_of_subject,2)
     end
     %% save
     if fast
-        outputDir = strcat('Data/SVM_results/nn',num2str(nn),'/task',num2str(task),'/fast/T1/');
+        outputDir = strcat('Data/NN_results/nn',num2str(nn),'/task',num2str(task),'/fast/T1/');
     else
-        outputDir = strcat('Data/SVM_results/nn',num2str(nn),'/task',num2str(task),'/slow/T1/');
+        outputDir = strcat('Data/NN_results/nn',num2str(nn),'/task',num2str(task),'/slow/T1/');
     end
     % Check if the folder exists , and if not, make it...
     if ~exist(outputDir, 'dir')
