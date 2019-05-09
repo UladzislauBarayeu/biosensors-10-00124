@@ -1,0 +1,16 @@
+main_2 -> лучшая нейронка в декабре 2018,основана на половине InceptionV3(до mixed4),
+        на самом деле куча ошибок и говно+возвращала вектор 80*1
+
+main_21 -> исправленная нейронка, основана на InceptionV3(до mixed8), особенность -
+                max_pooling2d_1 = MaxPooling2D(pool_size=(1, 3), strides=(1, 2), )
+                max_pooling2d_2 = MaxPooling2D(pool_size=(1, 3), strides=(1, 2), )
+                max_pooling2d_3 = MaxPooling2D(pool_size=(1, 1), strides=(1, 2), )
+
+main_22 -> исправленная нейронка, основана на InceptionV3(до mixed8), почти полностью как main_21,
+        особенность -
+                max_pooling2d_1 = MaxPooling2D(pool_size=(1, 2), strides=(1, 2), )
+                max_pooling2d_2 = MaxPooling2D(pool_size=(1, 2), strides=(1, 2), )
+                max_pooling2d_3 = MaxPooling2D(pool_size=(1, 2), strides=(1, 2), )
+
+24.01.2019 - поставили на обучение main_22 (One Task)
+
