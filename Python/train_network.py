@@ -111,19 +111,19 @@ def train_both_tasks(nn, s, number_of_folds=5, number_for_test=10 ,epoch=160, pe
             optimizer = optimizers.Adam(lr=lr)
             info_T1_1 = train_autoencoder(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
                                        train_data=train_x_T1, labels=train_y, epoch=epoch//2, period=period, save_ae=True,
-                                       loss=loss, ae_name=file1, aepath='./output-nn')
+                                       loss=loss, ae_name=file1)
             optimizer = optimizers.Adam(lr=lr/10)
             info_T1_2 = train_autoencoder(h5file=file1, batch_size=batch_size, optimizer=optimizer,
                                                                       train_data=train_x_T1, labels=train_y, epoch=epoch//2, period=period, save_ae=True,
-                                                                      loss=loss, ae_name=file1, aepath='./output-nn')
+                                                                      loss=loss, ae_name=file1)
             optimizer = optimizers.Adam(lr=lr)
             info_T2_1 = train_autoencoder(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
                                        train_data=train_x_T2, labels=train_y, epoch=epoch//2, period=period, save_ae=True,
-                                       loss=loss, ae_name=file2, aepath='./output-nn')
+                                       loss=loss, ae_name=file2)
             optimizer = optimizers.Adam(lr=lr/10)
             info_T2_2= train_autoencoder(h5file=file2, batch_size=batch_size, optimizer=optimizer,
                                        train_data=train_x_T2, labels=train_y, epoch=epoch//2, period=period, save_ae=True,
-                                       loss=loss, ae_name=file2, aepath='./output-nn')
+                                       loss=loss, ae_name=file2)
 
             trainning_acc_T1[i] = info_T1_1.history['acc']
             trainning_loss_T1[i] = info_T1_1.history['loss']
@@ -140,11 +140,11 @@ def train_both_tasks(nn, s, number_of_folds=5, number_for_test=10 ,epoch=160, pe
             info_T1 = train_autoencoder(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
                                        train_data=train_x_T1, labels=train_y, epoch=epoch, period=period,
                                        save_ae=True,
-                                       loss=loss, ae_name=file1, aepath='./output-nn')
+                                       loss=loss, ae_name=file1)
             info_T2 = train_autoencoder(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
                                        train_data=train_x_T2, labels=train_y, epoch=epoch, period=period,
                                        save_ae=True,
-                                       loss=loss, ae_name=file2, aepath='./output-nn')
+                                       loss=loss, ae_name=file2)
 
             trainning_acc_T1[i] = info_T1.history['acc']
             trainning_loss_T1[i] = info_T1.history['loss']
@@ -217,9 +217,9 @@ def train_both_tasks(nn, s, number_of_folds=5, number_for_test=10 ,epoch=160, pe
             f.create_dataset("trainning_acc_T2_" + str(m), data=np.array(trainning_acc_T2[m], dtype=np.float64))
             f.create_dataset("trainning_loss_T2_" + str(m), data=np.array(trainning_loss_T2[m], dtype=np.float64))
 
-
-#train_both_tasks(2, 2, two_times=True, batch_size=16)
-train_both_tasks(2, 1, two_times=True, batch_size=36, with_test=True, lr=0.001, epoch=180)
+#if __name__ == '__main__':
+    #train_both_tasks(2, 2, two_times=True, batch_size=16)
+    #train_both_tasks(2, 1, two_times=False, batch_size=36, with_test=False, lr=0.001, epoch=2)
 
 
 
