@@ -19,4 +19,4 @@ if __name__ == '__main__':
             sp.check_call([sys.executable, 'train_driver.py', '--arg', str(i)])
     else:
         from train_network import *
-        train_both_tasks(2, int(args.arg), two_times=False, batch_size=36, lr=0.001, epoch=2)
+        train_both_tasks(21, int(args.arg), two_times=True, batch_size=22, lr=0.001, epoch=180,  number_of_folds=5, number_for_test=7)
