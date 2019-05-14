@@ -3,8 +3,6 @@ clear all;
 
 
 
-
-
 %% set
 size_of_subject=105;
 task=1;

@@ -9,11 +9,12 @@ clear all;
 size_of_subject=105;
 task=1;
 
-List_of_subject={'s05','s15','s25','s35','s45','s55','s65','s75','s85','s95'};
+List_of_subject={'s05','s15','s25','s35','s45','s55','s65','s75','s85','s95','105'};
 %List_of_subject={'s04','s05','s06','s16','s17','s18'};
 fast=1;
-nn=21;
+nn=2;
 fast_check=1;
+KernelSVM='linear';%'rbf' or 'linear' optional
 
 predict_both_posterior_all=[];
 predict_T1_posterior_all=[];
@@ -41,11 +42,11 @@ for subject_i=1:size(List_of_subject,2)
     data=loadjson(strcat('Data/NN_convoluted/nn',num2str(nn),'/data_for_svm_',subject,'.json'));
     %data=load(strcat('Data/NN_convoluted/task',num2str(task),'/',num2str(subject_i),'.mat'));
     % test
-    %test=loadjson(strcat('Data/Python_res/NN_test/predicted_data_for_SVM_all_false_subjects_',subject,'.json'));
+    test=loadjson(strcat('Data/Python_res/NN_test/nn',num2str(nn),'/predicted_data_for_SVM_all_false_subjects_',subject,'.json'));
     
     
     nbFolds = 5;
-    KernelSVM='linear';%'rbf' or 'linear' optional
+    
 
     errorIT1=zeros(1,nbFolds);
     errorIIT1=zeros(1,nbFolds);
@@ -190,75 +191,75 @@ for subject_i=1:size(List_of_subject,2)
         ACCT2(f) = mean(predictT2 == testCuesT1);
         ACC(f) = mean(predict_both.' == testCuesT1);
         %% test
-%         
-%         XT1_test=test.T1.test_sample{f};
-%         XT2_test=test.T1.test_sample{f};
-%         Y_test=test.test_y{f};
-%         Y_test=Y_test(:,1);
-%         %% T1
-%         FIdx_T1=resT1.Indexes{ind_max_T1}{1}; 
-%         testTrialsT1_test = XT1_test(:,FIdx_T1);
-% 
-%         %normalize train data
-%         %get max and min for train data
-%         testTrialsT1_test=testTrialsT1_test.';
-%         for normit=1:size(testTrialsT1_test,1)
-%             for test_iterator=1:size(testTrialsT1_test,2)
-%                 testTrialsT1_test(normit, test_iterator)=(testTrialsT1_test(normit,test_iterator)-min_train_T1(normit))...
-%                     /(max_train_T1(normit)-min_train_T1(normit));
-%             end
-%         end
-%         testTrialsT1_test=testTrialsT1_test.';
-% 
-%         % SVM Classifier
-%         predictT1_test = SVMModelT1.predict(testTrialsT1_test);
-%         [~,predictT1_posterior_test] = predict(SVMModelT1_posterior,testTrialsT1_test);
-%         
-%         %% T2
-%         FIdx_T2=resT2.Indexes{ind_max_T2}{1}; 
-%         testTrialsT2_test = XT2_test(:,FIdx_T2);
-% 
-%         %normalize train data
-%         %get max and min for train data
-%         testTrialsT2_test=testTrialsT2_test.';
-%         for normit=1:size(testTrialsT2_test,1)
-%             for test_iterator=1:size(testTrialsT2_test,2)
-%                 testTrialsT2_test(normit, test_iterator)=(testTrialsT2_test(normit,test_iterator)-min_train_T2(normit))...
-%                     /(max_train_T2(normit)-min_train_T2(normit));
-%             end
-%         end
-%         testTrialsT2_test=testTrialsT2_test.';
-% 
-%         % SVM Classifier
-%         predictT2_test = SVMModelT2.predict(testTrialsT2_test);
-%         [~,predictT2_posterior_test] = predict(SVMModelT2_posterior,testTrialsT2_test);
-% 
-%         for i=1:size(Y_test,1)
-% 
-%             if predictT1_test(i)==1 && predictT2_test(i)==1
-%                 predict_both_test(i)=1;
-%             else
-%                 predict_both_test(i)=0;
-%             end
-% 
-%             %T1
-%             if Y_test(i)==0 && predictT1_test(i)==1
-%                 errorIIT1_test(f)=errorIIT1_test(f)+1/size(Y_test,1);
-%             end
-% 
-%             %T2
-%             if Y_test(i)==0 && predictT2_test(i)==1
-%                 errorIIT2_test(f)=errorIIT2_test(f)+1/size(Y_test,1);
-%             end
-%             
-%             %both
-%             if Y_test(i)==0 && predict_both_test(i)==1
-%                 errorIIboth_test(f)=errorIIboth_test(f)+1/size(Y_test,1);
-%             end
-%         end
-%         ACCT1(f) = mean(predictT1 == testCuesT1);
-%         ACCT2(f) = mean(predictT2 == testCuesT1);
-%         ACC(f) = mean(predict_both.' == testCuesT1);
+        
+        XT1_test=test.T1.test_sample{f};
+        XT2_test=test.T1.test_sample{f};
+        Y_test=test.test_y{f};
+        Y_test=Y_test(:,1);
+        %% T1
+        FIdx_T1=resT1.Indexes{ind_max_T1}{1}; 
+        testTrialsT1_test = XT1_test(:,FIdx_T1);
+
+        %normalize train data
+        %get max and min for train data
+        testTrialsT1_test=testTrialsT1_test.';
+        for normit=1:size(testTrialsT1_test,1)
+            for test_iterator=1:size(testTrialsT1_test,2)
+                testTrialsT1_test(normit, test_iterator)=(testTrialsT1_test(normit,test_iterator)-min_train_T1(normit))...
+                    /(max_train_T1(normit)-min_train_T1(normit));
+            end
+        end
+        testTrialsT1_test=testTrialsT1_test.';
+
+        % SVM Classifier
+        predictT1_test = SVMModelT1.predict(testTrialsT1_test);
+        [~,predictT1_posterior_test] = predict(SVMModelT1_posterior,testTrialsT1_test);
+        
+        %% T2
+        FIdx_T2=resT2.Indexes{ind_max_T2}{1}; 
+        testTrialsT2_test = XT2_test(:,FIdx_T2);
+
+        %normalize train data
+        %get max and min for train data
+        testTrialsT2_test=testTrialsT2_test.';
+        for normit=1:size(testTrialsT2_test,1)
+            for test_iterator=1:size(testTrialsT2_test,2)
+                testTrialsT2_test(normit, test_iterator)=(testTrialsT2_test(normit,test_iterator)-min_train_T2(normit))...
+                    /(max_train_T2(normit)-min_train_T2(normit));
+            end
+        end
+        testTrialsT2_test=testTrialsT2_test.';
+
+        % SVM Classifier
+        predictT2_test = SVMModelT2.predict(testTrialsT2_test);
+        [~,predictT2_posterior_test] = predict(SVMModelT2_posterior,testTrialsT2_test);
+
+        for i=1:size(Y_test,1)
+
+            if predictT1_test(i)==1 && predictT2_test(i)==1
+                predict_both_test(i)=1;
+            else
+                predict_both_test(i)=0;
+            end
+
+            %T1
+            if Y_test(i)==0 && predictT1_test(i)==1
+                errorIIT1_test(f)=errorIIT1_test(f)+1/size(Y_test,1);
+            end
+
+            %T2
+            if Y_test(i)==0 && predictT2_test(i)==1
+                errorIIT2_test(f)=errorIIT2_test(f)+1/size(Y_test,1);
+            end
+            
+            %both
+            if Y_test(i)==0 && predict_both_test(i)==1
+                errorIIboth_test(f)=errorIIboth_test(f)+1/size(Y_test,1);
+            end
+        end
+        ACCT1(f) = mean(predictT1 == testCuesT1);
+        ACCT2(f) = mean(predictT2 == testCuesT1);
+        ACC(f) = mean(predict_both.' == testCuesT1);
         
         
         %ROC
@@ -344,9 +345,9 @@ ErrI_both=mean(ErrorI_both);ErrII_both=mean(ErrorII_both);
 ErrII_T1_test=mean(ErrorIIT1_test);ErrII_T2_test=mean(ErrorIIT2_test);ErrII_both_test=mean(ErrorIITboth_test);
 %% save
 if fast
-    outputDir = strcat('Data/NN_final/task',num2str(task),'/fast/');
+    outputDir = strcat('Data/NN_final/nn',num2str(nn),'/task',num2str(task),'/fast/');
 else
-    outputDir = strcat('Data/NN_final/task',num2str(task),'/slow/');
+    outputDir = strcat('Data/NN_final/nn',num2str(nn),'/task',num2str(task),'/slow/');
 end
 % Check if the folder exists , and if not, make it...
 if ~exist(outputDir, 'dir')
