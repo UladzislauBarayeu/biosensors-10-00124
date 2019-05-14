@@ -19,7 +19,7 @@ def load_network(h5file, name=None):
 
 def train_autoencoder(h5file, train_data,labels, batch_size=32, callbacks_list=None, optimizer=None,
                       epoch=2, save_ae=False, ae_name='test_ae.h5',
-                      loss='mean_squared_error', period=50, validation_split=0.1, aepath='output-nn', earlystop=False):
+                      loss='mean_squared_error', period=50, validation_split=0.2, earlystop=False):
 
     network= load_network(h5file)
 
@@ -48,8 +48,6 @@ def train_autoencoder(h5file, train_data,labels, batch_size=32, callbacks_list=N
                                  batch_size=batch_size, validation_split=validation_split, verbose=2, callbacks=callbacks_list)
     # if save_ae:
     #     network.save(ae_name)
-    del (network)
-    gc.collect()
     return model_info
 
 def normalize_data(x_array, minmax_arr=None):
