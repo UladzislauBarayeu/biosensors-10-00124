@@ -1,5 +1,5 @@
 clear all;
-task=2;%set number of task
+task=1;%set number of task
 size_of_subjects=105;%set
 
 

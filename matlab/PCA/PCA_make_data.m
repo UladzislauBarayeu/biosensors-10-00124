@@ -3,7 +3,7 @@ clear all;
 
 Size_of_subject=105;
 task=1;
-size_of_vector=50;
+size_of_vector=250;
 
 for subject_i=1:Size_of_subject
 

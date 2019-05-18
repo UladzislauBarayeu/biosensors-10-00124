@@ -1,5 +1,4 @@
 %% preproces data for subj #n for task number T
-clear all
 folderpath='Data/input/';% set number of sub
 task=1;%set number of task
 size_of_subjects=108;%set
@@ -146,29 +145,13 @@ for subject=1:size_of_subjects
             signal=T1{trial_old}{channel};
             k=0;
             while length(signal)-size_of_window-step*k>0
-                T1_new{trial}{channel}=signal((1+step*k):(size_of_window+step*k));
                 k=k+1;
+                T1_new{trial}{channel}=signal()'
                 trial=trial+1;
             end
         end
     end
-    %T2
-    for channel=1:length(T2{1})
-        trial=1;
-        for trial_old=1:length(T2)
-            signal=T2{trial_old}{channel};
-            k=0;
-            while length(signal)-size_of_window-step*k>0
-                T2_new{trial}{channel}=signal((1+step*k):(size_of_window+step*k));
-                k=k+1;
-                trial=trial+1;
-            end
-        end
-    end
-    %%
-    clear T2 T1
-    T2=T2_new; T1=T1_new;
-    clear T2_new T1_new
+
     %%  Save
     channel_names=annotation1.labels;
     sample_rate=annotation1.samplerate(1);
