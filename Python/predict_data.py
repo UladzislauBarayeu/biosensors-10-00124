@@ -87,5 +87,5 @@ def predict_allFalse_for_svm_two_tasks(nn, s, number_of_folds=5):
         d = f.create_dataset("T2_predicted", data=np.array(t2_test_data_predicted, dtype=np.float64))
         d = f.create_dataset("test_labels", data=np.array(test_y, dtype=np.float64))
 
-predict_two_tasks(2, 4)
+
 

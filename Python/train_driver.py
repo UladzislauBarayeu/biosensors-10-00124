@@ -14,9 +14,9 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
     if not args.arg:
-        for i in [2]:
+        for i in [5, 15, 25, 35, 45, 55,65,75, 85, 95, 105]:
             print('Running script with {}'.format(i))
             sp.check_call([sys.executable, 'train_driver.py', '--arg', str(i)])
     else:
         from train_network import *
-        train_both_tasks(21, int(args.arg), two_times=True, batch_size=22, lr=0.001, epoch=180,  number_of_folds=5, number_for_test=7)
+        train_both_tasks(211, int(args.arg), two_times=True, batch_size=140, lr=0.001, epoch=160,  number_of_folds=5, number_for_test=44)

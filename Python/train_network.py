@@ -22,7 +22,7 @@ def train_both_tasks(nn, s, number_of_folds=5, number_for_test=10 ,epoch=160, pe
     train_data_T1, train_data_T2, labels = shuffle(np.copy(test1.all_data), np.copy(test2.all_data),
                                                  np.copy(test1.all_labels), random_state=0)
 
-    file_raw = home_repo+'two-task-nn/nn' + str(nn) + '/test_conv_ae.h5'
+    file_raw = home_repo+'two-task-nn/nn' + str(nn) + '/test_conv_ae.json'
 
     aepath = home_repo+'two-task-nn/nn' + str(nn) + '/' + str(s) + '/'
     if not os.path.exists(aepath):
@@ -109,20 +109,20 @@ def train_both_tasks(nn, s, number_of_folds=5, number_for_test=10 ,epoch=160, pe
 
         if two_times:
             optimizer = optimizers.Adam(lr=lr)
-            info_T1_1 = train_autoencoder(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
-                                       train_data=train_x_T1, labels=train_y, epoch=epoch//2, period=period, save_ae=True,
+            info_T1_1 = train_autoencoder(h5file=file_raw, format="json",  batch_size=batch_size, optimizer=optimizer,
+                                       train_data=train_x_T1, labels=train_y, epoch=epoch//2, period=period,
                                        loss=loss, ae_name=file1)
             optimizer = optimizers.Adam(lr=lr/10)
             info_T1_2 = train_autoencoder(h5file=file1, batch_size=batch_size, optimizer=optimizer,
-                                                                      train_data=train_x_T1, labels=train_y, epoch=epoch//2, period=period, save_ae=True,
+                                                                      train_data=train_x_T1, labels=train_y, epoch=epoch//2, period=period,
                                                                       loss=loss, ae_name=file1)
             optimizer = optimizers.Adam(lr=lr)
-            info_T2_1 = train_autoencoder(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
-                                       train_data=train_x_T2, labels=train_y, epoch=epoch//2, period=period, save_ae=True,
+            info_T2_1 = train_autoencoder(h5file=file_raw, format="json", batch_size=batch_size, optimizer=optimizer,
+                                       train_data=train_x_T2, labels=train_y, epoch=epoch//2, period=period,
                                        loss=loss, ae_name=file2)
             optimizer = optimizers.Adam(lr=lr/10)
             info_T2_2= train_autoencoder(h5file=file2, batch_size=batch_size, optimizer=optimizer,
-                                       train_data=train_x_T2, labels=train_y, epoch=epoch//2, period=period, save_ae=True,
+                                       train_data=train_x_T2, labels=train_y, epoch=epoch//2, period=period,
                                        loss=loss, ae_name=file2)
 
             trainning_acc_T1[i] = info_T1_1.history['acc']
@@ -137,13 +137,11 @@ def train_both_tasks(nn, s, number_of_folds=5, number_for_test=10 ,epoch=160, pe
 
         else:
             optimizer = optimizers.Adam(lr=lr)
-            info_T1 = train_autoencoder(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
+            info_T1 = train_autoencoder(h5file=file_raw,  format="json", batch_size=batch_size, optimizer=optimizer,
                                        train_data=train_x_T1, labels=train_y, epoch=epoch, period=period,
-                                       save_ae=True,
                                        loss=loss, ae_name=file1)
-            info_T2 = train_autoencoder(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
+            info_T2 = train_autoencoder(h5file=file_raw, format="json", batch_size=batch_size, optimizer=optimizer,
                                        train_data=train_x_T2, labels=train_y, epoch=epoch, period=period,
-                                       save_ae=True,
                                        loss=loss, ae_name=file2)
 
             trainning_acc_T1[i] = info_T1.history['acc']
@@ -217,9 +215,8 @@ def train_both_tasks(nn, s, number_of_folds=5, number_for_test=10 ,epoch=160, pe
             f.create_dataset("trainning_acc_T2_" + str(m), data=np.array(trainning_acc_T2[m], dtype=np.float64))
             f.create_dataset("trainning_loss_T2_" + str(m), data=np.array(trainning_loss_T2[m], dtype=np.float64))
 
-#if __name__ == '__main__':
-    #train_both_tasks(2, 2, two_times=True, batch_size=16)
-    #train_both_tasks(2, 1, two_times=False, batch_size=36, with_test=False, lr=0.001, epoch=2)
+if __name__ == '__main__':
+    train_both_tasks(211, 5, two_times=True, batch_size=140, lr=0.001, epoch=4, number_for_test=44)
 
 
 

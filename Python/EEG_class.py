@@ -3,7 +3,7 @@ import numpy as np
 import h5py
 import os
 import random
-
+from sklearn.utils import shuffle
 
 class EEGdata:
 
@@ -21,29 +21,30 @@ class EEGdata:
         return labels
 
     def load_raw_data(self, h5file, directory=None, task='T1', load_false_data_from_files=True, other=None,  data_len=0):
+
         self.path=directory+h5file
         json_data = open(self.path)
         d = json.load(json_data)
         json_data.close()
 
-        true_data=np.array(d['Subject_old'][task][:22])
+        true_data=np.array(d[task][:110])
         false_data=[]
         self.task=task
 
         if load_false_data_from_files:
-            all_subjects=os.listdir(directory)
+            all_subjects=shuffle(os.listdir(directory))
             all_subjects.remove(h5file)
             t_size=data_len-len(true_data)
+            self.id_for_false=random.sample(all_subjects, t_size-104)
 
-            #id_for_false=random.sample(all_subjects, len(all_subjects))
-            self.id_for_false=random.sample(all_subjects, t_size)
+            self.id_for_false.extend(all_subjects)
             self.internal_id=[]
             for el in self.id_for_false:
                 json_data = open(directory+el)
                 d = json.load(json_data)
                 json_data.close()
-                temp=d['Subject_old'][task]
-                i=random.randint(0, 21)
+                temp=d[task]
+                i=random.randint(0, 109)
                 self.internal_id.append(i)
                 false_data.append(temp[i])
 
@@ -53,10 +54,7 @@ class EEGdata:
 
         else:
 
-            all_subjects = os.listdir(directory)
-            all_subjects.remove(h5file)
             t_size = data_len - len(true_data)
-            # id_for_false=random.sample(all_subjects, len(all_subjects))
             self.id_for_false = other.id_for_false
             self.internal_id=other.internal_id
             j=0
@@ -64,7 +62,7 @@ class EEGdata:
                 json_data = open(directory + el)
                 d = json.load(json_data)
                 json_data.close()
-                temp = d['Subject_old'][task]
+                temp = d[task]
                 false_data.append(temp[self.internal_id[j]])
                 j += 1
 
