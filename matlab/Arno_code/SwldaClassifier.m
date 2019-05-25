@@ -27,7 +27,7 @@ classdef SwldaClassifier < handle
 		%           cues (nb_epochs x 1)
         %               Vector indicating which label is the target
 		function train(this, epochs, labels, cues, ~)
-%             features = this.extractFeatures(epochs);
+            features = this.extractFeatures(epochs);
             %% Vlad: 
             % if you load your features into features here and load in
             % which trials you want to train then this will work

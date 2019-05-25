@@ -14,18 +14,17 @@ function [ features, freq_labels ] = freq_feat( T, labels, sample_rate )
            
             [~,~,~,S1,~,f]=coherencyc(signal,signal,param);
             
-            %?-???? ?? 1 ?? 4 ??
-            %?-???? ?? 4 ?? 8 ??
-            % ?-???? ?? 8 ?? 13 ??
-            %?-???? ?? 13 ?? 40
+            % 1 ?? 4 
+            % 4 ?? 8 
+            % 8 ?? 13
+            % 13 ?? 40
             alphas=[];bettas=[];thetas=[];deltas=[];
-            log_scale = logspace(0,1.6,21);
+            log_scale = logspace(0,1.6,13);
             PSDs={};
             for j=1:size(log_scale,2)-1
                 PSDs{j}=[];
             end
             for i=1:size(f,2)
-                %PSDs{i}=[];
                 for j=1:size(log_scale,2)-1
                     if f(i)>log_scale(j) && f(i)<log_scale(j+1)
                         PSDs{j}(end+1)=S1(i);

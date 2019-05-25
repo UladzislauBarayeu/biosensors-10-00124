@@ -44,7 +44,7 @@ for Number_of_subject=1:size_of_subjects
     
     %% Saving
     jsonStr = jsonencode(Subject); 
-    fid = fopen(strcat('Result_json/Task',num2str(task),'/',num2str(Number_of_subject),'.json'), 'w'); 
+    fid = fopen(strcat('Data/Result_json/task',num2str(task),'/',num2str(Number_of_subject),'.json'), 'w'); 
     if fid == -1, error('Cannot create JSON file'); end 
     fwrite(fid, jsonStr, 'char'); 
     fclose(fid);

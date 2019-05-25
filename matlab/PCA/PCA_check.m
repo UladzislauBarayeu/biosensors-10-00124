@@ -33,7 +33,7 @@ for subject_i=1:size_of_subject
     [~,ind_max_T2]=max(resT2.result_accuracy);
 
     %make train model
-    data=load(strcat('Data/PCA_processed/task',num2str(task),'/',num2str(subject_i),'.mat'));
+    data=load(strcat('Data/PCA_SVM/task',num2str(task),'/',num2str(subject_i),'.mat'));
     XT1=data.Subject.T1;
     XT2=data.Subject.T2;
     Y=data.Subject.cues;
