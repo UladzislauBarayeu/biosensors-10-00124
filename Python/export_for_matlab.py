@@ -108,7 +108,8 @@ def export_allFalse_for_svm_two_tasks(nn, s, number_of_folds=5):
     labels=['' for i in range(80)]
     j=0
 
-    for i in range(0, 2560, 64):
+    #for i in range(0, 2560, 64):
+    for i in range(0, 1535, 64):
         labels[j] = all_labels[i][5:]
         j += 1
         labels[j] = all_labels[i][5:]
@@ -128,11 +129,11 @@ def export_allFalse_for_svm_two_tasks(nn, s, number_of_folds=5):
             json_data = open(path)
             d = json.load(json_data)
             json_data.close()
-            data_T1 = np.array(d['Subject_old']['T1'][:22])
+            data_T1 = np.array(d['T1'][:22])
             data_T1 = np.transpose(data_T1, (0, 2, 1))
             data_T1 = np.expand_dims(data_T1, axis=3)
             all_T1.extend(data_T1)
-            data_T2 = np.array(d['Subject_old']['T2'][:22])
+            data_T2 = np.array(d['T2'][:22])
             data_T2 = np.transpose(data_T2, (0, 2, 1))
             data_T2 = np.expand_dims(data_T2, axis=3)
             all_T2.extend(data_T2)

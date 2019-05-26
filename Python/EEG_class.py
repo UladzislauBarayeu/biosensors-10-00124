@@ -17,7 +17,7 @@ class EEGdata:
         json_data = open(self.path)
         d = json.load(json_data)
         json_data.close()
-        labels=np.array(d['Subject_old']['result_label'][:])
+        labels=np.array(d['result_label'][:])
         return labels
 
     def load_raw_data(self, h5file, directory=None, task='T1', load_false_data_from_files=True, other=None,  data_len=0):
