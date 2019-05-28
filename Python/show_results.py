@@ -4,12 +4,11 @@ import numpy as np
 from configurations import *
 true_vector=np.array([1.0, 0.0])
 false_vector=np.array([0.0, 1.0])
-
 from sklearn.metrics import roc_curve, auc
 import matplotlib.pyplot as plt
 
 
-def read_predicted_file(nn, s, file='predicted_data.h5', all_false=False):
+def read_predicted_file(nn, s, file='predicted_data.h5', threshold_for_T1=0.5, threshold_for_T2=0.5):
     aepath = home_repo+'two-task-nn/nn' + str(nn) + '/' + str(s) + '/'
 
     sum_false_right_both = 0
@@ -25,8 +24,6 @@ def read_predicted_file(nn, s, file='predicted_data.h5', all_false=False):
         t2_test_data= f["T2_predicted"][:]
         test_y_all= f["test_labels"][:]
 
-    # Compute ROC curve and ROC area for each class
-    #plot_Roc(t1_test_data, test_y_all)
     for i in range(t1_test_data.shape[0]):
 
         y_pred_1=t1_test_data[i]
@@ -46,12 +43,12 @@ def read_predicted_file(nn, s, file='predicted_data.h5', all_false=False):
 
         for j in range(len(test_y)):
 
-            if (y_pred_1[j][0] >y_pred_1[j][1]):
+            if (y_pred_1[j][0] >0.65):
                 t1 = [1.0, 0.0]
             else:
                 t1 = [0.0, 1.0]
 
-            if (y_pred_2[j][0] >=y_pred_2[j][1]):
+            if (y_pred_2[j][0] >0.65):
                 t2 = [1.0, 0.0]
             else:
                 t2 = [0.0, 1.0]
@@ -131,7 +128,7 @@ def plot_Roc(y_test, y_predicted):
     plt.show()
 
 
-def mean_accuracy(nn, subjects, allFalse=False):
+def mean_accuracy(nn, subjects, allFalse=False, into_file=False, threshold_for_T1=0.65, threshold_for_T2=0.65):
 
     sum_true_right_T1 = [0 for i in range(len(subjects))]
     sum_false_right_T1 = [0 for i in range(len(subjects))]
@@ -143,7 +140,7 @@ def mean_accuracy(nn, subjects, allFalse=False):
     len_of_false = [0 for i in range(len(subjects))]
 
     for i in range(len(subjects)):
-        sum_true_right_T1[i], sum_false_right_T1[i], sum_true_right_T2[i], sum_false_right_T2[i], sum_true_right_both[i], sum_false_right_both[i], len_of_true[i], len_of_false[i] = read_predicted_file(nn, subjects[i])
+        sum_true_right_T1[i], sum_false_right_T1[i], sum_true_right_T2[i], sum_false_right_T2[i], sum_true_right_both[i], sum_false_right_both[i], len_of_true[i], len_of_false[i] = read_predicted_file(nn, subjects[i], threshold_for_T1=threshold_for_T1, threshold_for_T2=threshold_for_T2)
 
     true_right_T1 = sum(sum_true_right_T1)
     false_right_T1 = sum(sum_false_right_T1)
@@ -155,37 +152,75 @@ def mean_accuracy(nn, subjects, allFalse=False):
     false_right_both = sum(sum_false_right_both)
     len_of_true_sum = sum(len_of_true)
     len_of_false_sum = sum(len_of_false)
-    print("===================================================\n OVERALL")
 
-    if allFalse:
-        print('For T1 type II error in cross-validation: {} \n '.format(
-            (1 - false_right_T1 / len_of_false_sum)))
+    if into_file:
+        aepath = home_repo + 'two-task-nn/nn' + str(nn) + '/'
+        file = open(aepath+"mean_acc.txt", "w")
+        file.write("Mean acuracy of subjects {} \n".format(list_of_subjects))
+        if allFalse:
+            file.write('For T1 type II error in cross-validation: {} \n '.format(
+                (1 - false_right_T1 / len_of_false_sum)))
 
-        print('For T2  type II error in cross-validation: {} \n '.format(
-            (1 - false_right_T2 / len_of_false_sum)))
+            file.write('For T2  type II error in cross-validation: {} \n '.format(
+                (1 - false_right_T2 / len_of_false_sum)))
 
-        print(
-            'For both type II error in cross-validation: {} \n '.format(
-                (1 - false_right_both / len_of_false_sum)))
+            file.write(
+                'For both type II error in cross-validation: {} \n '.format(
+                    (1 - false_right_both / len_of_false_sum)))
+
+        else:
+            file.write('For T1:  \n type I error in cross-validation: {} \n type II error in cross-validation: {} \n \n '.format(
+                (1 - true_right_T1 / len_of_true_sum), (1 - false_right_T1 / len_of_false_sum)))
+
+            file.write('For T2  \n type I error in cross-validation: {} \n type II error in cross-validation: {} \n \n '.format(
+                (1 - true_right_T2 / len_of_true_sum), (1 - false_right_T2 / len_of_false_sum)))
+
+            file.write('For both  \n type I error in cross-validation: {} \n type II error in cross-validation: {} \n \n '.format(
+                (1 - true_right_both / len_of_true_sum), (1 - false_right_both / len_of_false_sum)))
+
+            file.write(
+                'For T1 accuracy overall: {} \n '.format((true_right_T1 + false_right_T1) / (len_of_true_sum + len_of_false_sum)))
+
+            file.write(
+                'For T2  accuracy overall {} \n '.format((true_right_T2 + false_right_T2) / (len_of_true_sum + len_of_false_sum)))
+
+            file.write('For both  accuracy overall {} '.format(
+                (true_right_both + false_right_both) / (len_of_true_sum + len_of_false_sum)))
+
+        file.close()
 
     else:
-        print('For T1:  \n type I error in cross-validation: {} \n type II error in cross-validation: {} \n '.format(
-            (1 - true_right_T1 / len_of_true_sum), (1 - false_right_T1 / len_of_false_sum)))
+        print("===================================================\n OVERALL")
 
-        print('For T2  \n type I error in cross-validation: {} \n type II error in cross-validation: {} \n '.format(
-            (1 - true_right_T2 / len_of_true_sum), (1 - false_right_T2 / len_of_false_sum)))
+        if allFalse:
+            print('For T1 type II error in cross-validation: {} \n '.format(
+                (1 - false_right_T1 / len_of_false_sum)))
 
-        print('For both  \n type I error in cross-validation: {} \n type II error in cross-validation: {} \n '.format(
-            (1 - true_right_both / len_of_true_sum), (1 - false_right_both / len_of_false_sum)))
+            print('For T2  type II error in cross-validation: {} \n '.format(
+                (1 - false_right_T2 / len_of_false_sum)))
 
-        print(
-            'For T1 accuracy overall: {} '.format((true_right_T1 + false_right_T1) / (len_of_true_sum + len_of_false_sum)))
+            print(
+                'For both type II error in cross-validation: {} \n '.format(
+                    (1 - false_right_both / len_of_false_sum)))
 
-        print(
-            'For T2  accuracy overall {} '.format((true_right_T2 + false_right_T2) / (len_of_true_sum + len_of_false_sum)))
+        else:
+            print('For T1:  \n type I error in cross-validation: {} \n type II error in cross-validation: {} \n '.format(
+                (1 - true_right_T1 / len_of_true_sum), (1 - false_right_T1 / len_of_false_sum)))
 
-        print('For both  accuracy overall {} '.format(
-            (true_right_both + false_right_both) / (len_of_true_sum + len_of_false_sum)))
+            print('For T2  \n type I error in cross-validation: {} \n type II error in cross-validation: {} \n '.format(
+                (1 - true_right_T2 / len_of_true_sum), (1 - false_right_T2 / len_of_false_sum)))
 
+            print('For both  \n type I error in cross-validation: {} \n type II error in cross-validation: {} \n '.format(
+                (1 - true_right_both / len_of_true_sum), (1 - false_right_both / len_of_false_sum)))
 
+            print(
+                'For T1 accuracy overall: {} '.format((true_right_T1 + false_right_T1) / (len_of_true_sum + len_of_false_sum)))
 
+            print(
+                'For T2  accuracy overall {} '.format((true_right_T2 + false_right_T2) / (len_of_true_sum + len_of_false_sum)))
+
+            print('For both  accuracy overall {} '.format(
+                (true_right_both + false_right_both) / (len_of_true_sum + len_of_false_sum)))
+
+if __name__ == '__main__':
+    mean_accuracy(nn, list_of_subjects, into_file=True)
