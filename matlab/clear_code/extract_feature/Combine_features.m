@@ -1,6 +1,7 @@
-clear all;
-task=1;%set number of task
-size_of_subjects=105;%set
+function [] = Combine_features( task )
+%combine entropy and freq features
+
+size_of_subjects=105;
 
 
 for Number_of_subject=1:size_of_subjects
@@ -44,7 +45,12 @@ for Number_of_subject=1:size_of_subjects
     
     %% Saving
     jsonStr = jsonencode(Subject); 
-    fid = fopen(strcat('Data/Result_json/task',num2str(task),'/',num2str(Number_of_subject),'.json'), 'w'); 
+    outputDir = strcat('Data/Result_json/Task',num2str(task),'/');
+    % Check if the folder exists , and if not, make it...
+    if ~exist(outputDir, 'dir')
+        mkdir(outputDir);
+    end
+    fid = fopen(strcat(outputDir, num2str(Number_of_subject),'.json'), 'w'); 
     if fid == -1, error('Cannot create JSON file'); end 
     fwrite(fid, jsonStr, 'char'); 
     fclose(fid);
@@ -59,3 +65,6 @@ for Number_of_subject=1:size_of_subjects
     % Write it to disk
     save(outputfilename,'Subject');
 end
+
+end
+

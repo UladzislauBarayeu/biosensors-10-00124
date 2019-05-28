@@ -1,24 +1,14 @@
-clear all;
+function [ mean_result ] = PCA_SVM_T1( task, Size_of_feat, KernelSVM,  fast)
+%PCA_SVM_T1 analyse data
 
-
-
-task=1;
-
-Size_of_feat=10;
 size_of_sub=105;
-best_indx=zeros(Size_of_feat,size_of_sub);
-result_accuracy=zeros(Size_of_feat,1);
-
-KernelSVM='rbf';%'rbf' or 'linear' optional
-Indexes={};
-modelsSVM={};
-fast=1;%if 1 run without optimization
 
 for subject_i=1:size_of_sub
     load(strcat('Data/PCA_SVM/task',num2str(task),'/',num2str(subject_i),'.mat'));
+    Indexes={};
+    result_accuracy=zeros(Size_of_feat,1);
     
-    
-    X=Subject.T2;
+    X=Subject.T1;
     Y=Subject.cues;
     resultIDx=[];
     %Find best Nofeat
@@ -71,6 +61,8 @@ for subject_i=1:size_of_sub
                 if fast
                     SVMModel = fitcsvm(trainTrials,trainCues,'Standardize',true,...
                             'KernelFunction',KernelSVM,'KernelScale','auto');
+                    %SVMModel2 = fitPosterior(SVMModel);
+                    %[~,score_svm] = predict(SVMModel2,testTrials);
                 else
                     opts = struct('ShowPlots',false,'MaxObjectiveEvaluations', 5);
                     SVMModel = fitcsvm(trainTrials, trainCues,...
@@ -189,9 +181,9 @@ for subject_i=1:size_of_sub
     %best_indx(:,subject_i)=resultIDx;
     %% save
     if fast
-        outputDir = strcat('Data/PCA_results/task',num2str(task),'/fast/T2/');
+        outputDir = strcat('Data/PCA_results/task',num2str(task),'/fast/T1/');
     else
-        outputDir = strcat('Data/PCA_results/task',num2str(task),'/slow/T2/');
+        outputDir = strcat('Data/PCA_results/task',num2str(task),'/slow/T1/');
     end
     % Check if the folder exists , and if not, make it...
     if ~exist(outputDir, 'dir')
@@ -200,6 +192,12 @@ for subject_i=1:size_of_sub
     save(strcat(outputDir,num2str(subject_i),'.mat'),'Indexes','result_accuracy');
     Max_values(subject_i)=max(result_accuracy);
     clearvars -except Max_values task KernelSVM fast Size_of_feat size_of_sub 
+
     
 end
-mean_result=mean(Max_values)
+mean_result=mean(Max_values);
+
+
+
+end
+

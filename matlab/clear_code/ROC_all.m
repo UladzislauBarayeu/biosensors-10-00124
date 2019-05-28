@@ -1,10 +1,7 @@
-%% set
-clear all
+function [] = ROC_all( task, fast,  nn, List_of_subject)
+%UNTITLED plot ROC curves 
 
-size_of_subject=105;
-task=1;
-fast=1;
-nn=2;
+
 if fast
     PCA=load(strcat('Data/PCA_final/task',num2str(task),'/fast/result_PCA'));
 else
@@ -17,7 +14,6 @@ else
     SVM=load(strcat('Data/NN_final/nn',num2str(nn),'/task',num2str(task),'/slow/result_SVM'));
 end
 
-List_of_subject={'s05','s15','s25','s35','s45','s55','s65','s75','s85','s95'};
 predicted_T1=[]; predicted_T2=[]; predicted_all=[]; labels=[];
 temp=1;
 for sub=1:length(List_of_subject)
@@ -91,3 +87,6 @@ end
 namefile=strcat('%s','-ROC-all.jpg');
 outputjpgname = sprintf(namefile, outputjpgDir);
 saveas(gcf,outputjpgname);
+
+end
+

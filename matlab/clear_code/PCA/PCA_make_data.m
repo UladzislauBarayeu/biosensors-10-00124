@@ -1,9 +1,7 @@
-clear all;
-
+function [] = PCA_make_data( task,  size_of_vector)
+%PCA_MAKE_DATA make data for SVM
 
 Size_of_subject=105;
-task=1;
-size_of_vector=225;
 
 for subject_i=1:Size_of_subject
 
@@ -12,7 +10,7 @@ for subject_i=1:Size_of_subject
     randarray=randi([1 Size_of_subject],size_of_vector-min([size(Submain.Subject_pca.T1,2) size(Submain.Subject_pca.T2,2)]),1);
     while find( randarray==subject_i)
         randarray=randi([1 Size_of_subject],size_of_vector-size(Submain.Subject_pca.T1,2),1);
-        enda
+    end
     Subject.cues=zeros(size_of_vector,1);
     for i=1:min([size(Submain.Subject_pca.T1,2) size(Submain.Subject_pca.T2,2)])
         Subject.cues(i)=1;
@@ -60,3 +58,6 @@ for subject_i=1:Size_of_subject
     save(strcat(outputDir,num2str(subject_i),'.mat'),'Subject');
     
 end
+
+end
+

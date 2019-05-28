@@ -1,12 +1,8 @@
-%% preproces data for subj #n for task number T
-clear all
-folderpath='Data/input/';% set number of sub
-task=1;%set number of task
-size_of_subjects=108;%set
+function [] = preproces( task, folderpath )
+%% preproces data for task number T
 
+size_of_subjects=108;
 
-%1/S001R
-%% do not change code below
 iterator_sub=0;
 for subject=1:size_of_subjects
     if subject==88 || subject==92 || subject==100 
@@ -186,3 +182,7 @@ for subject=1:size_of_subjects
     
     clearvars -except size_of_subjects task subject folderpath iterator_sub
 end
+
+
+end
+

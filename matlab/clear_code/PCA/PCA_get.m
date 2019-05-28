@@ -1,9 +1,7 @@
-clear all;
-task=1;
+function [] = PCA_get( task, number_sub_channel)
+%PCA_GET convolute electrodes for each feature
 
-number_sub_channel=2;
-size_of_subjects=105;%set
-
+size_of_subjects=105;
 
 for Number_of_subject=1:size_of_subjects
     name_file=strcat('Data\Processed\Combined\task',num2str(task),'/',num2str(Number_of_subject),'.mat');
@@ -72,6 +70,11 @@ for Number_of_subject=1:size_of_subjects
     end
     save(strcat(outputDir,num2str(Number_of_subject),'.mat'),'Subject_pca');
 end
+
+
+end
+
+
 
 
 
