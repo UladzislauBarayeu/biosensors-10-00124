@@ -1,7 +1,7 @@
-%% set
-clear all;
-task=1;%set number of task
-size_of_subjects=105;%set
+function [] = entropy_feature( task )
+% extract entropy features
+
+size_of_subjects=105;
 
 %%
 for Number_of_subject=1:size_of_subjects
@@ -24,3 +24,6 @@ for Number_of_subject=1:size_of_subjects
     % Write it to disk
     save(outputfilename,'T1_entropy_feature','T2_entropy_feature','entropylabels');
 end
+
+end
+

@@ -1,23 +1,12 @@
-clear all;
+function [ mean_result ] = SVM_after_NN_T1( task, KernelSVM, List_of_subject, nn, Size_of_feat)
+%SVM_AFTER_NN_T1 analyse data after NN
 
-
-
-
-List_of_subject={'s05','s15','s25','s35','s45','s55','s65','s75','s85','s95'};
-%List_of_subject={'s04','s05','s06','s16','s17','s18','s25','s35','s45'};
-task=1;
-KernelSVM='linear';%'rbf' or 'linear' optional
-fast=1;%if 1 run without optimization
-nn=21;%set type of NN
-
-Size_of_feat=10;
     
 for subject_i=1:size(List_of_subject,2)
     subject=List_of_subject{subject_i};
     dat=loadjson(strcat('Data/NN_convoluted/nn',num2str(nn),'/data_for_svm_',subject,'.json'));
 
     %make train model
-
     result_accuracy=zeros(Size_of_feat,1);
     Indexes={};
     nbFolds = size(dat.T1.train_sample,1);
@@ -135,8 +124,5 @@ for subject_i=1:size(List_of_subject,2)
 end
 mean_result=mean(Max_values);
 
-
-
-
-
+end
 

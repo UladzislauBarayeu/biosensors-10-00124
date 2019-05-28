@@ -1,6 +1,7 @@
-clear all;
-task=1;%set number of task
-size_of_subjects=105;%set
+function [] = freq_feature( task )
+%UNTITLED extract frequance features
+
+size_of_subjects=105;
 
 %%
 for Number_of_subject=1:size_of_subjects
@@ -15,7 +16,7 @@ for Number_of_subject=1:size_of_subjects
     
     %T1_freq_feature=T1_freq_features{Number_of_subject};
     %T2_freq_feature=T2_freq_features{Number_of_subject};
-    fprintf('Saving the data...\n');
+    %fprintf('Saving the data...\n');
     % Define the folder where to store the data
     outputDir = strcat('Data/Processed/freq_features/task',num2str(task),'/');
     % Check if the folder exists , and if not, make it...
@@ -26,5 +27,9 @@ for Number_of_subject=1:size_of_subjects
     outputfilename = sprintf('%s/%s.mat', outputDir, num2str(Number_of_subject));
     % Write it to disk
     save(outputfilename,'T1_freq_feature','T2_freq_feature','freqlabels');
+end
+
+
+
 end
 
