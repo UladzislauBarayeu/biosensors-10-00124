@@ -14,7 +14,6 @@ if __name__ == '__main__':
         for i in list_of_subjects:
             print('Running script with {}'.format(i))
             sp.check_call([sys.executable, 'train_driver.py', '--arg', str(i)])
-
     else:
-        from train_network import *
-        train_both_tasks(nn, int(args.arg), two_times=True, batch_size=140, lr=0.0001, epoch=300,  number_of_folds=5, number_for_test=44, global_task=global_task)
+        from predict_data import *
+        predict_two_tasks(nn, int(args.arg))

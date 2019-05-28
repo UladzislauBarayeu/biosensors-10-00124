@@ -261,7 +261,7 @@ def make_nn(nn, two_task=True):
     # batch_normalization_48 = BatchNormalization(name='batch_normalization_48')(conv2d_48)
     # activation_48 = Activation('relu', name='activation_48')(batch_normalization_48)
 
-    y = Flatten()(activation_48)
+    y = Flatten(name="flatten_1")(activation_48)
     y = Dense(encoding_dim, activation='relu', )(y)
     y = Dense(encoding_dim//2, activation='relu', )(y)
     y = Dense(encoding_dim//2, activation='relu', )(y)

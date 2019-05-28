@@ -3,6 +3,7 @@ import subprocess as sp
 import sys
 import argparse
 from configurations import *
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--arg')
@@ -16,5 +17,5 @@ if __name__ == '__main__':
             sp.check_call([sys.executable, 'train_driver.py', '--arg', str(i)])
 
     else:
-        from train_network import *
-        train_both_tasks(nn, int(args.arg), two_times=True, batch_size=140, lr=0.0001, epoch=300,  number_of_folds=5, number_for_test=44, global_task=global_task)
+        from export_for_matlab import *
+        export_nn_for_svm_two_tasks(nn, int(args.arg), global_task=global_task)

@@ -6,30 +6,25 @@ import gc
 from keras.models import model_from_json
 import json
 
-def load_network(file, name=None, format="h5"):
+def load_network(file, name=None):
     '''
     load network from file, give it name(optional)
     return network and attribute 'use_channels',
     if use_channels=False, then real and imaginary parts of image are treated as separate images,
     if use_channels=True, then real and imaginary parts of image are treated as channels in one image
     '''
-    if format == "h5":
-        model_cpu = load_model(file)
-    if format == "json":
-        json_data = open(file)
-        nn = json.load(json_data)
-        json_data.close()
-        model_cpu = model_from_json(nn)
+
+    model_cpu = load_model(file)
 
     if name is not None:
         model_cpu.name = name
     return model_cpu
 
 
-def train_autoencoder(h5file, train_data, labels, format="h5", batch_size=32, callbacks_list=None, optimizer=None,
+def train_autoencoder(h5file, train_data, labels, batch_size=32, callbacks_list=None, optimizer=None,
                       epoch=2, ae_name='test_ae.h5',
                       loss='mean_squared_error', period=2, validation_split=0.2, earlystop=False):
-    network = load_network(h5file, format=format)
+    network = load_network(h5file)
 
     if callbacks_list is None:
 

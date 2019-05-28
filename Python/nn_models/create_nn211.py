@@ -13,10 +13,11 @@ from keras.layers import Dropout, ZeroPadding2D, Cropping2D, Concatenate
 from keras.layers import LeakyReLU, Dense, UpSampling3D
 import os
 from configurations import *
+import json
 
 def make_nn(nn, two_task=True):
-    input_shape = Input(shape=(40, 64, 1))
-    encoding_dim = 80
+    input_shape = Input(shape=(24, 64, 1))
+    encoding_dim = 48
     conv2d_1 = Conv2D(filters=32, kernel_size=(1, 3), activation='linear', strides=(1, 2), padding='same',
                       name='conv2d_1')(input_shape)
     batch_normalization_1 = BatchNormalization(name='batch_normalization_1')(conv2d_1)
@@ -64,9 +65,6 @@ def make_nn(nn, two_task=True):
     activation_7 = Activation('relu', name='activation_7')(batch_normalization_7)
     activation_10 = Activation('relu', name='activation_10')(batch_normalization_10)
 
-    # average_pooling2d_1 = AveragePooling2D(pool_size=(1, 3), strides=(1, 1), padding='same',
-    #                                        name='average_pooling2d_1')(max_pooling2d_2)
-
     conv2d_6 = Conv2D(filters=64, kernel_size=(1, 1), activation='linear', strides=(1, 1), padding='same',
                       name='conv2d_6')(max_pooling2d_2)
     conv2d_8 = Conv2D(filters=64, kernel_size=(1, 5), activation='linear', strides=(1, 1), padding='same',
@@ -100,8 +98,6 @@ def make_nn(nn, two_task=True):
     activation_14 = Activation('relu', name='activation_14')(batch_normalization_14)
     activation_17 = Activation('relu', name='activation_17')(batch_normalization_17)
 
-    # average_pooling2d_2 = AveragePooling2D(pool_size=(1, 3), strides=(1, 1), padding='same',
-    #                                        name='average_pooling2d_2')(mixed0)
 
     conv2d_13 = Conv2D(filters=64, kernel_size=(1, 1), activation='linear', strides=(1, 1), padding='same',
                        name='conv2d_13')(mixed0)
@@ -135,9 +131,6 @@ def make_nn(nn, two_task=True):
     batch_normalization_24 = BatchNormalization(name='batch_normalization_24')(conv2d_24)
     activation_21 = Activation('relu', name='activation_21')(batch_normalization_21)
     activation_24 = Activation('relu', name='activation_24')(batch_normalization_24)
-
-    # average_pooling2d_3 = AveragePooling2D(pool_size=(1, 3), strides=(1, 1), padding='same',
-    #                                        name='average_pooling2d_3')(mixed1)
 
     conv2d_20 = Conv2D(filters=64, kernel_size=(1, 1), activation='linear', strides=(1, 1), padding='same',
                        name='conv2d_20')(mixed0)
@@ -194,8 +187,6 @@ def make_nn(nn, two_task=True):
     activation_32 = Activation('relu', name='activation_32')(batch_normalization_32)
     activation_37 = Activation('relu', name='activation_37')(batch_normalization_37)
 
-    # average_pooling2d_4 = AveragePooling2D(pool_size=(1, 3), strides=(1, 1), padding='same',
-    #                                        name='average_pooling2d_3')(mixed3)
 
     conv2d_31 = Conv2D(filters=192, kernel_size=(1, 1), activation='linear', strides=(1, 1), padding='same',
                        name='conv2d_31')(mixed3)
@@ -252,36 +243,34 @@ def make_nn(nn, two_task=True):
     batch_normalization_48 = BatchNormalization(name='batch_normalization_48')(conv2d_48)
     activation_48= Activation('relu', name='activation_48')(batch_normalization_48)
 
-    # conv2d_48 = Conv2D(filters=1, kernel_size=(1, 7), activation='linear', strides=(1, 2), padding='same',
-    #                    name='conv2d_487')(activation_47)
-    # batch_normalization_48 = BatchNormalization(name='batch_normalization_48')(conv2d_48)
-    # activation_48 = Activation('relu', name='activation_48')(batch_normalization_48)
 
-    y = Flatten()(activation_48)
+    y = Flatten(name="flatten_1")(activation_48)
     y = Dense(encoding_dim, activation='relu', )(y)
     y = Dense(encoding_dim//2, activation='relu', )(y)
     y = Dense(encoding_dim//2, activation='relu', )(y)
     y=Dropout(rate=0.2)(y)
     y = Dense(encoding_dim // 4, activation='relu', )(y)
     y = Dense(encoding_dim // 4, activation='relu', )(y)
-    y = Dense(encoding_dim // 10, activation='relu', )(y)
-    y = Dense(encoding_dim // 10, activation='relu', )(y)
-    # y = Dense(encoding_dim // 16, activation='relu', )(y)
-    # y = Dense(encoding_dim // 16, activation='relu', )(y)
+    y = Dense(encoding_dim // 12, activation='relu', )(y)
+    y = Dense(encoding_dim // 12, activation='relu', )(y)
 
     output = Dense(2, activation='sigmoid')(y)
     network = Model(input_shape, output, name="nn")
     network.summary()
     if two_task:
-        first_fold = home_repo+'two-task-nn'
+        first_fold = '../'+home_repo+'two-task-nn'
     else:
-        first_fold = home_repo+'one-task-nn'
+        first_fold = '../'+home_repo+'one-task-nn'
     aepath = first_fold+'/nn' + str(nn) + '/'
     if not os.path.exists(aepath):
         os.makedirs(aepath)
     file_raw = first_fold+'/nn' + str(nn) + '/test_conv_ae.h5'
+    # json_nn = network.to_json()
+    # outfile = open(file_raw, 'w')
+    # json.dump(json_nn, outfile)
+    # outfile.close()
     network.save(file_raw)
     return file_raw
 
-make_nn(21)
+make_nn(211)
 #print('hey')
