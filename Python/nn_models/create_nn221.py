@@ -12,6 +12,8 @@ from keras.layers import Dense, Flatten, Reshape, BatchNormalization, Activation
 from keras.layers import Dropout, ZeroPadding2D, Cropping2D, Concatenate
 from keras.layers import LeakyReLU, Dense, UpSampling3D
 import os
+import sys
+sys.path.insert(0, '../')
 from configurations import *
 
 true_vector=np.array([1.0, 0.0])
@@ -282,6 +284,7 @@ def make_nn(nn, two_task=True):
     else:
         first_fold = '../'+home_repo+'one-task-nn'
     aepath = first_fold+'/nn' + str(nn) + '/'
+
     if not os.path.exists(aepath):
         os.makedirs(aepath)
     file_raw = first_fold+'/nn' + str(nn) + '/test_conv_ae.h5'

@@ -12,6 +12,8 @@ from keras.layers import Dense, Flatten, Reshape, BatchNormalization, Activation
 from keras.layers import Dropout, ZeroPadding2D, Cropping2D, Concatenate
 from keras.layers import LeakyReLU, Dense, UpSampling3D
 import os
+import sys
+sys.path.insert(0, '../')
 from configurations import *
 import json
 
