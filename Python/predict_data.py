@@ -9,7 +9,7 @@ from configurations import *
 
 def predict_two_tasks(nn, s):
 
-    aepath = home_repo+'two-task-nn/nn' + str(nn) + '/' + str(s) + '/'
+    aepath = home_repo+'nn_' + str(nn) + '/' + str(s) + '/'
 
     with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
         test_x_1 = f["test_sample_T1"][:]
@@ -38,7 +38,7 @@ def predict_two_tasks(nn, s):
 
 def predict_allFalse_two_tasks(nn, s,  global_task='Task1'):
 
-    aepath = home_repo+'two-task-nn/nn' + str(nn) + '/' + str(s) + '/'
+    aepath = home_repo+'nn_' + str(nn) + '/' + str(s) + '/'
 
     with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
         minmax_T1 = f["minmax_T1"][:]
@@ -54,7 +54,7 @@ def predict_allFalse_two_tasks(nn, s,  global_task='Task1'):
     for j in range(1, 106, 1):
         if j != s:
             h5file = str(s) + '.json'
-            path = home_repo + global_task+'/' + h5file
+            path = repo_with_raw_data + global_task+'/' + h5file
             json_data = open(path)
             d = json.load(json_data)
             json_data.close()
@@ -93,5 +93,5 @@ def predict_allFalse_two_tasks(nn, s,  global_task='Task1'):
         d = f.create_dataset("test_labels", data=np.array(test_y, dtype=np.float64))
 
 if __name__ == '__main__':
-    predict_two_tasks(211,5)
+    predict_allFalse_two_tasks("simple_1",5)
 

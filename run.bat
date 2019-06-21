@@ -1,5 +1,5 @@
 cd Python/nn_models
-python create_nn211.py
+python nn_simple_1.py
 cd ../
 python train_driver.py
 python predict_driver.py

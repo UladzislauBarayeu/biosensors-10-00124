@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 
 def read_predicted_file(nn, s, file='predicted_data.h5', threshold_for_T1=0.5, threshold_for_T2=0.5):
-    aepath = home_repo+'two-task-nn/nn' + str(nn) + '/' + str(s) + '/'
+    aepath = home_repo+'nn_' + str(nn) + '/' + str(s) + '/'
 
     sum_false_right_both = 0
     sum_true_right_both = 0
@@ -43,12 +43,12 @@ def read_predicted_file(nn, s, file='predicted_data.h5', threshold_for_T1=0.5, t
 
         for j in range(len(test_y)):
 
-            if (y_pred_1[j][0] >0.65):
+            if (y_pred_1[j][0] >0.6):
                 t1 = [1.0, 0.0]
             else:
                 t1 = [0.0, 1.0]
 
-            if (y_pred_2[j][0] >0.65):
+            if (y_pred_2[j][0]>0.6):
                 t2 = [1.0, 0.0]
             else:
                 t2 = [0.0, 1.0]
@@ -154,7 +154,7 @@ def mean_accuracy(nn, subjects, allFalse=False, into_file=False, threshold_for_T
     len_of_false_sum = sum(len_of_false)
 
     if into_file:
-        aepath = home_repo + 'two-task-nn/nn' + str(nn) + '/'
+        aepath = home_repo + 'nn_' + str(nn) + '/'
         file = open(aepath+"mean_acc.txt", "w")
         file.write("Mean acuracy of subjects {} \n".format(list_of_subjects))
         if allFalse:
@@ -223,4 +223,4 @@ def mean_accuracy(nn, subjects, allFalse=False, into_file=False, threshold_for_T
                 (true_right_both + false_right_both) / (len_of_true_sum + len_of_false_sum)))
 
 if __name__ == '__main__':
-    mean_accuracy(nn, list_of_subjects, into_file=True)
+    mean_accuracy("simple_1", [5], into_file=False, allFalse=True)
