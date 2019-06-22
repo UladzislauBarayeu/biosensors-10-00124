@@ -16,7 +16,6 @@ for Number_of_subject=1:size_of_subjects
     
     %T1_freq_feature=T1_freq_features{Number_of_subject};
     %T2_freq_feature=T2_freq_features{Number_of_subject};
-    %fprintf('Saving the data...\n');
     % Define the folder where to store the data
     outputDir = strcat('Data/Processed/freq_features/task',num2str(task),'/');
     % Check if the folder exists , and if not, make it...

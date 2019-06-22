@@ -12,7 +12,6 @@ for Number_of_subject=1:size_of_subjects
     [ T1_entropy_feature, entropylabels ] = Extract_entropy_feat( Procesed_EMD.T1_EMD, Procesed_EMD.labels);
     [ T2_entropy_feature, ~ ] = Extract_entropy_feat( Procesed_EMD.T2_EMD, Procesed_EMD.labels);
     
-    fprintf('Saving the data...\n');
     % Define the folder where to store the data
     outputDir = strcat('Data/Processed/EMD_features/task',num2str(task),'/');
     % Check if the folder exists , and if not, make it...
