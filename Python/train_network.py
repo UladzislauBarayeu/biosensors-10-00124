@@ -4,8 +4,6 @@ from sklearn.utils import shuffle
 import os
 from configurations import *
 
-true_vector=np.array([1.0, 0.0])
-false_vector=np.array([0.0, 1.0])
 
 def train_both_tasks(nn, s, number_of_folds=5, number_for_test=10 ,epoch=160, period=2, lr=0.0001, two_times=False, batch_size=36, with_test=False, loss = 'mean_squared_error', global_task='Task1'):
 
@@ -22,9 +20,9 @@ def train_both_tasks(nn, s, number_of_folds=5, number_for_test=10 ,epoch=160, pe
     train_data_T1, train_data_T2, labels = shuffle(np.copy(test1.all_data), np.copy(test2.all_data),
                                                  np.copy(test1.all_labels), random_state=0)
 
-    file_raw = home_repo+'two-task-nn/nn' + str(nn) + '/test_conv_ae.h5'
+    file_raw = home_repo+'nn_' + str(nn) + '/test_conv_ae.h5'
 
-    aepath = home_repo+'two-task-nn/nn' + str(nn) + '/' + str(s) + '/'
+    aepath = home_repo+'nn_' + str(nn) + '/' + str(s) + '/'
     if not os.path.exists(aepath):
         os.makedirs(aepath)
 
@@ -75,21 +73,6 @@ def train_both_tasks(nn, s, number_of_folds=5, number_for_test=10 ,epoch=160, pe
         d = f.create_dataset("minmax_T1", data=np.array(minmax_T1_all_folds, dtype=np.float64))
         d = f.create_dataset("minmax_T2", data=np.array(minmax_T2_all_folds, dtype=np.float64))
 
-    if with_test:
-        true_values_right_T1 = 0
-        false_values_right_T1 = 0
-
-        true_values_right_T2 = 0
-        false_values_right_T2 = 0
-
-        true_values_right_both = 0
-        false_values_right_both = 0
-
-        len_true_all=0
-        len_false_all=0
-
-
-
     for i in range (number_of_folds):
         train_x_T1 =train_sample_T1_all_folds[i]
         train_x_T2 = train_sample_T2_all_folds[i]
@@ -105,98 +88,44 @@ def train_both_tasks(nn, s, number_of_folds=5, number_for_test=10 ,epoch=160, pe
 
         if two_times:
             optimizer = optimizers.Adam(lr=lr)
-            info_T1_1 = train_autoencoder(h5file=file_raw,  batch_size=batch_size, optimizer=optimizer,
-                                       train_data=train_x_T1, labels=train_y, epoch=epoch//2, period=period,
-                                       loss=loss, ae_name=file1)
+            info_T1_1 = train_nn(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
+                                 train_data=train_x_T1, labels=train_y, epoch=epoch//2, period=period,
+                                 loss=loss, ae_name=file1)
 
             optimizer = optimizers.Adam(lr=lr/10)
-            info_T1_2 = train_autoencoder(h5file=file1, batch_size=batch_size, optimizer=optimizer,
-                                                                      train_data=train_x_T1, labels=train_y, epoch=epoch//2, period=period,
-                                                                      loss=loss, ae_name=file1)
+            info_T1_2 = train_nn(h5file=file1, batch_size=batch_size, optimizer=optimizer,
+                                 train_data=train_x_T1, labels=train_y, epoch=epoch//2, period=period,
+                                 loss=loss, ae_name=file1)
             optimizer = optimizers.Adam(lr=lr)
-            info_T2_1 = train_autoencoder(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
-                                       train_data=train_x_T2, labels=train_y, epoch=epoch//2, period=period,
-                                       loss=loss, ae_name=file2)
+            info_T2_1 = train_nn(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
+                                 train_data=train_x_T2, labels=train_y, epoch=epoch//2, period=period,
+                                 loss=loss, ae_name=file2)
 
             optimizer = optimizers.Adam(lr=lr/10)
-            info_T2_2= train_autoencoder(h5file=file2, batch_size=batch_size, optimizer=optimizer,
-                                       train_data=train_x_T2, labels=train_y, epoch=epoch//2, period=period,
-                                       loss=loss, ae_name=file2)
-
-
+            info_T2_2= train_nn(h5file=file2, batch_size=batch_size, optimizer=optimizer,
+                                train_data=train_x_T2, labels=train_y, epoch=epoch//2, period=period,
+                                loss=loss, ae_name=file2)
 
         else:
             optimizer = optimizers.Adam(lr=lr)
-            info_T1 = train_autoencoder(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
-                                       train_data=train_x_T1, labels=train_y, epoch=epoch, period=period,
-                                       loss=loss, ae_name=file1)
-            info_T2 = train_autoencoder(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
-                                       train_data=train_x_T2, labels=train_y, epoch=epoch, period=period,
-                                       loss=loss, ae_name=file2)
+            info_T1 = train_nn(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
+                               train_data=train_x_T1, labels=train_y, epoch=epoch, period=period,
+                               loss=loss, ae_name=file1)
+            info_T2 = train_nn(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
+                               train_data=train_x_T2, labels=train_y, epoch=epoch, period=period,
+                               loss=loss, ae_name=file2)
 
         if with_test:
+            test_within_fold(file1, file2, test_sample_T1_all_folds[i], test_sample_T2_all_folds[i], test_y_all_folds[i])
 
-            network1 = load_network(file1)
-            y_pred_1 = network1.predict(test_sample_T1_all_folds[i])
-
-            network2 = load_network(file2)
-            y_pred_2 = network2.predict(test_sample_T2_all_folds[i])
-
-            test_y=test_y_all_folds[i]
-            len_true_all += ((test_y == true_vector).sum() // 2)
-            len_false_all += ((test_y == false_vector).sum() // 2)
-
-            for j in range(len(test_y)):
-
-                if (y_pred_1[j][0] > 0.5):
-                    t1 = [1.0, 0.0]
-                else:
-                    t1 = [0.0, 1.0]
-
-                if (y_pred_2[j][0] > 0.5):
-                    t2 = [1.0, 0.0]
-                else:
-                    t2 = [0.0, 1.0]
-
-                if (test_y[j] == true_vector).all():
-                    # check T1 task
-                    if (t1 == test_y[j]).all():
-                        true_values_right_T1 += 1
-                    # check T2 task
-                    if (t2 == test_y[j]).all():
-                        true_values_right_T2 += 1
-                    # check both tasks
-                    if (t1 == test_y[j]).all() and (t2 == test_y[j]).all():
-                        true_values_right_both += 1
-
-                else:
-                    # check T1 task
-                    if (t1 == test_y[j]).all():
-                        false_values_right_T1 += 1
-                    # check T2 task
-                    if (t2 == test_y[j]).all():
-                        false_values_right_T2 += 1
-                    # check both tasks
-                    if ((t1 == test_y[j]).all() and (t2 == test_y[j]).all()) or (
-                            (t1 == test_y[j]).all() and (t2 == true_vector).all()) or (
-                            (t1 == true_vector).all() and (t2 == test_y[j]).all()):
-                        false_values_right_both += 1
-
-
-                print('for T1 type I was predicted {} out of {}'.format(true_values_right_T1, len_true_all))
-                print('for T2 type I was predicted {} out of {}'.format(true_values_right_T2, len_true_all))
-                print('for both type I was predicted {} out of {}'.format(true_values_right_both, len_true_all))
-                print('for T1 type II was predicted {} out of {}'.format(false_values_right_T1, len_false_all))
-                print('for T2 type II was predicted {} out of {}'.format(false_values_right_T2, len_false_all))
-                print('for both type II was predicted {} out of {}'.format(false_values_right_both, len_false_all))
 
 
 
 
 def train_both_tasks_from_fold(nn, s, n_fold, epoch=160, period=2, lr=0.0001, two_times=False, batch_size=36, loss = 'mean_squared_error'):
 
-    file_raw = home_repo + 'two-task-nn/nn' + str(nn) + '/test_conv_ae.h5'
-    aepath = home_repo + 'two-task-nn/nn' + str(nn) + '/' + str(s) + '/'
+    file_raw = home_repo + 'nn_' + str(nn) + '/test_conv_ae.h5'
+    aepath = home_repo + 'nn_' + str(nn) + '/' + str(s) + '/'
     if not os.path.exists(aepath):
         os.makedirs(aepath)
     with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
@@ -221,35 +150,35 @@ def train_both_tasks_from_fold(nn, s, n_fold, epoch=160, period=2, lr=0.0001, tw
 
         if two_times:
             optimizer = optimizers.Adam(lr=lr)
-            info_T1_1 = train_autoencoder(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
-                                       train_data=train_x_T1, labels=train_y, epoch=epoch//2, period=period,
-                                       loss=loss, ae_name=file1)
+            info_T1_1 = train_nn(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
+                                 train_data=train_x_T1, labels=train_y, epoch=epoch//2, period=period,
+                                 loss=loss, ae_name=file1)
             optimizer = optimizers.Adam(lr=lr/10)
-            info_T1_2 = train_autoencoder(h5file=file1, batch_size=batch_size, optimizer=optimizer,
-                                                                      train_data=train_x_T1, labels=train_y, epoch=epoch//2, period=period,
-                                                                      loss=loss, ae_name=file1)
+            info_T1_2 = train_nn(h5file=file1, batch_size=batch_size, optimizer=optimizer,
+                                 train_data=train_x_T1, labels=train_y, epoch=epoch//2, period=period,
+                                 loss=loss, ae_name=file1)
             optimizer = optimizers.Adam(lr=lr)
-            info_T2_1 = train_autoencoder(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
-                                       train_data=train_x_T2, labels=train_y, epoch=epoch//2, period=period,
-                                       loss=loss, ae_name=file2)
+            info_T2_1 = train_nn(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
+                                 train_data=train_x_T2, labels=train_y, epoch=epoch//2, period=period,
+                                 loss=loss, ae_name=file2)
             optimizer = optimizers.Adam(lr=lr/10)
-            info_T2_2= train_autoencoder(h5file=file2, batch_size=batch_size, optimizer=optimizer,
-                                       train_data=train_x_T2, labels=train_y, epoch=epoch//2, period=period,
-                                       loss=loss, ae_name=file2)
+            info_T2_2= train_nn(h5file=file2, batch_size=batch_size, optimizer=optimizer,
+                                train_data=train_x_T2, labels=train_y, epoch=epoch//2, period=period,
+                                loss=loss, ae_name=file2)
 
         else:
             optimizer = optimizers.Adam(lr=lr)
-            info_T1 = train_autoencoder(h5file=file_raw,  batch_size=batch_size, optimizer=optimizer,
-                                       train_data=train_x_T1, labels=train_y, epoch=epoch, period=period,
-                                       loss=loss, ae_name=file1)
-            info_T2 = train_autoencoder(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
-                                       train_data=train_x_T2, labels=train_y, epoch=epoch, period=period,
-                                       loss=loss, ae_name=file2)
+            info_T1 = train_nn(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
+                               train_data=train_x_T1, labels=train_y, epoch=epoch, period=period,
+                               loss=loss, ae_name=file1)
+            info_T2 = train_nn(h5file=file_raw, batch_size=batch_size, optimizer=optimizer,
+                               train_data=train_x_T2, labels=train_y, epoch=epoch, period=period,
+                               loss=loss, ae_name=file2)
 
 
 if __name__ == '__main__':
-    train_both_tasks(211, 5, two_times=False, batch_size=140, lr=0.0001, epoch=200, number_of_folds=5,
-                     number_for_test=44)
+    train_both_tasks("simple_1", 5, two_times=False, batch_size=140, lr=0.0001, epoch=500, number_of_folds=5,
+                     number_for_test=44, with_test=True)
 
 
 

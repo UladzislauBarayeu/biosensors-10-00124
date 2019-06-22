@@ -17,4 +17,4 @@ if __name__ == '__main__':
 
     else:
         from train_network import *
-        train_both_tasks(nn, int(args.arg), two_times=True, batch_size=140, lr=0.0001, epoch=300,  number_of_folds=5, number_for_test=44, global_task=global_task)
+        train_both_tasks(nn, int(args.arg), two_times=False, batch_size=140, lr=0.0001, epoch=500,  number_of_folds=5, number_for_test=44, global_task=global_task)

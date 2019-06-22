@@ -19,3 +19,4 @@ if __name__ == '__main__':
     else:
         from export_for_matlab import *
         export_nn_for_svm_two_tasks(nn, int(args.arg), global_task=global_task)
+        export_allFalse_for_svm_two_tasks(nn, int(args.arg), global_task=global_task)

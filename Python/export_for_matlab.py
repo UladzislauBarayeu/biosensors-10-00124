@@ -7,7 +7,7 @@ from network_utils import *
 from configurations import *
 
 def export_nn_for_svm_two_tasks(nn, s, global_task='Task1'):
-    aepath = home_repo+'two-task-nn/nn' + str(nn) + '/' + str(s) + '/'
+    aepath = home_repo+'nn_' + str(nn) + '/' + str(s) + '/'
 
     with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
         test_x_1 = f["test_sample_T1"][:]
@@ -82,7 +82,7 @@ def export_nn_for_svm_two_tasks(nn, s, global_task='Task1'):
 
 def create_json_for_ROC(nn, s, file='predicted_data.h5'):
 
-    aepath = home_repo+'two-task-nn/nn' + str(nn) + '/' + str(s) + '/'
+    aepath = home_repo+'nn_' + str(nn) + '/' + str(s) + '/'
     with h5py.File(aepath + file, 'r') as f:
         t1_test_data = f["T1_predicted"][:,:, 0]
         t2_test_data = f["T2_predicted"][:, :,0]
@@ -100,13 +100,13 @@ def create_json_for_ROC(nn, s, file='predicted_data.h5'):
     jsondic = {'T1': t1_test_data.tolist(),
                'T2': t2_test_data.tolist(),
                'labels': labels}
-    outfile = open(home_repo+'two-task-nn/nn' + str(nn) + '/predicted_data_for_ROC_s' + str(s) + '.json', 'w')
+    outfile = open(home_repo+'nn_' + str(nn) + '/predicted_data_for_ROC_s' + str(s) + '.json', 'w')
     json.dump(jsondic, outfile)
     outfile.close()
 
 
 def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1'):
-    aepath = home_repo+'two-task-nn/nn' + str(nn) + '/' + str(s) + '/'
+    aepath = home_repo+'nn_' + str(nn) + '/' + str(s) + '/'
 
     test1 = EEGdata()
     file = str(s) + '.json'

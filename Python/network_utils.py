@@ -5,14 +5,9 @@ import keras
 import gc
 from keras.models import model_from_json
 import json
-
+from configurations import *
+import os
 def load_network(file, name=None):
-    '''
-    load network from file, give it name(optional)
-    return network and attribute 'use_channels',
-    if use_channels=False, then real and imaginary parts of image are treated as separate images,
-    if use_channels=True, then real and imaginary parts of image are treated as channels in one image
-    '''
 
     model_cpu = load_model(file)
 
@@ -21,9 +16,9 @@ def load_network(file, name=None):
     return model_cpu
 
 
-def train_autoencoder(h5file, train_data, labels, batch_size=32, callbacks_list=None, optimizer=None,
-                      epoch=2, ae_name='test_ae.h5',
-                      loss='mean_squared_error', period=2, validation_split=0.2, earlystop=False):
+def train_nn(h5file, train_data, labels, batch_size=32, callbacks_list=None, optimizer=None,
+             epoch=2, ae_name='test_ae.h5',
+             loss='mean_squared_error', period=2, validation_split=0.2, earlystop=False):
     network = load_network(h5file)
 
     if callbacks_list is None:
@@ -37,9 +32,8 @@ def train_autoencoder(h5file, train_data, labels, batch_size=32, callbacks_list=
 
         callbacks_list = [checkpoint]
         if earlystop:
-            callbacks_list = [earlycallback]
+            callbacks_list = [checkpoint, earlycallback]
         # callbacks_list = [checkpoint]
-        #
 
     if optimizer is None:
         optimizer = optimizers.Adam(lr=0.00001)
@@ -49,8 +43,6 @@ def train_autoencoder(h5file, train_data, labels, batch_size=32, callbacks_list=
     model_info = network.fit(train_data, labels, epochs=epoch, shuffle=True,
                              batch_size=batch_size, validation_split=validation_split, verbose=2,
                              callbacks=callbacks_list)
-    # if save_ae:
-    #     network.save(ae_name)
     return model_info
 
 
@@ -119,3 +111,88 @@ def show_model(file, out_file):
     model = load_network(file)
     from keras.utils import plot_model
     plot_model(model, to_file=out_file, show_layer_names=False, rankdir='LR')
+
+
+def save_network(name, nn ):
+    aepath = '../'+home_repo + '/nn_' + str(name) + '/'
+    if not os.path.exists(aepath):
+        os.makedirs(aepath)
+    file_raw = aepath + 'test_conv_ae.h5'
+    nn.save(file_raw)
+
+def test_within_fold(file1, file2, test_sample_T1, test_sample_T2, test_y):
+    network1 = load_network(file1)
+    y_pred_1 = network1.predict(test_sample_T1)
+
+    network2 = load_network(file2)
+    y_pred_2 = network2.predict(test_sample_T2)
+
+    true_values_right_T1 = 0
+    false_values_right_T1 = 0
+
+    true_values_right_T2 = 0
+    false_values_right_T2 = 0
+
+    true_values_right_both = 0
+    false_values_right_both = 0
+
+    len_true_all = 0
+    len_false_all = 0
+    len_true_all += ((test_y == true_vector).sum() // 2)
+    len_false_all += ((test_y == false_vector).sum() // 2)
+
+    for j in range(len(test_y)):
+
+        if (y_pred_1[j][0] > 0.5):
+            t1 = [1.0, 0.0]
+        else:
+            t1 = [0.0, 1.0]
+
+        if (y_pred_2[j][0] > 0.5):
+            t2 = [1.0, 0.0]
+        else:
+            t2 = [0.0, 1.0]
+
+        if (test_y[j] == true_vector).all():
+            # check T1 task
+            if (t1 == test_y[j]).all():
+                true_values_right_T1 += 1
+            # check T2 task
+            if (t2 == test_y[j]).all():
+                true_values_right_T2 += 1
+            # check both tasks
+            if (t1 == test_y[j]).all() and (t2 == test_y[j]).all():
+                true_values_right_both += 1
+
+        else:
+            # check T1 task
+            if (t1 == test_y[j]).all():
+                false_values_right_T1 += 1
+            # check T2 task
+            if (t2 == test_y[j]).all():
+                false_values_right_T2 += 1
+            # check both tasks
+            if ((t1 == test_y[j]).all() and (t2 == test_y[j]).all()) or (
+                    (t1 == test_y[j]).all() and (t2 == true_vector).all()) or (
+                    (t1 == true_vector).all() and (t2 == test_y[j]).all()):
+                false_values_right_both += 1
+
+    print('For T1:  \n type I error in cross-validation: {} \n type II error in cross-validation: {} \n '.format(
+        (1 - true_values_right_T1 / len_true_all), (1 - false_values_right_T1 / len_false_all)))
+
+    print('For T2  \n type I error in cross-validation: {} \n type II error in cross-validation: {} \n '.format(
+        (1 - true_values_right_T2 / len_true_all), (1 - false_values_right_T2 / len_false_all)))
+
+    print('For both  \n type I error in cross-validation: {} \n type II error in cross-validation: {} \n '.format(
+        (1 - true_values_right_both / len_true_all), (1 - false_values_right_both / len_false_all)))
+
+    print(
+        'For T1 accuracy overall: {} '.format((true_values_right_T1 + false_values_right_T1) / (len_true_all + len_false_all)))
+
+    print(
+        'For T2  accuracy overall {} '.format((true_values_right_T2 + false_values_right_T2) / (len_true_all + len_false_all)))
+
+    print('For both  accuracy overall {} '.format((true_values_right_both + false_values_right_both) / (len_true_all + len_false_all)))
+
+
+
