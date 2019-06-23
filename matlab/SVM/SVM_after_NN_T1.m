@@ -1,4 +1,4 @@
-function [ mean_result ] = SVM_after_NN_T1( task, KernelSVM, List_of_subject, nn, Size_of_feat)
+function [ mean_result ] = SVM_after_NN_T1( task, KernelSVM, List_of_subject, nn, Size_of_feat, fast)
 %SVM_AFTER_NN_T1 analyse data after NN
 
     

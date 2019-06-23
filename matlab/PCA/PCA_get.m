@@ -4,7 +4,7 @@ function [] = PCA_get( task, number_sub_channel)
 size_of_subjects=105;
 
 for Number_of_subject=1:size_of_subjects
-    name_file=strcat('Data\Processed\Combined\task',num2str(task),'/',num2str(Number_of_subject),'.mat');
+    name_file=strcat('Data/Processed/Combined/task',num2str(task),'/',num2str(Number_of_subject),'.mat');
     load(char(name_file));
     
     %% T1
