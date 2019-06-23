@@ -23,10 +23,10 @@ def export_nn_for_svm_two_tasks(nn, s, global_task='Task1'):
     test1 = EEGdata()
     file = str(s) + '.json'
     all_labels=test1.load_labels(file, global_task=global_task)
-    labels=['' for i in range(48)]
+    labels=['' for i in range(all_labels.size*2//64)]
     j=0
 
-    for i in range(0, 1536, 64):
+    for i in range(0, all_labels.size, 64):
         labels[j] = all_labels[i][5:]
         j += 1
         labels[j] = all_labels[i][5:]
@@ -111,10 +111,10 @@ def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1'):
     test1 = EEGdata()
     file = str(s) + '.json'
     all_labels=test1.load_labels(file, global_task=global_task)
-    labels=['' for i in range(48)]
-    j=0
+    labels = ['' for i in range(all_labels.size * 2 // 64)]
+    j = 0
 
-    for i in range(0, 1536, 64):
+    for i in range(0, all_labels.size, 64):
         labels[j] = all_labels[i][5:]
         j += 1
         labels[j] = all_labels[i][5:]
@@ -188,4 +188,4 @@ def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1'):
 
 
 if __name__=="__main__":
-    export_nn_for_svm_two_tasks(211, 5)
+    export_nn_for_svm_two_tasks("simple_1", 15)
