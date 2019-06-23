@@ -43,12 +43,12 @@ def read_predicted_file(nn, s, file='predicted_data.h5', threshold_for_T1=0.5, t
 
         for j in range(len(test_y)):
 
-            if (y_pred_1[j][0] >0.6):
+            if (y_pred_1[j][0] >0.5):
                 t1 = [1.0, 0.0]
             else:
                 t1 = [0.0, 1.0]
 
-            if (y_pred_2[j][0]>0.6):
+            if (y_pred_2[j][0]>0.5):
                 t2 = [1.0, 0.0]
             else:
                 t2 = [0.0, 1.0]
@@ -138,9 +138,12 @@ def mean_accuracy(nn, subjects, allFalse=False, into_file=False, threshold_for_T
     sum_false_right_both = [0 for i in range(len(subjects))]
     len_of_true = [0 for i in range(len(subjects))]
     len_of_false = [0 for i in range(len(subjects))]
-
+    if allFalse:
+        file="predicted_data_all_false.h5"
+    else:
+        file = "predicted_data.h5"
     for i in range(len(subjects)):
-        sum_true_right_T1[i], sum_false_right_T1[i], sum_true_right_T2[i], sum_false_right_T2[i], sum_true_right_both[i], sum_false_right_both[i], len_of_true[i], len_of_false[i] = read_predicted_file(nn, subjects[i], threshold_for_T1=threshold_for_T1, threshold_for_T2=threshold_for_T2)
+        sum_true_right_T1[i], sum_false_right_T1[i], sum_true_right_T2[i], sum_false_right_T2[i], sum_true_right_both[i], sum_false_right_both[i], len_of_true[i], len_of_false[i] = read_predicted_file(nn, subjects[i], file=file, threshold_for_T1=threshold_for_T1, threshold_for_T2=threshold_for_T2)
 
     true_right_T1 = sum(sum_true_right_T1)
     false_right_T1 = sum(sum_false_right_T1)
