@@ -131,7 +131,7 @@ def load_train_data(subject, global_task='Task1'):
     train_y=np.array([keras.utils.to_categorical(d["data"]["train_y"][j]) for j in range(len(d["data"]["train_y"]))])
     return train_x_T1, train_x_T2, train_y
 
-def load_test_data(subject,i, global_task='Task1'):
+def load_test_data(subject,global_task='Task1'):
     file_path = repo_with_raw_data + global_task + '/' + str(subject) + '.json'
     json_data = open(file_path)
     d = json.load(json_data)
@@ -146,22 +146,31 @@ def load_test_data(subject,i, global_task='Task1'):
     return train_x_T1, train_x_T2, train_y
 
 
-def load_allFalse_data(subject, i, global_task='Task1'):
+def load_allFalse_data(subject, global_task='Task1'):
     file_path_T1 = repo_with_raw_data + global_task + '/' + str(subject) + 'all_False_T1.json'
     json_data = open(file_path_T1)
     d_T1 = json.load(json_data)
     json_data.close()
+    train_x_T1 = np.expand_dims(
+        [np.reshape(d_T1["data"]["T1"]["all_false"][i]["_ArrayData_"], d_T1["data"]["T1"]["all_false"][0]["_ArraySize_"]) for i in
+         range(len(d_T1["data"]["T1"]["all_false"]))], axis=4)
 
     file_path_T2 = repo_with_raw_data + global_task + '/' + str(subject) + 'all_False_T2.json'
     json_data = open(file_path_T2)
     d_T2 = json.load(json_data)
     json_data.close()
-    test_y=np.array([[0., 1.] for j in range(len(d_T1["data"]["T1"][i]))])
-    return np.expand_dims(d_T1["data"]["T1"][i], axis=4), np.expand_dims(d_T2["data"]["T2"]["test_x"][i], axis=4), keras.utils.to_categorical(d["data"]["test_y"][i])
+
+    train_x_T2 = np.expand_dims(
+        [np.reshape(d_T2["data"]["T2"]["all_false"][i]["_ArrayData_"], d_T2["data"]["T2"]["all_false"][0]["_ArraySize_"]) for i in
+         range(len(d_T2["data"]["T2"]["all_false"]))], axis=4)
 
 
+    return train_x_T1, train_x_T2
+
+
+#change later
 def test_within_fold(s, i, global_task, file1, file2):
-    test_sample_T1, test_sample_T2, test_y=load_test_data(s, i, global_task)
+    test_sample_T1, test_sample_T2, test_y=load_test_data(s, global_task)
     network1 = load_network(file1)
     y_pred_1 = network1.predict(test_sample_T1)
 

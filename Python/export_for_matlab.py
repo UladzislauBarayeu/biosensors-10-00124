@@ -6,17 +6,20 @@ from EEG_class import *
 from network_utils import *
 from configurations import *
 
-def export_nn_for_svm_two_tasks(nn, s, global_task='Task1'):
+def export_nn_for_svm_two_tasks(nn, s, from_my_files=True, global_task='Task1'):
     aepath = home_repo+'nn_' + str(nn) + '/' + str(s) + '/'
+    if from_my_files:
+        with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
+            test_x_1 = f["test_sample_T1"][:]
+            test_x_2 = f["test_sample_T2"][:]
+            test_labels = f["test_labels"][:]
 
-    with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
-        test_x_1 = f["test_sample_T1"][:]
-        test_x_2 = f["test_sample_T2"][:]
-        test_labels = f["test_labels"][:]
-
-        train_x_1 = f["train_sample_T1"][:]
-        train_x_2 = f["train_sample_T2"][:]
-        train_labels = f["train_labels"][:]
+            train_x_1 = f["train_sample_T1"][:]
+            train_x_2 = f["train_sample_T2"][:]
+            train_labels = f["train_labels"][:]
+    else:
+        test_x_1, test_x_2, test_labels=load_test_data(s, global_task)
+        train_x_1, train_x_2, train_labels=load_train_data(s, global_task)
 
     number_of_folds = train_labels.shape[0]
 
@@ -169,6 +172,65 @@ def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1'):
         test_y[i]=[[0.0, 1.0] for l in range(len(normalized_T1))]
         test_data_1 = intermediate_layer_model1.predict(normalized_T1)
         test_data_2 = intermediate_layer_model2.predict(normalized_T2)
+
+        t1_test_data_predicted[i] = test_data_1.tolist()
+        t2_test_data_predicted[i] = test_data_2.tolist()
+
+    jsondic = {'T1':{'test_sample':t1_test_data_predicted},
+               'T2': {'test_sample': t2_test_data_predicted},
+               'result_label':labels, 'test_y': test_y}
+
+
+    dir_for_output = matlab_repo_for_saving_all_false_svm + str(nn) + '/'
+
+    if not os.path.exists(dir_for_output):
+        os.makedirs(dir_for_output)
+    outfile = open(dir_for_output + 'predicted_data_for_SVM_all_false_subjects_s' + str(s) + '.json', 'w')
+    json.dump(jsondic, outfile)
+    outfile.close()
+
+
+def export_allFalse_for_svm_two_tasks_from_scratch(nn, s, global_task='Task1'):
+    aepath = home_repo+'nn_' + str(nn) + '/' + str(s) + '/'
+
+    test1 = EEGdata()
+    file = str(s) + '.json'
+    all_labels=test1.load_labels(file, global_task=global_task)
+    labels = ['' for i in range(all_labels.size * 2 // 64)]
+    j = 0
+
+    for i in range(0, all_labels.size, 64):
+        labels[j] = all_labels[i][5:]
+        j += 1
+        labels[j] = all_labels[i][5:]
+        j += 1
+
+
+
+    all_T1 , all_T2=load_allFalse_data(s, global_task)
+    number_of_folds = all_T1.shape[0]
+
+    t1_test_data_predicted = [0 for i in range(number_of_folds)]
+    t2_test_data_predicted = [0 for i in range(number_of_folds)]
+    test_y = [0 for i in range(number_of_folds)]
+
+
+    for i in range(number_of_folds):
+        file1 = aepath + 'T1/test_conv_ae_' + str(i) + '.h5'
+        file2 = aepath + 'T2/test_conv_ae_' + str(i) + '.h5'
+        layer_name = 'flatten_1'
+        model1 = load_network(file1)
+
+        intermediate_layer_model1 = Model(inputs=model1.input,
+                                         outputs=model1.get_layer(layer_name).output)
+        model2 = load_network(file2)
+        intermediate_layer_model2 = Model(inputs=model2.input,
+                                          outputs=model2.get_layer(layer_name).output)
+
+        test_y[i] = [[0.0, 1.0] for i in range(len(all_T1[i]))]
+
+        test_data_1 = intermediate_layer_model1.predict(all_T1[i])
+        test_data_2 = intermediate_layer_model2.predict(all_T2[i])
 
         t1_test_data_predicted[i] = test_data_1.tolist()
         t2_test_data_predicted[i] = test_data_2.tolist()
