@@ -1,4 +1,2 @@
-cd Python/nn_models
-python nn_simple_1.py
-cd ../
+cd Python
 python Run_subjects.py

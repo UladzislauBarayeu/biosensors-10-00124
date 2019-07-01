@@ -23,17 +23,17 @@ def export_nn_for_svm_two_tasks(nn, s, from_my_files=True, global_task='Task1'):
 
     number_of_folds = train_labels.shape[0]
 
-    test1 = EEGdata()
-    file = str(s) + '.json'
-    all_labels=test1.load_labels(file, global_task=global_task)
-    labels=['' for i in range(all_labels.size*2//64)]
-    j=0
-
-    for i in range(0, all_labels.size, 64):
-        labels[j] = all_labels[i][5:]
-        j += 1
-        labels[j] = all_labels[i][5:]
-        j += 1
+    # test1 = EEGdata()
+    # file = str(s) + '.json'
+    # all_labels=test1.load_labels(file, global_task=global_task)
+    # labels=['' for i in range(all_labels.size*2//64)]
+    # j=0
+    #
+    # for i in range(0, all_labels.size, 64):
+    #     labels[j] = all_labels[i][5:]
+    #     j += 1
+    #     labels[j] = all_labels[i][5:]
+    #     j += 1
 
     t1_train_data_predicted=[0 for i in range(number_of_folds)]
     t1_test_data_predicted=[0 for i in range(number_of_folds)]
@@ -74,7 +74,7 @@ def export_nn_for_svm_two_tasks(nn, s, from_my_files=True, global_task='Task1'):
 
     jsondic = {'T1':{'train_sample':t1_train_data_predicted,'test_sample':t1_test_data_predicted},
                'T2': {'train_sample': t2_train_data_predicted, 'test_sample': t2_test_data_predicted},
-               'result_label':labels, 'train_y': train_y, 'test_y': test_y}
+               'train_y': train_y, 'test_y': test_y}
 
     dir_for_output=matlab_repo_for_saving_svm+str(nn)+'/'
     if not os.path.exists(dir_for_output):
@@ -193,17 +193,17 @@ def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1'):
 def export_allFalse_for_svm_two_tasks_from_scratch(nn, s, global_task='Task1'):
     aepath = home_repo+'nn_' + str(nn) + '/' + str(s) + '/'
 
-    test1 = EEGdata()
-    file = str(s) + '.json'
-    all_labels=test1.load_labels(file, global_task=global_task)
-    labels = ['' for i in range(all_labels.size * 2 // 64)]
-    j = 0
-
-    for i in range(0, all_labels.size, 64):
-        labels[j] = all_labels[i][5:]
-        j += 1
-        labels[j] = all_labels[i][5:]
-        j += 1
+    # test1 = EEGdata()
+    # file = str(s) + '.json'
+    # all_labels=test1.load_labels(file, global_task=global_task)
+    # labels = ['' for i in range(all_labels.size * 2 // 64)]
+    # j = 0
+    #
+    # for i in range(0, all_labels.size, 64):
+    #     labels[j] = all_labels[i][5:]
+    #     j += 1
+    #     labels[j] = all_labels[i][5:]
+    #     j += 1
 
 
 
@@ -237,7 +237,7 @@ def export_allFalse_for_svm_two_tasks_from_scratch(nn, s, global_task='Task1'):
 
     jsondic = {'T1':{'test_sample':t1_test_data_predicted},
                'T2': {'test_sample': t2_test_data_predicted},
-               'result_label':labels, 'test_y': test_y}
+                'test_y': test_y}
 
 
     dir_for_output = matlab_repo_for_saving_all_false_svm + str(nn) + '/'
