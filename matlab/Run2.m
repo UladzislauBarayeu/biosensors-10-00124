@@ -1,9 +1,9 @@
 clear all
 %% upgrade results from NN
-List_of_subject={'s35','s15','s25'}; % set list of subject
+List_of_subject={'s15','s25','s35','s45'}; % set list of subject
 KernelSVM='linear';%'rbf' or 'linear' optional
 fast=1;%if 1 run without optimization
-nn=211;%set type of NN
+nn='nnsimple_with_dropout_3';%set type of NN
 Size_of_feat=10;%number of feature, when stop grid selection
 task=1;
 
@@ -17,8 +17,8 @@ NN_check( task, List_of_subject,  fast, nn,  fast_check, KernelSVM);  % check mo
 
 %%
 fast=1;%if 1 run without optimization
-nn=21;%set type of NN
-List_of_subject={'s05','s15','s25','s35','s45','s55','s65','s75','s85','s95'}; % set list of subject
+%nn=21;%set type of NN
+%List_of_subject={'s05','s15','s25','s35','s45','s55','s65','s75','s85','s95'}; % set list of subject
 ROC_all( task, fast,  nn, List_of_subject);
 
 

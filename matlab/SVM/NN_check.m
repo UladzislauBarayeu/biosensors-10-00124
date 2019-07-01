@@ -24,10 +24,10 @@ for subject_i=1:size(List_of_subject,2)
     [~,ind_max_T2]=max(resT2.result_accuracy);
 
     %make train model
-    data=loadjson(strcat('Data/NN_convoluted/nn',num2str(nn),'/data_for_svm_',subject,'.json'));
+    data=loadjson(strcat('Data/NN_convoluted/',nn,'/data_for_svm_',subject,'.json'));
     %data=load(strcat('Data/NN_convoluted/task',num2str(task),'/',num2str(subject_i),'.mat'));
     % test
-    test=loadjson(strcat('Data/Python_res/NN_test/nn',num2str(nn),'/predicted_data_for_SVM_all_false_subjects_',subject,'.json'));
+    test=loadjson(strcat('Data/NN_convoluted/',nn,'/predicted_data_for_SVM_all_false_subjects_',subject,'.json'));
     
     
     nbFolds = 5;

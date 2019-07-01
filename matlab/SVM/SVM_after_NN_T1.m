@@ -4,7 +4,7 @@ function [ mean_result ] = SVM_after_NN_T1( task, KernelSVM, List_of_subject, nn
     
 for subject_i=1:size(List_of_subject,2)
     subject=List_of_subject{subject_i};
-    dat=loadjson(strcat('Data/NN_convoluted/nn',num2str(nn),'/data_for_svm_',subject,'.json'));
+    dat=loadjson(strcat('Data/NN_convoluted/',nn,'/data_for_svm_',subject,'.json'));
 
     %make train model
     result_accuracy=zeros(Size_of_feat,1);
