@@ -4,7 +4,7 @@ import numpy as np
 import h5py
 from EEG_class import *
 from keras import *
-from network_utils import normalize_data, load_network, load_test_data, load_allFalse_data
+from network_utils import normalize_data, load_network, load_test_data, load_allFalse_data, load_minmax
 from configurations import *
 
 def predict_two_tasks(nn, s, from_my_files=True, global_task='Task1'):
@@ -40,13 +40,16 @@ def predict_two_tasks(nn, s, from_my_files=True, global_task='Task1'):
         d = f.create_dataset("test_labels", data=np.array(test_labels, dtype=np.float64))
 
 
-def predict_allFalse_two_tasks(nn, s, global_task='Task1'):
+def predict_allFalse_two_tasks(nn, s, global_task='Task1', from_my_files=True):
 
     aepath = home_repo+'nn_' + str(nn) + '/' + str(s) + '/'
+    if from_my_files:
 
-    with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
-        minmax_T1 = f["minmax_T1"][:]
-        minmax_T2 = f["minmax_T2"][:]
+        with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
+            minmax_T1 = f["minmax_T1"][:]
+            minmax_T2 = f["minmax_T2"][:]
+    else:
+        minmax_T1, minmax_T2 = load_minmax(s, global_task)
 
     number_of_folds = minmax_T1.shape[0]
     t1_test_data_predicted = [0 for i in range(number_of_folds)]
