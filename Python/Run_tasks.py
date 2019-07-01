@@ -22,7 +22,7 @@ if __name__ == '__main__':
         if int(args.arg2) == 1:
             from train_network_from_scratch import *
 
-            train_both_tasks(nn, int(args.arg1), two_times=True, batch_size=140, lr=0.001, epoch=180, global_task=global_task)
+            train_both_tasks(nn, int(args.arg1), two_times=True, batch_size=140, lr=0.001, epoch=200, global_task=global_task)
 
         if int(args.arg2) == 2:
             from export_for_matlab import *
