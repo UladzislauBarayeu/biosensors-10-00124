@@ -128,7 +128,7 @@ def load_train_data(subject, global_task='Task1'):
     json_data.close()
     x_T1 = np.expand_dims(np.array(d["T1"]["train_x"]), axis=4)
     x_T2 = np.expand_dims(np.array(d["T2"]["train_x"]), axis=4)
-    train_y=np.array([keras.utils.to_categorical(d["data"]["train_y"][j]) for j in range(len(d["data"]["train_y"]))])
+    train_y=np.array([keras.utils.to_categorical(d["train_y"][j]) for j in range(len(d["train_y"]))])
     return x_T1, x_T2, train_y
 
 def load_test_data(subject,global_task='Task1'):
@@ -140,7 +140,7 @@ def load_test_data(subject,global_task='Task1'):
     x_T1 = np.expand_dims(np.array(d["T1"]["test_x"]), axis=4)
     x_T2 = np.expand_dims(np.array(d["T2"]["test_x"]), axis=4)
 
-    train_y = np.array([keras.utils.to_categorical(d["data"]["test_y"][j]) for j in range(len(d["data"]["test_y"]))])
+    train_y = np.array([keras.utils.to_categorical(d["test_y"][j]) for j in range(len(d["test_y"]))])
     return x_T1, x_T2, train_y
 
 def load_minmax(subject, global_task='Task1'):
