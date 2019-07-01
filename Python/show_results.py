@@ -43,12 +43,12 @@ def read_predicted_file(nn, s, file='predicted_data.h5', threshold_for_T1=0.5, t
 
         for j in range(len(test_y)):
 
-            if (y_pred_1[j][0] >0.5):
+            if (y_pred_1[j][0] >threshold_for_T1):
                 t1 = [1.0, 0.0]
             else:
                 t1 = [0.0, 1.0]
 
-            if (y_pred_2[j][0]>0.5):
+            if (y_pred_2[j][0]>threshold_for_T2):
                 t2 = [1.0, 0.0]
             else:
                 t2 = [0.0, 1.0]
@@ -226,4 +226,5 @@ def mean_accuracy(nn, subjects, allFalse=False, into_file=False, threshold_for_T
                 (true_right_both + false_right_both) / (len_of_true_sum + len_of_false_sum)))
 
 if __name__ == '__main__':
-    mean_accuracy("simple_1", [5], into_file=False, allFalse=True)
+    mean_accuracy("inception_2", [5], into_file=False, allFalse=False, threshold_for_T1=0.5, threshold_for_T2=0.5)
+    mean_accuracy("inception_2", [5], into_file=False, allFalse=True, threshold_for_T1=0.5, threshold_for_T2=0.5)

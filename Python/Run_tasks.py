@@ -22,16 +22,16 @@ if __name__ == '__main__':
         if int(args.arg2) == 1:
             from train_network_from_scratch import *
 
-            train_both_tasks(nn, int(args.arg1), two_times=False, batch_size=140, lr=0.0001, epoch=500, global_task=global_task)
+            train_both_tasks(nn, int(args.arg1), two_times=True, batch_size=140, lr=0.001, epoch=180, global_task=global_task)
 
         if int(args.arg2) == 2:
             from export_for_matlab import *
-
             export_nn_for_svm_two_tasks(nn, int(args.arg1), from_my_files=False, global_task=global_task)
+
         if int(args.arg2) == 3:
             from export_for_matlab import *
 
-            export_allFalse_for_svm_two_tasks_from_scratch(nn, int(args.arg1), global_task)
+            export_allFalse_for_svm_two_tasks(nn, int(args.arg1), global_task, from_my_files=False)
         if int(args.arg2) == 4:
             from predict_data import *
             predict_two_tasks(nn, int(args.arg1), from_my_files=False)
@@ -39,4 +39,4 @@ if __name__ == '__main__':
         if int(args.arg2) == 5:
             from predict_data import *
 
-            predict_allFalse_two_tasks_from_scratch(nn, int(args.arg1), global_task=global_task)
+            predict_allFalse_two_tasks(nn, int(args.arg1), global_task=global_task, from_my_files=False,)

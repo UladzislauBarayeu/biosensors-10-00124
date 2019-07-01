@@ -75,7 +75,7 @@ def normalize_data(x_array, minmax_arr=None):
         l_min = minmax_arr[0]
         l_max = minmax_arr[1]
 
-        div = [l_max[i] - l_min[i] for i in range(len(l_max))]
+        div = [(l_max[i] - l_min[i]) for i in range(len(l_max))]
         tmp = lambda a, i, j: a[i, j, :, :]
         for i in range(x_array.shape[0]):
             for j in range(x_array.shape[1]):
@@ -126,24 +126,32 @@ def load_train_data(subject, global_task='Task1'):
     json_data = open(file_path)
     d = json.load(json_data)
     json_data.close()
-    train_x_T1= np.expand_dims([np.reshape(d["data"]["T1"]["train_x"][i]["_ArrayData_"], d["data"]["T1"]["train_x"][0]["_ArraySize_"]) for i in range(len(d["data"]["T1"]["train_x"]))], axis=4)
-    train_x_T2= np.expand_dims([np.reshape(d["data"]["T2"]["train_x"][i]["_ArrayData_"], d["data"]["T2"]["train_x"][0]["_ArraySize_"]) for i in range(len(d["data"]["T2"]["train_x"]))], axis=4)
+    x_T1 = np.expand_dims(np.array(d["T1"]["train_x"]), axis=4)
+    x_T2 = np.expand_dims(np.array(d["T2"]["train_x"]), axis=4)
     train_y=np.array([keras.utils.to_categorical(d["data"]["train_y"][j]) for j in range(len(d["data"]["train_y"]))])
-    return train_x_T1, train_x_T2, train_y
+    return x_T1, x_T2, train_y
 
 def load_test_data(subject,global_task='Task1'):
     file_path = repo_with_raw_data + global_task + '/' + str(subject) + '.json'
     json_data = open(file_path)
     d = json.load(json_data)
     json_data.close()
-    train_x_T1 = np.expand_dims(
-        [np.reshape(d["data"]["T1"]["test_x"][i]["_ArrayData_"], d["data"]["T1"]["test_x"][0]["_ArraySize_"]) for i in
-         range(len(d["data"]["T1"]["test_x"]))], axis=4)
-    train_x_T2 = np.expand_dims(
-        [np.reshape(d["data"]["T2"]["test_x"][i]["_ArrayData_"], d["data"]["T2"]["test_x"][0]["_ArraySize_"]) for i in
-         range(len(d["data"]["T2"]["test_x"]))], axis=4)
+
+    x_T1 = np.expand_dims(np.array(d["T1"]["test_x"]), axis=4)
+    x_T2 = np.expand_dims(np.array(d["T2"]["test_x"]), axis=4)
+
     train_y = np.array([keras.utils.to_categorical(d["data"]["test_y"][j]) for j in range(len(d["data"]["test_y"]))])
-    return train_x_T1, train_x_T2, train_y
+    return x_T1, x_T2, train_y
+
+def load_minmax(subject, global_task='Task1'):
+    file_path = repo_with_raw_data + global_task + '/' + str(subject) + '.json'
+    json_data = open(file_path)
+    d = json.load(json_data)
+    json_data.close()
+    minmax_T1=np.array([[d['T1']['min'][i],d['T1']['max'][i]]for i in range(len(d['T1']['max']))])
+    minmax_T2=np.array([[d['T2']['min'][i],d['T2']['max'][i]]for i in range(len(d['T2']['max']))])
+
+    return minmax_T1, minmax_T2
 
 
 def load_allFalse_data(subject, global_task='Task1'):
@@ -247,33 +255,7 @@ def test_within_fold(s, i, global_task, file1, file2):
 
 def test_within_fold_allFalse(s,i, global_task, file1, file2):
 
-    # all_T1 = []
-    # all_T2 = []
-    #
-    # for j in range(1, 106, 1):
-    #     if j != s:
-    #         h5file = str(s) + '.json'
-    #         path = repo_with_raw_data + global_task + '/' + h5file
-    #         json_data = open(path)
-    #         d = json.load(json_data)
-    #         json_data.close()
-    #
-    #         data_T1 = np.array(d['T1'][:110])
-    #         data_T1 = np.transpose(data_T1, (0, 2, 1))
-    #         all_T1.extend(data_T1)
-    #
-    #         data_T2 = np.array(d['T2'][:110])
-    #         data_T2 = np.transpose(data_T2, (0, 2, 1))
-    #         all_T2.extend(data_T2)
-    #
-    # all_T1 = np.expand_dims(all_T1, axis=3)
-    # all_T2 = np.expand_dims(all_T2, axis=3)
-    #
-    #
-    #
-    # test_y = np.array([[0.0, 1.0] for i in range(len(all_T1))])all_T1
-
-    all_T1, all_T2, test_y=load_allFalse_data(s, i, global_task)
+    all_T1, all_T2, test_y=load_allFalse_data(s, global_task)
 
     network1 = load_network(file1)
     y_pred_1 = network1.predict(all_T1)
@@ -342,3 +324,5 @@ def test_within_fold_allFalse(s,i, global_task, file1, file2):
         (1 - false_values_right_both / len_false_all)))
 
 
+if __name__ == '__main__':
+    load_minmax(1, global_task)

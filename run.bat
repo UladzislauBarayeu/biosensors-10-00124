@@ -1,4 +1,4 @@
 cd Python/nn_models
-python nn_simple_1.py
+python nn_inception_1_with_small_kernel.py
 cd ../
 python Run_subjects.py
