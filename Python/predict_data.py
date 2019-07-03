@@ -61,7 +61,7 @@ def predict_allFalse_two_tasks(nn, s, global_task='Task1', from_my_files=True):
     for j in range(1, 106, 1):
         if j != s:
             h5file = str(s) + '.json'
-            path = repo_with_raw_data + global_task+'/' + h5file
+            path = repo_with_raw_data_all_false + global_task+'/' + h5file
             json_data = open(path)
             d = json.load(json_data)
             json_data.close()
@@ -134,5 +134,5 @@ def predict_allFalse_two_tasks_from_scratch(nn, s, global_task='Task1'):
 
 
 if __name__ == '__main__':
-    predict_allFalse_two_tasks_from_scratch("simple_1_with_dropout_2", 1)
+    predict_two_tasks("inception_1_with_small_kernel", 1, from_my_files=False)
 

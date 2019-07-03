@@ -129,7 +129,7 @@ def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1', from_my_files=
     all_T2 = []
     for j in range(1, 106, 1):
         if j != s:
-            directory = repo_with_raw_data+global_task+"/"
+            directory = repo_with_raw_data_all_false+global_task+"/"
             h5file = str(s) + '.json'
             path = directory + h5file
             json_data = open(path)
@@ -242,4 +242,4 @@ def export_allFalse_for_svm_two_tasks_from_scratch(nn, s, global_task='Task1'):
 
 
 if __name__=="__main__":
-    export_nn_for_svm_two_tasks("simple_1", 15)
+    export_allFalse_for_svm_two_tasks(nn="inception_1_with_small_kernel", s=1, from_my_files=False)
