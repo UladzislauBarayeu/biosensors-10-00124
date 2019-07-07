@@ -5,17 +5,17 @@ import os
 from configurations import *
 
 
-def train_both_tasks(nn, s, number_of_folds=5, number_for_test=10 ,epoch=160, period=2, lr=0.0001, two_times=False, batch_size=36, with_test=False, loss = 'mean_squared_error', global_task='Task1'):
+def train_both_tasks(nn, s, number_of_folds=5, data_len=200, epoch=160, period=2, lr=0.0001, two_times=False, batch_size=36, with_test=False, loss = 'mean_squared_error', global_task='Task1'):
 
     test1 = EEGdata()
     file = str(s) + '.json'
     test1.load_raw_data(file, global_task=global_task, task='T1', load_false_data_from_files=True,
-                        data_len=number_for_test * number_of_folds)
+                        data_len=data_len)
 
     test2 = EEGdata()
     file = str(s) + '.json'
     test2.load_raw_data(file, global_task=global_task, task='T2', load_false_data_from_files=False, other=test1,
-                        data_len=number_for_test * number_of_folds)
+                        data_len=data_len)
 
     train_data_T1, train_data_T2, labels = shuffle(np.copy(test1.all_data), np.copy(test2.all_data),
                                                  np.copy(test1.all_labels), random_state=0)
@@ -35,6 +35,7 @@ def train_both_tasks(nn, s, number_of_folds=5, number_for_test=10 ,epoch=160, pe
     minmax_T1_all_folds=[[] for i in range(number_of_folds)]
     minmax_T2_all_folds=[[] for i in range(number_of_folds)]
 
+    number_for_test=data_len//number_of_folds
 
     for i in range(number_of_folds):
         test_x_T1= train_data_T1[i*number_for_test:i*number_for_test+number_for_test]
@@ -135,6 +136,7 @@ def train_both_tasks_from_fold(nn, s, n_fold, epoch=160, period=2, lr=0.0001, tw
 
 
     number_of_folds=train_sample_T1_all_folds.shape[0]
+
     for i in range (n_fold, number_of_folds, 1):
         train_x_T1 =train_sample_T1_all_folds[i]
         train_x_T2 = train_sample_T2_all_folds[i]
@@ -177,8 +179,7 @@ def train_both_tasks_from_fold(nn, s, n_fold, epoch=160, period=2, lr=0.0001, tw
 
 
 if __name__ == '__main__':
-    train_both_tasks("simple_1", 5, two_times=False, batch_size=140, lr=0.0001, epoch=500, number_of_folds=5,
-                     number_for_test=44, with_test=True)
+    train_both_tasks("inception_1_with_small_kernel", 2, data_len=220, two_times=True, batch_size=140, lr=0.001, epoch=200, number_of_folds=5,with_test=True)
 
 
 

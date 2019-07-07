@@ -36,9 +36,7 @@ class EEGdata:
             all_subjects=shuffle(os.listdir(self.dir))
             all_subjects.remove(h5file)
             t_size=data_len-len(true_data)
-            self.id_for_false=random.sample(all_subjects, t_size-104)
-
-            self.id_for_false.extend(all_subjects)
+            self.id_for_false=[random.choice(all_subjects) for i in range(t_size)]
             self.internal_id=[]
             for el in self.id_for_false:
                 json_data = open(self.dir+el)
