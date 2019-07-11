@@ -78,10 +78,11 @@ def export_nn_for_svm_two_tasks(nn, s, from_my_files=True, global_task='Task1'):
                'T2': {'train_sample': t2_train_data_predicted, 'test_sample': t2_test_data_predicted},
                'train_y': train_y, 'test_y': test_y}
 
-    dir_for_output=matlab_repo_for_saving_svm+str(nn)+'/'
+    dir_for_output=matlab_repo_for_saving_svm+str(nn)+'/'+str(global_task)
+
     if not os.path.exists(dir_for_output):
         os.makedirs(dir_for_output)
-    outfile = open(dir_for_output+'data_for_svm_s'+str(s)+'.json', 'w')
+    outfile = open(dir_for_output+'/data_for_svm_s'+str(s)+'.json', 'w')
     json.dump(jsondic, outfile)
     outfile.close()
 
@@ -105,7 +106,13 @@ def create_json_for_ROC(nn, s, file='predicted_data.h5'):
     jsondic = {'T1': t1_test_data.tolist(),
                'T2': t2_test_data.tolist(),
                'labels': labels}
-    outfile = open(home_repo+'nn_' + str(nn) + '/predicted_data_for_ROC_s' + str(s) + '.json', 'w')
+
+    dir_for_output = matlab_repo_for_saving_svm + str(nn) + '/'+str(global_task)
+
+    if not os.path.exists(dir_for_output):
+        os.makedirs(dir_for_output)
+
+    outfile = open(dir_for_output+'/predicted_data_for_ROC_s' + str(s) + '.json', 'w')
     json.dump(jsondic, outfile)
     outfile.close()
 
@@ -125,27 +132,7 @@ def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1', from_my_files=
     t2_test_data_predicted=[0 for i in range(number_of_folds)]
     test_y = [0 for i in range(number_of_folds)]
 
-    all_T1 = []
-    all_T2 = []
-    for j in range(1, 106, 1):
-        if j != s:
-            directory = repo_with_raw_data_all_false+global_task+"/"
-            h5file = str(s) + '.json'
-            path = directory + h5file
-            json_data = open(path)
-            d = json.load(json_data)
-            json_data.close()
-            data_T1 = np.array(d['T1'][:110])
-            data_T1 = np.transpose(data_T1, (0, 2, 1))
-            data_T1 = np.expand_dims(data_T1, axis=3)
-            all_T1.extend(data_T1)
-            data_T2 = np.array(d['T2'][:110])
-            data_T2 = np.transpose(data_T2, (0, 2, 1))
-            data_T2 = np.expand_dims(data_T2, axis=3)
-            all_T2.extend(data_T2)
-
-    all_T1 = np.array(all_T1)
-    all_T2 = np.array(all_T2)
+    all_T1 , all_T2=load_allFalse(s, global_task)
 
 
     for i in range(number_of_folds):
@@ -173,7 +160,7 @@ def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1', from_my_files=
                'T2': {'test_sample': t2_test_data_predicted}, 'test_y': test_y}
 
 
-    dir_for_output = matlab_repo_for_saving_all_false_svm + str(nn) + '/'
+    dir_for_output = matlab_repo_for_saving_svm + str(nn) + '/'+str(global_task)+'/'
 
     if not os.path.exists(dir_for_output):
         os.makedirs(dir_for_output)
@@ -182,64 +169,8 @@ def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1', from_my_files=
     outfile.close()
 
 
-def export_allFalse_for_svm_two_tasks_from_scratch(nn, s, global_task='Task1'):
-    aepath = home_repo+'nn_' + str(nn) + '/' + str(s) + '/'
-
-    # test1 = EEGdata()
-    # file = str(s) + '.json'
-    # all_labels=test1.load_labels(file, global_task=global_task)
-    # labels = ['' for i in range(all_labels.size * 2 // 64)]
-    # j = 0
-    #
-    # for i in range(0, all_labels.size, 64):
-    #     labels[j] = all_labels[i][5:]
-    #     j += 1
-    #     labels[j] = all_labels[i][5:]
-    #     j += 1
-
-
-
-    all_T1 , all_T2=load_allFalse_data(s, global_task)
-    number_of_folds = all_T1.shape[0]
-
-    t1_test_data_predicted = [0 for i in range(number_of_folds)]
-    t2_test_data_predicted = [0 for i in range(number_of_folds)]
-    test_y = [0 for i in range(number_of_folds)]
-
-
-    for i in range(number_of_folds):
-        file1 = aepath + 'T1/test_conv_ae_' + str(i) + '.h5'
-        file2 = aepath + 'T2/test_conv_ae_' + str(i) + '.h5'
-        layer_name = 'flatten_1'
-        model1 = load_network(file1)
-
-        intermediate_layer_model1 = Model(inputs=model1.input,
-                                         outputs=model1.get_layer(layer_name).output)
-        model2 = load_network(file2)
-        intermediate_layer_model2 = Model(inputs=model2.input,
-                                          outputs=model2.get_layer(layer_name).output)
-
-        test_y[i] = [[0.0, 1.0] for i in range(len(all_T1[i]))]
-
-        test_data_1 = intermediate_layer_model1.predict(all_T1[i])
-        test_data_2 = intermediate_layer_model2.predict(all_T2[i])
-
-        t1_test_data_predicted[i] = test_data_1.tolist()
-        t2_test_data_predicted[i] = test_data_2.tolist()
-
-    jsondic = {'T1':{'test_sample':t1_test_data_predicted},
-               'T2': {'test_sample': t2_test_data_predicted},
-                'test_y': test_y}
-
-
-    dir_for_output = matlab_repo_for_saving_all_false_svm + str(nn) + '/'
-
-    if not os.path.exists(dir_for_output):
-        os.makedirs(dir_for_output)
-    outfile = open(dir_for_output + 'predicted_data_for_SVM_all_false_subjects_s' + str(s) + '.json', 'w')
-    json.dump(jsondic, outfile)
-    outfile.close()
 
 
 if __name__=="__main__":
-    export_allFalse_for_svm_two_tasks(nn="inception_1_with_small_kernel", s=1, from_my_files=False)
+    for s in [55]:
+        create_json_for_ROC(nn="inception_1_with_small_kernel", s=s)

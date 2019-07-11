@@ -131,7 +131,8 @@ def load_train_data(subject, global_task='Task1'):
     train_y=np.array([keras.utils.to_categorical(d["train_y"][j]) for j in range(len(d["train_y"]))])
     return x_T1, x_T2, train_y
 
-def load_test_data(subject,global_task='Task1'):
+
+def load_test_data(subject, global_task='Task1'):
     file_path = repo_with_raw_data + global_task + '/' + str(subject) + '.json'
     json_data = open(file_path)
     d = json.load(json_data)
@@ -153,175 +154,33 @@ def load_minmax(subject, global_task='Task1'):
 
     return minmax_T1, minmax_T2
 
+def load_allFalse(subject, global_task='Task1'):
 
-def load_allFalse_data(subject, global_task='Task1'):
-    file_path_T1 = repo_with_raw_data + global_task + '/' + str(subject) + 'all_False_T1.json'
-    json_data = open(file_path_T1)
-    d_T1 = json.load(json_data)
-    json_data.close()
-    train_x_T1 = np.expand_dims(
-        [np.reshape(d_T1["data"]["T1"]["all_false"][i]["_ArrayData_"], d_T1["data"]["T1"]["all_false"][0]["_ArraySize_"]) for i in
-         range(len(d_T1["data"]["T1"]["all_false"]))], axis=4)
+    all_T1 = []
+    all_T2 = []
 
-    file_path_T2 = repo_with_raw_data + global_task + '/' + str(subject) + 'all_False_T2.json'
-    json_data = open(file_path_T2)
-    d_T2 = json.load(json_data)
-    json_data.close()
+    for falseSubject in range(1, 106, 1):
 
-    train_x_T2 = np.expand_dims(
-        [np.reshape(d_T2["data"]["T2"]["all_false"][i]["_ArrayData_"], d_T2["data"]["T2"]["all_false"][0]["_ArraySize_"]) for i in
-         range(len(d_T2["data"]["T2"]["all_false"]))], axis=4)
+        if falseSubject != subject:
 
+            directory = repo_with_raw_data_all_false + global_task + "/"
+            h5file = str(falseSubject) + '.json'
+            path = directory + h5file
+            json_data = open(path)
+            d = json.load(json_data)
+            json_data.close()
+            data_T1 = np.array(d['T1'][:110])
+            data_T1 = np.transpose(data_T1, (0, 2, 1))
+            data_T1 = np.expand_dims(data_T1, axis=3)
+            all_T1.extend(data_T1)
+            data_T2 = np.array(d['T2'][:110])
+            data_T2 = np.transpose(data_T2, (0, 2, 1))
+            data_T2 = np.expand_dims(data_T2, axis=3)
+            all_T2.extend(data_T2)
 
-    return train_x_T1, train_x_T2
-
-
-#change later
-def test_within_fold(s, i, global_task, file1, file2):
-    test_sample_T1, test_sample_T2, test_y=load_test_data(s, global_task)
-    network1 = load_network(file1)
-    y_pred_1 = network1.predict(test_sample_T1)
-
-    network2 = load_network(file2)
-    y_pred_2 = network2.predict(test_sample_T2)
-
-    true_values_right_T1 = 0
-    false_values_right_T1 = 0
-
-    true_values_right_T2 = 0
-    false_values_right_T2 = 0
-
-    true_values_right_both = 0
-    false_values_right_both = 0
-
-    len_true_all = 0
-    len_false_all = 0
-    len_true_all += ((test_y == true_vector).sum() // 2)
-    len_false_all += ((test_y == false_vector).sum() // 2)
-
-    for j in range(len(test_y)):
-
-        if (y_pred_1[j][0] > 0.5):
-            t1 = [1.0, 0.0]
-        else:
-            t1 = [0.0, 1.0]
-
-        if (y_pred_2[j][0] > 0.5):
-            t2 = [1.0, 0.0]
-        else:
-            t2 = [0.0, 1.0]
-
-        if (test_y[j] == true_vector).all():
-            # check T1 task
-            if (t1 == test_y[j]).all():
-                true_values_right_T1 += 1
-            # check T2 task
-            if (t2 == test_y[j]).all():
-                true_values_right_T2 += 1
-            # check both tasks
-            if (t1 == test_y[j]).all() and (t2 == test_y[j]).all():
-                true_values_right_both += 1
-
-        else:
-            # check T1 task
-            if (t1 == test_y[j]).all():
-                false_values_right_T1 += 1
-            # check T2 task
-            if (t2 == test_y[j]).all():
-                false_values_right_T2 += 1
-            # check both tasks
-            if ((t1 == test_y[j]).all() and (t2 == test_y[j]).all()) or (
-                    (t1 == test_y[j]).all() and (t2 == true_vector).all()) or (
-                    (t1 == true_vector).all() and (t2 == test_y[j]).all()):
-                false_values_right_both += 1
-
-    print('For T1:  \n type I error in cross-validation: {} \n type II error in cross-validation: {} \n '.format(
-        (1 - true_values_right_T1 / len_true_all), (1 - false_values_right_T1 / len_false_all)))
-
-    print('For T2  \n type I error in cross-validation: {} \n type II error in cross-validation: {} \n '.format(
-        (1 - true_values_right_T2 / len_true_all), (1 - false_values_right_T2 / len_false_all)))
-
-    print('For both  \n type I error in cross-validation: {} \n type II error in cross-validation: {} \n '.format(
-        (1 - true_values_right_both / len_true_all), (1 - false_values_right_both / len_false_all)))
-
-    print(
-        'For T1 accuracy overall: {} '.format((true_values_right_T1 + false_values_right_T1) / (len_true_all + len_false_all)))
-
-    print(
-        'For T2  accuracy overall {} '.format((true_values_right_T2 + false_values_right_T2) / (len_true_all + len_false_all)))
-
-    print('For both  accuracy overall {} '.format((true_values_right_both + false_values_right_both) / (len_true_all + len_false_all)))
-
-
-def test_within_fold_allFalse(s,i, global_task, file1, file2):
-
-    all_T1, all_T2, test_y=load_allFalse_data(s, global_task)
-
-    network1 = load_network(file1)
-    y_pred_1 = network1.predict(all_T1)
-
-    network2 = load_network(file2)
-    y_pred_2 = network2.predict(all_T2)
-
-    true_values_right_T1 = 0
-    false_values_right_T1 = 0
-
-    true_values_right_T2 = 0
-    false_values_right_T2 = 0
-
-    true_values_right_both = 0
-    false_values_right_both = 0
-
-    len_true_all = 0
-    len_false_all = 0
-    len_true_all += ((test_y == true_vector).sum() // 2)
-    len_false_all += ((test_y == false_vector).sum() // 2)
-
-    for j in range(len(test_y)):
-
-        if (y_pred_1[j][0] > 0.5):
-            t1 = [1.0, 0.0]
-        else:
-            t1 = [0.0, 1.0]
-
-        if (y_pred_2[j][0] > 0.5):
-            t2 = [1.0, 0.0]
-        else:
-            t2 = [0.0, 1.0]
-
-        if (test_y[j] == true_vector).all():
-            # check T1 task
-            if (t1 == test_y[j]).all():
-                true_values_right_T1 += 1
-            # check T2 task
-            if (t2 == test_y[j]).all():
-                true_values_right_T2 += 1
-            # check both tasks
-            if (t1 == test_y[j]).all() and (t2 == test_y[j]).all():
-                true_values_right_both += 1
-
-        else:
-            # check T1 task
-            if (t1 == test_y[j]).all():
-                false_values_right_T1 += 1
-            # check T2 task
-            if (t2 == test_y[j]).all():
-                false_values_right_T2 += 1
-
-            # check both tasks
-            if ((t1 == test_y[j]).all() and (t2 == test_y[j]).all()) or (
-                    (t1 == test_y[j]).all() and (t2 == true_vector).all()) or (
-                    (t1 == true_vector).all() and (t2 == test_y[j]).all()):
-                false_values_right_both += 1
-
-    print('For T1:  \n type II error in cross-validation: {} \n '.format(
-        1 - false_values_right_T1 / len_false_all))
-
-    print('For T2  \n  type II error in cross-validation: {} \n '.format(
-        (1 - false_values_right_T2 / len_false_all)))
-
-    print('For both  \n type II error in cross-validation: {} \n '.format(
-        (1 - false_values_right_both / len_false_all)))
+    all_T1 = np.array(all_T1)
+    all_T2 = np.array(all_T2)
+    return all_T1, all_T2
 
 
 if __name__ == '__main__':

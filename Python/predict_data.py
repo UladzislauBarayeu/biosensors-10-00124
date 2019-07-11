@@ -4,7 +4,7 @@ import numpy as np
 import h5py
 from EEG_class import *
 from keras import *
-from network_utils import normalize_data, load_network, load_test_data, load_allFalse_data, load_minmax
+from network_utils import normalize_data, load_network, load_test_data, load_allFalse, load_minmax
 from configurations import *
 
 def predict_two_tasks(nn, s, from_my_files=True, global_task='Task1'):
@@ -55,27 +55,8 @@ def predict_allFalse_two_tasks(nn, s, global_task='Task1', from_my_files=True):
     t1_test_data_predicted = [0 for i in range(number_of_folds)]
     t2_test_data_predicted = [0 for i in range(number_of_folds)]
     test_y = [0 for i in range(number_of_folds)]
-    all_T1 = []
-    all_T2 = []
 
-    for j in range(1, 106, 1):
-        if j != s:
-            h5file = str(s) + '.json'
-            path = repo_with_raw_data_all_false + global_task+'/' + h5file
-            json_data = open(path)
-            d = json.load(json_data)
-            json_data.close()
-            data_T1 = np.array(d['T1'][:110])
-            data_T1 = np.transpose(data_T1, (0, 2, 1))
-            data_T1 = np.expand_dims(data_T1, axis=3)
-            all_T1.extend(data_T1)
-            data_T2 = np.array(d['T2'][:110])
-            data_T2 = np.transpose(data_T2, (0, 2, 1))
-            data_T2 = np.expand_dims(data_T2, axis=3)
-            all_T2.extend(data_T2)
-
-    all_T1 = np.array(all_T1)
-    all_T2 = np.array(all_T2)
+    all_T1 , all_T2=load_allFalse(s, global_task)
 
     for i in range(number_of_folds):
         file1 = aepath + 'T1/test_conv_ae_' + str(i) + '.h5'
@@ -100,39 +81,7 @@ def predict_allFalse_two_tasks(nn, s, global_task='Task1', from_my_files=True):
         d = f.create_dataset("test_labels", data=np.array(test_y, dtype=np.float64))
 
 
-def predict_allFalse_two_tasks_from_scratch(nn, s, global_task='Task1'):
-
-    aepath = home_repo+'nn_' + str(nn) + '/' + str(s) + '/'
-
-
-    all_T1 , all_T2=load_allFalse_data(s, global_task)
-    number_of_folds = all_T1.shape[0]
-
-    t1_test_data_predicted = [0 for i in range(number_of_folds)]
-    t2_test_data_predicted = [0 for i in range(number_of_folds)]
-    test_y = [0 for i in range(number_of_folds)]
-
-    for i in range(number_of_folds):
-        file1 = aepath + 'T1/test_conv_ae_' + str(i) + '.h5'
-        file2 = aepath + 'T2/test_conv_ae_' + str(i) + '.h5'
-        model1 = load_network(file1)
-        model2 = load_network(file2)
-
-        test_y[i]=[[0.0, 1.0] for i in range(len(all_T1[i]))]
-        test_data_1 = model1.predict(all_T1[i])
-        test_data_2 = model2.predict(all_T2[i])
-
-        t1_test_data_predicted[i] = test_data_1.tolist()
-        t2_test_data_predicted[i] = test_data_2.tolist()
-
-
-    with h5py.File(aepath + 'predicted_data_all_false.h5', 'w') as f:
-        d = f.create_dataset("T1_predicted", data=np.array(t1_test_data_predicted, dtype=np.float64))
-        d = f.create_dataset("T2_predicted", data=np.array(t2_test_data_predicted, dtype=np.float64))
-        d = f.create_dataset("test_labels", data=np.array(test_y, dtype=np.float64))
-
-
-
 if __name__ == '__main__':
-    predict_two_tasks("inception_1_with_small_kernel", 1, from_my_files=False)
+    predict_allFalse_two_tasks("inception_1_with_small_kernel", 5, from_my_files=False)
+
 
