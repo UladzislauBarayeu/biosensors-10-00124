@@ -3,6 +3,7 @@ import subprocess as sp
 import sys
 import argparse
 from configurations import *
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--arg1')
@@ -16,5 +17,5 @@ if __name__ == '__main__':
             sp.check_call([sys.executable, 'Run_subjects.py', '--arg1', str(i)])
 
     else:
-        sp.check_call([sys.executable, 'Run_tasks.py', '--arg1', args.arg1])
+        sp.check_call([sys.executable, 'Run_predict_tasks.py', '--arg1', args.arg1])
 
