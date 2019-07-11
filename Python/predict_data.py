@@ -7,17 +7,14 @@ from keras import *
 from network_utils import normalize_data, load_network, load_test_data, load_allFalse, load_minmax
 from configurations import *
 
-def predict_two_tasks(nn, s, from_my_files=True, global_task='Task1'):
+def predict_two_tasks(nn, s, global_task='Task1'):
 
     aepath = home_repo+'nn_' + str(nn) + '/' + str(s) + '/'
-    if from_my_files:
-        with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
-            test_x_1 = f["test_sample_T1"][:]
-            test_x_2= f["test_sample_T2"][:]
-            test_labels= f["test_labels"][:]
 
-    else:
-        test_x_1, test_x_2, test_labels=load_test_data(subject=s, global_task=global_task)
+    with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
+        test_x_1 = f["test_sample_T1"][:]
+        test_x_2= f["test_sample_T2"][:]
+        test_labels= f["test_labels"][:]
 
 
     number_of_folds = test_labels.shape[0]
@@ -40,23 +37,20 @@ def predict_two_tasks(nn, s, from_my_files=True, global_task='Task1'):
         d = f.create_dataset("test_labels", data=np.array(test_labels, dtype=np.float64))
 
 
-def predict_allFalse_two_tasks(nn, s, global_task='Task1', from_my_files=True):
+def predict_allFalse_two_tasks(nn, s, global_task='Task1'):
 
     aepath = home_repo+'nn_' + str(nn) + '/' + str(s) + '/'
-    if from_my_files:
 
-        with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
-            minmax_T1 = f["minmax_T1"][:]
-            minmax_T2 = f["minmax_T2"][:]
-    else:
-        minmax_T1, minmax_T2 = load_minmax(s, global_task)
+    with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
+        minmax_T1 = f["minmax_T1"][:]
+        minmax_T2 = f["minmax_T2"][:]
 
     number_of_folds = minmax_T1.shape[0]
     t1_test_data_predicted = [0 for i in range(number_of_folds)]
     t2_test_data_predicted = [0 for i in range(number_of_folds)]
     test_y = [0 for i in range(number_of_folds)]
 
-    all_T1 , all_T2=load_allFalse(s, global_task)
+    all_T1 , all_T2 = load_allFalse(s, global_task)
 
     for i in range(number_of_folds):
         file1 = aepath + 'T1/test_conv_ae_' + str(i) + '.h5'
@@ -82,6 +76,6 @@ def predict_allFalse_two_tasks(nn, s, global_task='Task1', from_my_files=True):
 
 
 if __name__ == '__main__':
-    predict_allFalse_two_tasks("inception_1_with_small_kernel", 5, from_my_files=False)
+    predict_allFalse_two_tasks("simple_1_with_dropout_2", 15)
 
 

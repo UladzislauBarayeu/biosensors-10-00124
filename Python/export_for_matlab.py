@@ -6,36 +6,21 @@ from EEG_class import *
 from network_utils import *
 from configurations import *
 
-def export_nn_for_svm_two_tasks(nn, s, from_my_files=True, global_task='Task1'):
+def export_nn_for_svm_two_tasks(nn, s,global_task='Task1'):
     aepath = home_repo+'nn_' + str(nn) + '/' + str(s) + '/'
-    if from_my_files:
 
-        with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
-            test_x_1 = f["test_sample_T1"][:]
-            test_x_2 = f["test_sample_T2"][:]
-            test_labels = f["test_labels"][:]
+    with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
+        test_x_1 = f["test_sample_T1"][:]
+        test_x_2 = f["test_sample_T2"][:]
+        test_labels = f["test_labels"][:]
 
-            train_x_1 = f["train_sample_T1"][:]
-            train_x_2 = f["train_sample_T2"][:]
-            train_labels = f["train_labels"][:]
+        train_x_1 = f["train_sample_T1"][:]
+        train_x_2 = f["train_sample_T2"][:]
+        train_labels = f["train_labels"][:]
 
-    else:
-        test_x_1, test_x_2, test_labels=load_test_data(s, global_task)
-        train_x_1, train_x_2, train_labels=load_train_data(s, global_task)
 
     number_of_folds = train_labels.shape[0]
 
-    # test1 = EEGdata()
-    # file = str(s) + '.json'
-    # all_labels=test1.load_labels(file, global_task=global_task)
-    # labels=['' for i in range(all_labels.size*2//64)]
-    # j=0
-    #
-    # for i in range(0, all_labels.size, 64):
-    #     labels[j] = all_labels[i][5:]
-    #     j += 1
-    #     labels[j] = all_labels[i][5:]
-    #     j += 1
 
     t1_train_data_predicted=[0 for i in range(number_of_folds)]
     t1_test_data_predicted=[0 for i in range(number_of_folds)]
@@ -117,15 +102,15 @@ def create_json_for_ROC(nn, s, file='predicted_data.h5'):
     outfile.close()
 
 
-def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1', from_my_files=True):
+def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1'):
     aepath = home_repo+'nn_' + str(nn) + '/' + str(s) + '/'
 
-    if from_my_files:
-        with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
-            minmax_T1 = f["minmax_T1"][:]
-            minmax_T2 = f["minmax_T2"][:]
-    else:
-        minmax_T1, minmax_T2 = load_minmax(s, global_task)
+
+    with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
+        minmax_T1 = f["minmax_T1"][:]
+        minmax_T2 = f["minmax_T2"][:]
+
+
     number_of_folds = minmax_T1.shape[0]
 
     t1_test_data_predicted=[0 for i in range(number_of_folds)]
@@ -133,7 +118,6 @@ def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1', from_my_files=
     test_y = [0 for i in range(number_of_folds)]
 
     all_T1 , all_T2=load_allFalse(s, global_task)
-
 
     for i in range(number_of_folds):
         file1 = aepath + 'T1/test_conv_ae_' + str(i) + '.h5'
