@@ -20,27 +20,23 @@ if __name__ == '__main__':
     else:
         if int(args.arg2) == 1:
             from train_network import *
-
             train_both_tasks(nn, int(args.arg1), data_len=data_len, two_times=two_times, batch_size=batch_size, lr=lr, epoch=epoch,
                              global_task=global_task, earlystop=earlystop)
 
         if int(args.arg2) == 2:
-            from export_for_matlab import *
+            from predict_data import *
+            predict_two_tasks(nn, int(args.arg1))
 
+        if int(args.arg2) == 3:
+            from predict_data import *
+            predict_allFalse_two_tasks(nn, int(args.arg1), global_task=global_task)
+
+        if int(args.arg2) == 4:
+            from export_for_matlab import *
             export_nn_for_svm_two_tasks(nn, int(args.arg1), global_task=global_task)
             create_json_for_ROC(nn, s=int(args.arg1))
 
-        if int(args.arg2) == 3:
-            from export_for_matlab import *
-
-            export_allFalse_for_svm_two_tasks(nn, int(args.arg1), global_task, )
-
-        if int(args.arg2) == 4:
-            from predict_data import *
-
-            predict_two_tasks(nn, int(args.arg1))
-
         if int(args.arg2) == 5:
-            from predict_data import *
+            from export_for_matlab import *
+            export_allFalse_for_svm_two_tasks(nn, int(args.arg1), global_task)
 
-            predict_allFalse_two_tasks(nn, int(args.arg1), global_task=global_task)
