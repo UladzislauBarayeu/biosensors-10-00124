@@ -12,9 +12,9 @@ data_len=220
 two_times=True
 batch_size=140
 lr=0.001
-epoch=400
+epoch=600
 
-list_of_subjects = [1]
+list_of_subjects = [i for i in range(1,number_of_subjects+1, 1)]
 global_task = "Task1"
 
 nn = "simple_1_with_dropout_2"
