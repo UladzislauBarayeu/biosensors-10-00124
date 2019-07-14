@@ -10,7 +10,7 @@ additional_folder_for_nn=''
 home_repo = general_repo + 'Data/neural_network_models/'
 repo_with_raw_data = general_repo + 'Data/Result_json/'
 matlab_repo_for_saving_svm = general_repo + 'Data/NN_convoluted/nn'
-python_repo_for_saving_predicted = general_repo + 'Data/NN_predicted/nn'
+python_repo_for_saving_predicted = general_repo + 'Data/NN_predicted/nn_'
 
 earlystop = False
 data_len = 220

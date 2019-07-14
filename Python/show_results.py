@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 def read_predicted_file(nn, s, file='predicted_data.h5', threshold_for_T1=0.5, threshold_for_T2=0.5):
 
-    aepath = home_repo + 'nn_' + str(nn) + '/' + global_task + '/' + str(s) + '/'
+    aepath = python_repo_for_saving_predicted+ str(nn) + '/' + global_task + '/'
     sum_false_right_both = 0
     sum_true_right_both = 0
     sum_false_right_T1 = 0
@@ -89,6 +89,7 @@ def read_predicted_file(nn, s, file='predicted_data.h5', threshold_for_T1=0.5, t
 
 
 def mean_accuracy(nn, subjects, allFalse=False, into_file=False, threshold_for_T1=0.65, threshold_for_T2=0.65):
+
     sum_true_right_T1 = [0 for i in range(len(subjects))]
     sum_false_right_T1 = [0 for i in range(len(subjects))]
     sum_true_right_T2 = [0 for i in range(len(subjects))]
@@ -101,9 +102,10 @@ def mean_accuracy(nn, subjects, allFalse=False, into_file=False, threshold_for_T
 
     for subject in range(len(subjects)):
         if allFalse:
-            file = "predicted_data_allFalse_s" + str(subject) + ".h5"
+            file = "predicted_data_allFalse_s" + str(subjects[subject]) + ".h5"
         else:
-            file = "predicted_data_s" + str(subject) + ".h5"
+            file = "predicted_data_s" + str(subjects[subject]) + ".h5"
+
         sum_true_right_T1[subject], sum_false_right_T1[subject], sum_true_right_T2[subject], sum_false_right_T2[
             subject], sum_true_right_both[
             subject], sum_false_right_both[subject], len_of_true[subject], len_of_false[subject] = read_predicted_file(
@@ -206,8 +208,8 @@ def mean_accuracy(nn, subjects, allFalse=False, into_file=False, threshold_for_T
 
 
 if __name__ == '__main__':
-    mean_accuracy("simple_1_with_dropout_2", [2,3,4], into_file=False, allFalse=False,
-                  threshold_for_T1=0.5, threshold_for_T2=0.5)
+    # mean_accuracy("simple_1_with_dropout_2", [2,3,4], into_file=False, allFalse=False,
+    #               threshold_for_T1=0.5, threshold_for_T2=0.5)
 
-    mean_accuracy("simple_1_with_dropout_2", [2,3,4], into_file=False, allFalse=True,
-                  threshold_for_T1=0.5, threshold_for_T2=0.5)
+    mean_accuracy("simple_1_with_dropout_2", [2], into_file=False, allFalse=True,
+                  threshold_for_T1=0.85, threshold_for_T2=0.85)
