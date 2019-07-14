@@ -31,7 +31,12 @@ def predict_two_tasks(nn, s, global_task='Task1'):
         t1_test_data[fold] = model1.predict(test_x_1[fold])
         t2_test_data[fold] = model2.predict(test_x_2[fold])
 
-    with h5py.File(aepath + 'predicted_data.h5', 'w') as f:
+    dir_for_output = python_repo_for_saving_predicted + str(nn) + '/' + str(global_task) + '/'
+
+    if not os.path.exists(dir_for_output):
+        os.makedirs(dir_for_output)
+
+    with h5py.File(dir_for_output + 'predicted_data_s' + str(s) + '.h5', 'w') as f:
         d = f.create_dataset("T1_predicted", data=np.array(t1_test_data, dtype=np.float64))
         d = f.create_dataset("T2_predicted", data=np.array(t2_test_data, dtype=np.float64))
         d = f.create_dataset("test_labels", data=np.array(test_labels, dtype=np.float64))
@@ -68,14 +73,19 @@ def predict_allFalse_two_tasks(nn, s, global_task='Task1'):
         t1_test_data_predicted[fold] = test_data_1.tolist()
         t2_test_data_predicted[fold] = test_data_2.tolist()
 
+    dir_for_output = python_repo_for_saving_predicted + str(nn) + '/' + str(global_task) + '/'
 
-    with h5py.File(aepath + 'predicted_data_all_false.h5', 'w') as f:
+    if not os.path.exists(dir_for_output):
+        os.makedirs(dir_for_output)
+
+    with h5py.File(dir_for_output + 'predicted_data_allFalse_s' + str(s) + '.h5', 'w') as f:
+
         d = f.create_dataset("T1_predicted", data=np.array(t1_test_data_predicted, dtype=np.float64))
         d = f.create_dataset("T2_predicted", data=np.array(t2_test_data_predicted, dtype=np.float64))
         d = f.create_dataset("test_labels", data=np.array(test_y, dtype=np.float64))
 
 
 if __name__ == '__main__':
-    predict_allFalse_two_tasks("simple_1_with_dropout_2", 15)
+    predict_allFalse_two_tasks("simple_1_with_dropout_2", 2)
 
 
