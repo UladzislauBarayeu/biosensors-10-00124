@@ -20,4 +20,4 @@ epoch = 500
 list_of_subjects = [i for i in range(1, number_of_subjects+1, 1)]
 global_task = "Task1"
 
-nn = "nn_inception_1_with_small_kernel"
+nn = "inception_1_with_small_kernel"
