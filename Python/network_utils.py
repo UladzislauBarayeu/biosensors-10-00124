@@ -113,8 +113,8 @@ def show_model(file, out_file):
     plot_model(model, to_file=out_file, show_layer_names=False, rankdir='LR')
 
 
-def save_network(name, nn):
-    aepath = '../' + home_repo + '/nn_' + str(name) + '/'
+def save_network(name, nn, additional_folder_for_nn=''):
+    aepath = additional_folder_for_nn + home_repo + '/nn_' + str(name) + '/'
     if not os.path.exists(aepath):
         os.makedirs(aepath)
     file_raw = aepath + 'test_conv_ae.h5'

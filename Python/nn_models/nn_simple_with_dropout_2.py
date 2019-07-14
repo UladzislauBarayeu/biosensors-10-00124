@@ -88,4 +88,4 @@ output = Dense(2, activation='sigmoid')(x)
 network = Model(input_shape, output, name="nn")
 network.summary()
 
-save_network("simple_1_with_dropout_2", network)
+save_network("simple_1_with_dropout_2", network, additional_folder_for_nn)

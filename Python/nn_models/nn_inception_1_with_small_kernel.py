@@ -250,4 +250,4 @@ output = Dense(2, activation='sigmoid')(x)
 network = Model(input_shape, output, name="nn")
 network.summary()
 
-save_network("inception_1_with_small_kernel", network)
+save_network("inception_1_with_small_kernel", network, additional_folder_for_nn)

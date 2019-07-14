@@ -5,6 +5,7 @@ false_vector = np.array([0.0, 1.0])
 number_of_trials = 110
 number_of_subjects = 105
 general_repo = 'vsc-hard-mounts/leuven-user/329/vsc32985/'
+additional_folder_for_nn=''
 home_repo = general_repo + 'Data/neural_network_models/'
 repo_with_raw_data = general_repo + 'Data/Result_json/'
 matlab_repo_for_saving_svm = general_repo + 'Data/NN_convoluted/nn'
