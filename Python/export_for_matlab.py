@@ -70,10 +70,12 @@ def export_nn_for_svm_two_tasks(nn, s,global_task='Task1'):
     json.dump(jsondic, outfile)
     outfile.close()
 
-def create_json_for_ROC(nn, s, file='predicted_data.h5'):
+def create_json_for_ROC(nn, s):
 
-    aepath = home_repo+'nn_' + str(nn) + '/' +global_task+'/'+ str(s) + '/'
-    with h5py.File(aepath + file, 'r') as f:
+    dir_for_output = python_repo_for_saving_predicted + str(nn) + '/' + str(global_task) + '/'
+    file = 'predicted_data_s'+str(s)+'.h5'
+
+    with h5py.File(dir_for_output + file, 'r') as f:
         t1_test_data = f["T1_predicted"][:,:, 0]
         t2_test_data = f["T2_predicted"][:, :,0]
         test_y_all = f["test_labels"][:,:, 0]
@@ -155,5 +157,5 @@ def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1'):
 
 
 if __name__=="__main__":
-    for s in [55]:
-        create_json_for_ROC(nn="inception_1_with_small_kernel", s=s)
+    for s in [6]:
+        create_json_for_ROC(nn="simple_1_with_dropout_2", s=s)
