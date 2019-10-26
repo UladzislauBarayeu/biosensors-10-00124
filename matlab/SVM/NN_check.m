@@ -1,4 +1,4 @@
-function [] = NN_check( task, List_of_subject,  fast, nn,  fast_check, KernelSVM)
+function [] = NN_check( task, List_of_subject,  fast, nn,  fast_check, KernelSVM, Size_of_feat, threshold)
 %NN_CHECK check results for NN+SVM
 
 predict_both_posterior_all=[];
@@ -11,23 +11,24 @@ labels_all=[];
 for subject_i=1:size(List_of_subject,2)
     subject=List_of_subject{subject_i};
     if fast
-        resT1=load(strcat('Data/NN_results/nn',num2str(nn),'/task',num2str(task),'/fast/T1/',subject,'.mat'));
+        resT1=load(strcat('Data/NN_results/',nn,'/task',num2str(task),'/fast/T1/',subject,'.mat'));
     else
-        resT1=load(strcat('Data/NN_results/nn',num2str(nn),'/task',num2str(task),'/slow/T1/',subject,'.mat'));
+        resT1=load(strcat('Data/NN_results/',nn,'/task',num2str(task),'/slow/T1/',subject,'.mat'));
     end
     [~,ind_max_T1]=max(resT1.result_accuracy);
+    %ind_max_T1=Size_of_feat;
     if fast
-        resT2=load(strcat('Data/NN_results/nn',num2str(nn),'/task',num2str(task),'/fast/T2/',subject,'.mat'));
+        resT2=load(strcat('Data/NN_results/',nn,'/task',num2str(task),'/fast/T2/',subject,'.mat'));
     else
-        resT2=load(strcat('Data/NN_results/nn',num2str(nn),'/task',num2str(task),'/slow/T2/',subject,'.mat'));
+        resT2=load(strcat('Data/NN_results/',nn,'/task',num2str(task),'/slow/T2/',subject,'.mat'));
     end
     [~,ind_max_T2]=max(resT2.result_accuracy);
-
+    %ind_max_T2=Size_of_feat;
     %make train model
-    data=loadjson(strcat('Data/NN_convoluted/',nn,'/data_for_svm_',subject,'.json'));
+    data=loadjson(strcat('Data/NN_convoluted/',nn,'/task',num2str(task),'/data_for_svm_s',subject,'.json'));
     %data=load(strcat('Data/NN_convoluted/task',num2str(task),'/',num2str(subject_i),'.mat'));
     % test
-    test=loadjson(strcat('Data/NN_convoluted/',nn,'/predicted_data_for_SVM_all_false_subjects_',subject,'.json'));
+    test=loadjson(strcat('Data/NN_convoluted/',nn,'/task',num2str(task),'/predicted_data_for_SVM_all_false_subjects_s',subject,'.json'));
     
     
     nbFolds = 5;
@@ -84,7 +85,13 @@ for subject_i=1:size(List_of_subject,2)
         predictT1 = SVMModelT1.predict(testTrialsT1);
         SVMModelT1_posterior = fitPosterior(SVMModelT1);
         [~,predictT1_posterior] = predict(SVMModelT1_posterior,testTrialsT1);
-        
+        for i=1:length(predictT1)
+            if predictT1_posterior(i,2)>threshold
+                predictT1(i)=1;
+            else
+                predictT1(i)=0;
+            end
+        end
         %% T2
         FIdx_T2=resT2.Indexes{ind_max_T2}{1}; 
         trainCuesT2 = Y;
@@ -122,7 +129,13 @@ for subject_i=1:size(List_of_subject,2)
         %posterior
         SVMModelT2_posterior = fitPosterior(SVMModelT2);
         [~,predictT2_posterior] = predict(SVMModelT2_posterior,testTrialsT2);
-
+        for i=1:length(predictT2)
+            if predictT2_posterior(i,2)>threshold
+                predictT2(i)=1;
+            else
+                predictT2(i)=0;
+            end
+        end
 
 
         for i=1:size(testCuesT1,1)
@@ -139,29 +152,30 @@ for subject_i=1:size(List_of_subject,2)
             else
                 predict_both_posterior(i)=predictT2_posterior(i,2);
             end
-            
             %T1
+            good=sum(testCuesT1);
             if testCuesT1(i)==1 && predictT1(i)==0
-                errorIT1(f)=errorIT1(f)+1/size(testCuesT1,1);
+                errorIT1(f)=errorIT1(f)+1/good;
             end
             if testCuesT1(i)==0 && predictT1(i)==1
-                errorIIT1(f)=errorIIT1(f)+1/size(testCuesT1,1);
+                errorIIT1(f)=errorIIT1(f)+1/(size(testCuesT1,1)-good);
             end
 
             %T2
+            good=sum(testCuesT2);
             if testCuesT2(i)==1 && predictT2(i)==0
-                errorIT2(f)=errorIT2(f)+1/size(testCuesT1,1);
+                errorIT2(f)=errorIT2(f)+1/good;
             end
             if testCuesT2(i)==0 && predictT2(i)==1
-                errorIIT2(f)=errorIIT2(f)+1/size(testCuesT1,1);
+                errorIIT2(f)=errorIIT2(f)+1/(size(testCuesT2,1)-good);
             end
             
             %both
             if testCuesT1(i)==1 && predict_both(i)==0
-                errorIboth(f)=errorIboth(f)+1/size(testCuesT1,1);
+                errorIboth(f)=errorIboth(f)+1/good;
             end
             if testCuesT1(i)==0 && predict_both(i)==1
-                errorIIboth(f)=errorIIboth(f)+1/size(testCuesT1,1);
+                errorIIboth(f)=errorIIboth(f)+1/(size(testCuesT1,1)-good);
             end
         end
         for i_label=1:length(testCuesT1)
@@ -199,7 +213,13 @@ for subject_i=1:size(List_of_subject,2)
         % SVM Classifier
         predictT1_test = SVMModelT1.predict(testTrialsT1_test);
         [~,predictT1_posterior_test] = predict(SVMModelT1_posterior,testTrialsT1_test);
-        
+        for i=1:length(predictT1_test)
+            if predictT1_posterior_test(i,2)>threshold
+                predictT1_test(i)=1;
+            else
+                predictT1_test(i)=0;
+            end
+        end
         %% T2
         FIdx_T2=resT2.Indexes{ind_max_T2}{1}; 
         testTrialsT2_test = XT2_test(:,FIdx_T2);
@@ -218,7 +238,15 @@ for subject_i=1:size(List_of_subject,2)
         % SVM Classifier
         predictT2_test = SVMModelT2.predict(testTrialsT2_test);
         [~,predictT2_posterior_test] = predict(SVMModelT2_posterior,testTrialsT2_test);
-
+        %set the threshold
+        for i=1:length(predictT2_test)
+            if predictT2_posterior_test(i,2)>threshold
+                predictT2_test(i)=1;
+            else
+                predictT2_test(i)=0;
+            end
+        end
+            
         for i=1:size(Y_test,1)
 
             if predictT1_test(i)==1 && predictT2_test(i)==1
@@ -272,6 +300,8 @@ for subject_i=1:size(List_of_subject,2)
     ErrorIIT1_test(subject_i)=mean(errorIIT1_test);
     ErrorIIT2_test(subject_i)=mean(errorIIT2_test);
     ErrorIITboth_test(subject_i)=mean(errorIIboth_test);
+    
+    clear data test
 end
 
 
@@ -326,13 +356,64 @@ AccT1=mean(accuracyT1);AccT2=mean(accuracyT2);AccBoth=mean(accuracyBoth);
 ErrI_T1=mean(ErrorI_T1);ErrII_T1=mean(ErrorII_T1);
 ErrI_T2=mean(ErrorI_T2);ErrII_T2=mean(ErrorII_T2);
 ErrI_both=mean(ErrorI_both);ErrII_both=mean(ErrorII_both);
-%test
+
+box_data=[ErrorII_T1 ErrorII_T2 ErrorII_both];
+box_label=zeros(length(ErrorIIT1_test)*3,4);
+box_label=char(box_label);
+for i=1:length(ErrorIIT1_test)
+    box_label(i,:)='T1  ';
+end
+for i=1:length(ErrorIIT2_test)
+    box_label(i+length(ErrorIIT1_test),:)='T2  ';
+end
+for i=1:length(ErrorIITboth_test)
+    box_label(i+2*length(ErrorIIT1_test),:)='both';
+end
+boxplot(box_data,box_label)
+title('Distribution of the FAR')
+ylim([0 0.6])
+ylabel('FAR')
+outputjpgDir = strcat('figures/boxplot/');
+if ~exist(outputjpgDir, 'dir')
+        mkdir(outputjpgDir);
+end
+namefile=strcat('%s','-FAR.jpg');
+outputjpgname = sprintf(namefile, outputjpgDir);
+saveas(gcf,outputjpgname);
+
+%% test
 ErrII_T1_test=mean(ErrorIIT1_test);ErrII_T2_test=mean(ErrorIIT2_test);ErrII_both_test=mean(ErrorIITboth_test);
+
+box_data=[ErrorIIT1_test ErrorIIT2_test ErrorIITboth_test];
+box_label=zeros(length(ErrorIIT1_test)*3,14);
+box_label=char(box_label);
+for i=1:length(ErrorIIT1_test)
+    box_label(i,:)='T1 all false  ';
+end
+for i=1:length(ErrorIIT2_test)
+    box_label(i+length(ErrorIIT1_test),:)='T2 all false  ';
+end
+for i=1:length(ErrorIITboth_test)
+    box_label(i+2*length(ErrorIIT1_test),:)='both all false';
+end
+boxplot(box_data,box_label)
+title('Distribution of the FAR all false')
+ylabel('FAR')
+ylim([0 0.6])
+outputjpgDir = strcat('figures/boxplot/');
+if ~exist(outputjpgDir, 'dir')
+        mkdir(outputjpgDir);
+end
+namefile=strcat('%s','-FAR-all-false.jpg');
+outputjpgname = sprintf(namefile, outputjpgDir);
+saveas(gcf,outputjpgname);
+
+
 %% save
 if fast
-    outputDir = strcat('Data/NN_final/nn',num2str(nn),'/task',num2str(task),'/fast/');
+    outputDir = strcat('Data/NN_final/',nn,'/task',num2str(task),'/fast/');
 else
-    outputDir = strcat('Data/NN_final/nn',num2str(nn),'/task',num2str(task),'/slow/');
+    outputDir = strcat('Data/NN_final/',nn,'/task',num2str(task),'/slow/');
 end
 % Check if the folder exists , and if not, make it...
 if ~exist(outputDir, 'dir')
@@ -340,10 +421,11 @@ if ~exist(outputDir, 'dir')
 end
 
 save(strcat(outputDir,'result_SVM.mat'),'AccT1','AccT2','AccBoth'...
-    ,'ErrI_T1','ErrII_T1'...
-    ,'ErrI_T2','ErrII_T2'...
-    ,'ErrI_both','ErrII_both'...
+    ,'ErrI_T1','ErrII_T1','ErrorI_T1','ErrorII_T1'...
+    ,'ErrI_T2','ErrII_T2','ErrorI_T2','ErrorII_T2'...
+    ,'ErrI_both','ErrII_both','ErrorI_both','ErrorII_both'...
     ,'ErrII_T1_test','ErrII_T2_test','ErrII_both_test'...
+    ,'ErrorIIT1_test','ErrorIIT2_test','ErrorIITboth_test'...
     ,'X_all','Y_all','X_T1','Y_T1','X_T2','Y_T2');
 
 

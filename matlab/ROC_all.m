@@ -9,16 +9,16 @@ else
 end
 
 if fast
-    SVM=load(strcat('Data/NN_final/nn',num2str(nn),'/task',num2str(task),'/fast/result_SVM'));
+    SVM=load(strcat('Data/NN_final/',nn,'/task',num2str(task),'/fast/result_SVM'));
 else
-    SVM=load(strcat('Data/NN_final/nn',num2str(nn),'/task',num2str(task),'/slow/result_SVM'));
+    SVM=load(strcat('Data/NN_final/',nn,'/task',num2str(task),'/slow/result_SVM'));
 end
 
 predicted_T1=[]; predicted_T2=[]; predicted_all=[]; labels=[];
 temp=1;
 for sub=1:length(List_of_subject)
     subject=List_of_subject{sub};
-    NN{sub}=loadjson(strcat('Data/Python_res/NN_final/nn',num2str(nn),'/task',num2str(task),'/predicted_data_for_ROC_',subject,'.json'));
+    NN{sub}=loadjson(strcat('Data/NN_convoluted/',nn,'/task',num2str(task),'/predicted_data_for_ROC_s',subject,'.json'));
     for fold=1:size(NN{sub}.T1,1)
         for trial=1:size(NN{sub}.T1,2)
             predicted_T1=[predicted_T1 NN{sub}.T1(fold,trial)];
