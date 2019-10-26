@@ -70,6 +70,7 @@ def export_nn_for_svm_two_tasks(nn, s, global_task='Task1'):
 
 
 def create_json_for_ROC(nn, s):
+    
     file_repo = python_repo_for_saving_predicted + str(nn) + '/' + str(global_task) + '/predicted_data_s' + str(
         s) + '.h5'
 
@@ -148,7 +149,3 @@ def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1'):
     json.dump(jsondic, outfile)
     outfile.close()
 
-
-if __name__ == "__main__":
-    for s in [6]:
-        create_json_for_ROC(nn="simple_1_with_dropout_2", s=s)

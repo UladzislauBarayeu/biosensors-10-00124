@@ -1,0 +1,857 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3241a890-8830-4121-a89a-800c903aff80" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/configurations.py" beforeDir="false" afterPath="$PROJECT_DIR$/configurations.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/export_for_matlab.py" beforeDir="false" afterPath="$PROJECT_DIR$/export_for_matlab.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/network_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nn_models/nn_inception_1.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nn_models/nn_inception_2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nn_models/nn_simple_1.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nn_models/nn_simple_1_with_dropout.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nn_models/nn_simple_with_dropout_2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nn_models/nn_simple_with_dropout_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/nn_models/nn_simple_1_with_dropout_2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nn_models/nn_simple_with_dropout_3.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nn_models_old_input/create_nn2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nn_models_old_input/create_nn21.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/predict_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/predict_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shit.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/show_results.py" beforeDir="false" afterPath="$PROJECT_DIR$/show_results.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/article.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../article and poster/article/article.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/pictures/Dense.png" beforeDir="false" afterPath="$PROJECT_DIR$/../article and poster/article/pictures/Dense.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/pictures/Dense.vsdx" beforeDir="false" afterPath="$PROJECT_DIR$/../article and poster/article/pictures/Dense.vsdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/pictures/ModuleA.png" beforeDir="false" afterPath="$PROJECT_DIR$/../article and poster/article/pictures/ModuleA.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/pictures/ModuleA.vsdx" beforeDir="false" afterPath="$PROJECT_DIR$/../article and poster/article/pictures/ModuleA.vsdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/pictures/ModuleB.png" beforeDir="false" afterPath="$PROJECT_DIR$/../article and poster/article/pictures/ModuleB.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/pictures/ModuleB.vsdx" beforeDir="false" afterPath="$PROJECT_DIR$/../article and poster/article/pictures/ModuleB.vsdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/pictures/ModuleC.png" beforeDir="false" afterPath="$PROJECT_DIR$/../article and poster/article/pictures/ModuleC.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/pictures/ModuleC.vsdx" beforeDir="false" afterPath="$PROJECT_DIR$/../article and poster/article/pictures/ModuleC.vsdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/pictures/ROC-T1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../article and poster/article/pictures/ROC-T1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/pictures/ROC-T2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../article and poster/article/pictures/ROC-T2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/pictures/ROC-all.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../article and poster/article/pictures/ROC-all.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/pictures/conv.png" beforeDir="false" afterPath="$PROJECT_DIR$/../article and poster/article/pictures/conv.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/pictures/conv.vsdx" beforeDir="false" afterPath="$PROJECT_DIR$/../article and poster/article/pictures/conv.vsdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/pictures/Безымянный.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/pictures/Документ5.png" beforeDir="false" afterPath="$PROJECT_DIR$/../article and poster/article/pictures/Документ5.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/pictures/Документ5.vsdx" beforeDir="false" afterPath="$PROJECT_DIR$/../article and poster/article/pictures/Документ5.vsdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/~$rticle.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../article and poster/article/~WRL2187.tmp" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/Python$nn_simple_2_with_dropout.coverage" NAME="nn_simple_2_with_dropout Coverage Results" MODIFIED="1561750992467" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nn_models" />
+    <SUITE FILE_PATH="coverage/Python$show_results.coverage" NAME="show_results Coverage Results" MODIFIED="1565645294384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Python$train_network_from_scratch.coverage" NAME="train_network_from_scratch Coverage Results" MODIFIED="1562438115016" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Python$Run_subjects.coverage" NAME="Run_subjects Coverage Results" MODIFIED="1563200444177" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Python$nn_inception_v1.coverage" NAME="nn_inception_v1 Coverage Results" MODIFIED="1561670617234" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nn_models" />
+    <SUITE FILE_PATH="coverage/Python$shit.coverage" NAME="shit Coverage Results" MODIFIED="1562859216221" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Python$show_interseption.coverage" NAME="show_interseption Coverage Results" MODIFIED="1560103992592" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Python$nn_simple_1.coverage" NAME="nn_simple_1 Coverage Results" MODIFIED="1561125617353" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nn_models" />
+    <SUITE FILE_PATH="coverage/Python$export_for_matlab_driver.coverage" NAME="export_for_matlab_driver Coverage Results" MODIFIED="1559080136183" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Python$train_driver.coverage" NAME="train_driver Coverage Results" MODIFIED="1557837859953" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Python$export_for_matlab.coverage" NAME="export_for_matlab Coverage Results" MODIFIED="1563217676393" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Python$nn_simple_with_dropout_2.coverage" NAME="nn_simple_with_dropout_2 Coverage Results" MODIFIED="1561308019762" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nn_models" />
+    <SUITE FILE_PATH="coverage/Python$nn_simple_1_with_dropout.coverage" NAME="nn_simple_1_with_dropout Coverage Results" MODIFIED="1561198745826" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nn_models" />
+    <SUITE FILE_PATH="coverage/Python$nn_inception_v2.coverage" NAME="nn_inception_v2 Coverage Results" MODIFIED="1561675643914" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nn_models" />
+    <SUITE FILE_PATH="coverage/Python$nn_inception_2.coverage" NAME="nn_inception_2 Coverage Results" MODIFIED="1561928993097" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nn_models" />
+    <SUITE FILE_PATH="coverage/Python$predict_data.coverage" NAME="predict_data Coverage Results" MODIFIED="1563107624756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Python$new_input_create_nn211.coverage" NAME="new_input_create_nn211 Coverage Results" MODIFIED="1558878494002" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nn_models" />
+    <SUITE FILE_PATH="coverage/Python$train_network_2.coverage" NAME="train_network_2 Coverage Results" MODIFIED="1561648391228" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Python$nn_inception_1_with_small_kernel.coverage" NAME="nn_inception_1_with_small_kernel Coverage Results" MODIFIED="1561989160537" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nn_models" />
+    <SUITE FILE_PATH="coverage/Python$new_input_create_nn221.coverage" NAME="new_input_create_nn221 Coverage Results" MODIFIED="1558872746663" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nn_models" />
+    <SUITE FILE_PATH="coverage/Python$train_network.coverage" NAME="train_network Coverage Results" MODIFIED="1562497685544" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Python$create_nn211.coverage" NAME="create_nn211 Coverage Results" MODIFIED="1561125395730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nn_models" />
+    <SUITE FILE_PATH="coverage/Python$nn_simple_with_dropout_3.coverage" NAME="nn_simple_with_dropout_3 Coverage Results" MODIFIED="1561669797440" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nn_models" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/show_results.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="226" column="9" selection-start-line="226" selection-start-column="9" selection-end-line="226" selection-end-column="9" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/train_driver.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="113" selection-start-line="19" selection-start-column="99" selection-end-line="19" selection-end-column="113" />
+              <folding>
+                <element signature="e#1#24#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/train_network.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="23" selection-start-line="23" selection-end-line="23" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Run_subjects.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="17" selection-start-line="17" selection-end-line="17" />
+              <folding>
+                <element signature="e#1#24#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/predict_data.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1462">
+              <caret line="86" selection-start-line="86" selection-end-line="86" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Run_predict_tasks.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="544">
+              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Run_tasks.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="40">
+              <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/export_for_matlab.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="88">
+              <caret line="131" column="14" selection-start-line="131" selection-start-column="14" selection-end-line="131" selection-end-column="14" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/network_utils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2516">
+              <caret line="148" selection-start-line="148" selection-end-line="148" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/EEG_class.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-201">
+              <caret line="38" selection-start-line="38" selection-end-line="38" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Subject</find>
+      <find>Subject_old</find>
+      <find>json</find>
+      <find>expand</find>
+      <find>Task1</find>
+      <find>if os</find>
+      <find>home</find>
+      <find>self.path</find>
+      <find>home_repo</find>
+      <find>model.add(</find>
+      <find>two-task-nn</find>
+      <find>two-</find>
+      <find>two</find>
+      <find>'nn</find>
+      <find>Dropout</find>
+      <find>105</find>
+      <find>train_x_T2_from_raw</find>
+      <find>For T2</find>
+      <find>linear</find>
+      <find>kernel_size</find>
+      <find>conv2d_1</find>
+      <find>max</find>
+      <find>&quot;data</find>
+      <find>repo_with_raw_data</find>
+      <find>padding</find>
+      <find>padding='valid</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>x=</replace>
+      <replace>relu</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/predict_driver.py" />
+        <option value="$PROJECT_DIR$/nn_models/new_input_create_nn211.py" />
+        <option value="$PROJECT_DIR$/nn_models/new_input_create_nn221.py" />
+        <option value="$PROJECT_DIR$/nn_models/create_nn21.py" />
+        <option value="$PROJECT_DIR$/nn_models/create_nn2.py" />
+        <option value="$PROJECT_DIR$/export_for_matlab_driver.py" />
+        <option value="$PROJECT_DIR$/nn_models/create_nn221.py" />
+        <option value="$PROJECT_DIR$/nn_models/save_nn.py" />
+        <option value="$PROJECT_DIR$/nn_models/create_nn211.py" />
+        <option value="$PROJECT_DIR$/nn_models/nn_simple_1.py" />
+        <option value="$PROJECT_DIR$/nn_models/nn_simple_1_with_dropout.py" />
+        <option value="$PROJECT_DIR$/train_network_2.py" />
+        <option value="$PROJECT_DIR$/nn_models/nn_simple_with_dropout_3.py" />
+        <option value="$PROJECT_DIR$/nn_models/nn_inception_v1_3.py" />
+        <option value="$PROJECT_DIR$/nn_models/nn_inception_v2.py" />
+        <option value="$PROJECT_DIR$/nn_models/nn_simple_2_with_dropout.py" />
+        <option value="$PROJECT_DIR$/nn_models/nn_inception_2.py" />
+        <option value="$PROJECT_DIR$/nn_models/nn_inception_1.py" />
+        <option value="$PROJECT_DIR$/train_network_from_scratch.py" />
+        <option value="$PROJECT_DIR$/Run_predict_tasks.py" />
+        <option value="$PROJECT_DIR$/train_driver.py" />
+        <option value="$PROJECT_DIR$/Run_subjects.py" />
+        <option value="$PROJECT_DIR$/EEG_class.py" />
+        <option value="$PROJECT_DIR$/train_network.py" />
+        <option value="$PROJECT_DIR$/Run_tasks.py" />
+        <option value="$PROJECT_DIR$/nn_models/nn_inception_1_with_small_kernel.py" />
+        <option value="$PROJECT_DIR$/nn_models/nn_simple_with_dropout_2.py" />
+        <option value="$PROJECT_DIR$/configurations.py" />
+        <option value="$PROJECT_DIR$/shit.py" />
+        <option value="$PROJECT_DIR$/export_for_matlab.py" />
+        <option value="$PROJECT_DIR$/network_utils.py" />
+        <option value="$PROJECT_DIR$/predict_data.py" />
+        <option value="$PROJECT_DIR$/show_results.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="676" />
+    <option name="width" value="697" />
+    <option name="height" value="371" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Python" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Python" type="462c0819:PsiDirectoryNode" />
+              <item name="nn_models" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="D:/Documents/Practice education/Algoritmth/untitled3" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\authentification_system_EEG\article\Python" />
+      <recent name="C:\authentification_system_EEG\article\Python\nn_models" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.show_results">
+    <configuration name="Run_subjects" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Run_subjects.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="export_for_matlab" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/export_for_matlab.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="predict_data" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/predict_data.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="shit" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/shit.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="show_results" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/show_results.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.show_results" />
+        <item itemvalue="Python.export_for_matlab" />
+        <item itemvalue="Python.Run_subjects" />
+        <item itemvalue="Python.predict_data" />
+        <item itemvalue="Python.shit" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3241a890-8830-4121-a89a-800c903aff80" name="Default Changelist" comment="" />
+      <created>1557431895967</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1557431895967</updated>
+      <workItem from="1557431899852" duration="2547000" />
+      <workItem from="1557435216766" duration="238000" />
+      <workItem from="1557487968018" duration="4223000" />
+      <workItem from="1557750477866" duration="57000" />
+      <workItem from="1557837394960" duration="627000" />
+      <workItem from="1558718740765" duration="10423000" />
+      <workItem from="1558782923520" duration="9353000" />
+      <workItem from="1559036761369" duration="6642000" />
+      <workItem from="1559045961783" duration="5135000" />
+      <workItem from="1559751497060" duration="690000" />
+      <workItem from="1559756698030" duration="5930000" />
+      <workItem from="1560103963919" duration="959000" />
+      <workItem from="1560108890498" duration="910000" />
+      <workItem from="1560193158156" duration="1659000" />
+      <workItem from="1560952142509" duration="3218000" />
+      <workItem from="1561122313755" duration="13614000" />
+      <workItem from="1561204246108" duration="7482000" />
+      <workItem from="1561307910877" duration="2140000" />
+      <workItem from="1561636030400" duration="23337000" />
+      <workItem from="1561740297362" duration="11294000" />
+      <workItem from="1561764209399" duration="262000" />
+      <workItem from="1561927954201" duration="46000" />
+      <workItem from="1561928054975" duration="1114000" />
+      <workItem from="1561979184889" duration="2593000" />
+      <workItem from="1562009621551" duration="1891000" />
+      <workItem from="1562012022660" duration="616000" />
+      <workItem from="1562064371338" duration="9739000" />
+      <workItem from="1562244428066" duration="2558000" />
+      <workItem from="1562338182340" duration="1724000" />
+      <workItem from="1562345037874" duration="8238000" />
+      <workItem from="1562408589156" duration="13223000" />
+      <workItem from="1562588165228" duration="786000" />
+      <workItem from="1562662003732" duration="2000" />
+      <workItem from="1562693644093" duration="5499000" />
+      <workItem from="1562851213166" duration="14660000" />
+      <workItem from="1562923442362" duration="13103000" />
+      <workItem from="1563100206726" duration="9541000" />
+      <workItem from="1563184168815" duration="2833000" />
+      <workItem from="1563268121512" duration="5713000" />
+      <workItem from="1563388456570" duration="2918000" />
+      <workItem from="1563477119237" duration="1559000" />
+      <workItem from="1563533109959" duration="1078000" />
+      <workItem from="1563783659872" duration="1461000" />
+      <workItem from="1563808978664" duration="3653000" />
+      <workItem from="1564004332374" duration="1761000" />
+      <workItem from="1565640784785" duration="4142000" />
+      <workItem from="1572127050713" duration="721000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="221912000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2549168" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.8630862" weight="0.57119477" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.68078667" weight="0.6121113" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.13691376" side_tool="true" visible="true" weight="0.049099836" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.3289689" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.3289689" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" weight="0.06051437" />
+      <window_info anchor="right" id="Database" order="4" weight="0.055219363" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/export_for_matlab.py</url>
+          <line>31</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/train_network.py</url>
+          <line>191</line>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/export_for_matlab.py</url>
+          <line>99</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Run_predict_tasks.py</url>
+          <line>25</line>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/train_network.py</url>
+          <line>23</line>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/show_results.py</url>
+          <line>135</line>
+          <option name="timeStamp" value="61" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="np.std(FAR_both)" language="Python" />
+        <watch expression="np.max(FAR_both)" language="Python" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="watch">
+      <expression>
+        <expression-string>np.max(FAR_both)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>np.std(FAR_both)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>np.mean(FAR_both)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>train_x_T1.sha[e]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>list(filter(lambda x: x ==[1.0, 0.0], test1.labels))</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/subprocess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4845">
+          <caret line="285" selection-start-line="285" selection-end-line="285" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nn_models/create_nn21.py" />
+    <entry file="file://$PROJECT_DIR$/show_interseption.py" />
+    <entry file="file://$PROJECT_DIR$/nn_models/create_nn221.py" />
+    <entry file="file://$PROJECT_DIR$/nn_models/save_nn.py" />
+    <entry file="file://$PROJECT_DIR$/nn_models/create_nn211.py" />
+    <entry file="file://$PROJECT_DIR$/export_for_matlab_driver.py" />
+    <entry file="file://$PROJECT_DIR$/predict_driver.py" />
+    <entry file="file://$PROJECT_DIR$/train_network_2.py" />
+    <entry file="file://$PROJECT_DIR$/nn_models/create_nn2.py" />
+    <entry file="file://$PROJECT_DIR$/nn_models/nn_inception_v2.py" />
+    <entry file="file://$PROJECT_DIR$/nn_models/nn_simple_2_with_dropout.py" />
+    <entry file="file://$PROJECT_DIR$/nn_models/nn_inception_v1.py" />
+    <entry file="file://$PROJECT_DIR$/nn_models/nn_inception_2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="17" column="104" selection-start-line="17" selection-start-column="104" selection-end-line="17" selection-end-column="104" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="308" selection-start-line="308" selection-end-line="308" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nn_models/nn_simple_1_with_dropout.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1292">
+          <caret line="83" column="36" selection-start-line="83" selection-start-column="36" selection-end-line="83" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nn_models/nn_simple_1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1122">
+          <caret line="66" column="27" selection-start-line="66" selection-start-column="27" selection-end-line="66" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nn_models/nn_simple_with_dropout_3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1785">
+          <caret line="112" column="107" selection-start-line="112" selection-start-column="38" selection-end-line="112" selection-end-column="107" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_network_from_scratch.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/keras/engine/saving.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="416" selection-start-line="416" selection-end-line="416" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nn_models_old_input/create_nn2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nn_models/nn_inception_1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1068">
+          <caret line="183" selection-start-line="183" selection-end-line="183" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="25" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nn_models/nn_simple_1_with_dropout_2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1513">
+          <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nn_models/nn_inception_1_with_small_kernel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3567">
+          <caret line="17" column="105" lean-forward="true" selection-start-line="17" selection-start-column="105" selection-end-line="17" selection-end-column="105" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/configurations.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EEG_class.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-201">
+          <caret line="38" selection-start-line="38" selection-end-line="38" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/export_for_matlab.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="131" column="14" selection-start-line="131" selection-start-column="14" selection-end-line="131" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2516">
+          <caret line="148" selection-start-line="148" selection-end-line="148" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/predict_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1462">
+          <caret line="86" selection-start-line="86" selection-end-line="86" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Run_predict_tasks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Run_subjects.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="e#1#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Run_tasks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/show_results.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="226" column="9" selection-start-line="226" selection-start-column="9" selection-end-line="226" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_driver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="113" selection-start-line="19" selection-start-column="99" selection-end-line="19" selection-end-column="113" />
+          <folding>
+            <element signature="e#1#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_network.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

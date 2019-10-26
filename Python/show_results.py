@@ -125,6 +125,15 @@ def mean_accuracy(nn, subjects, allFalse=False, into_file=False, threshold_for_T
     len_of_true_sum = sum(len_of_true)
     len_of_false_sum = sum(len_of_false)
 
+    # FRR_T1=[1-sum_true_right_T1[i]/len_of_true[i] for i in range(len(len_of_true))]
+    # FRR_T2 = [1-sum_true_right_T2[i] / len_of_true[i] for i in range(len(len_of_true))]
+    # FRR_both=[1-sum_true_right_both[i]/len_of_true[i] for i in range(len(len_of_true))]
+
+    FAR_T1 = [1-sum_false_right_T1[i]/ len_of_false[i] for i in range(len(len_of_false))]
+    FAR_T2 =[1- sum_false_right_T2[i]/ len_of_false[i] for i in range(len(len_of_false))]
+    FAR_both = [1-sum_false_right_both[i]/len_of_false[i] for i in range(len(len_of_false))]
+
+    mean_FAR_BOTH=np.mean(FAR_both)
     if into_file:
         aepath = home_repo + 'nn_' + str(nn) + '/' + global_task + '/'
         file = open(aepath + "mean_acc.txt", "w")
@@ -208,8 +217,14 @@ def mean_accuracy(nn, subjects, allFalse=False, into_file=False, threshold_for_T
 
 
 if __name__ == '__main__':
-    # mean_accuracy("simple_1_with_dropout_2", [2,3,4], into_file=False, allFalse=False,
-    #               threshold_for_T1=0.5, threshold_for_T2=0.5)
 
-    mean_accuracy("simple_1_with_dropout_2", [2], into_file=False, allFalse=True,
+    print("inception_1_with_small_kernel, threshold 0.85")
+    array_all=[i for i in range(2, 31, 1)]
+    array_all.extend([i for i in range(81, 95, 1)])
+
+    mean_accuracy("inception_1_with_small_kernel",array_all, into_file=False, allFalse=False,
                   threshold_for_T1=0.85, threshold_for_T2=0.85)
+    #all False test
+    mean_accuracy("inception_1_with_small_kernel", array_all, into_file=False, allFalse=True,
+                  threshold_for_T1=0.85, threshold_for_T2=0.85)
+

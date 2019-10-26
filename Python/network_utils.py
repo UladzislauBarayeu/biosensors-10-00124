@@ -147,5 +147,3 @@ def load_allFalse(subject, global_task='Task1'):
     return all_T1, all_T2
 
 
-if __name__ == '__main__':
-    load_allFalse(1, global_task)

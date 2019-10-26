@@ -85,7 +85,4 @@ def predict_allFalse_two_tasks(nn, s, global_task='Task1'):
         d = f.create_dataset("test_labels", data=np.array(test_y, dtype=np.float64))
 
 
-if __name__ == '__main__':
-    predict_allFalse_two_tasks("simple_1_with_dropout_2", 2)
-
 
