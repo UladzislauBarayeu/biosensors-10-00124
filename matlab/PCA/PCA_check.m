@@ -1,4 +1,4 @@
-function [] = PCA_check( task, fast, fast_check )
+function [] = PCA_check( task, fast, fast_check, knn )
 %PCA_CHECK check models
 
 %% set
@@ -14,15 +14,31 @@ labels_all=[];
 %%
 for subject_i=1:size_of_subject
     if fast
-        resT1=load(strcat('Data/PCA_results/task',num2str(task),'/fast/T1/',num2str(subject_i),'.mat'));
+        if knn
+            resT1=load(strcat('Data/PCA_results/task',num2str(task),'/fast/T1/knn',num2str(knn),'/',num2str(subject_i),'.mat'));
+        else
+            resT1=load(strcat('Data/PCA_results/task',num2str(task),'/fast/T1/',num2str(subject_i),'.mat'));
+        end
     else
-        resT1=load(strcat('Data/PCA_results/task',num2str(task),'/slow/T1/',num2str(subject_i),'.mat'));
+        if knn
+            resT1=load(strcat('Data/PCA_results/task',num2str(task),'/slow/T1/knn',num2str(knn),'/',num2str(subject_i),'.mat'));
+        else
+            resT1=load(strcat('Data/PCA_results/task',num2str(task),'/slow/T1/',num2str(subject_i),'.mat'));
+        end
     end
     [~,ind_max_T1]=max(resT1.result_accuracy);
     if fast
-        resT2=load(strcat('Data/PCA_results/task',num2str(task),'/fast/T2/',num2str(subject_i),'.mat'));
+        if knn
+            resT2=load(strcat('Data/PCA_results/task',num2str(task),'/fast/T2/knn',num2str(knn),'/',num2str(subject_i),'.mat'));
+        else
+            resT2=load(strcat('Data/PCA_results/task',num2str(task),'/fast/T2/',num2str(subject_i),'.mat'));
+        end
     else
-        resT2=load(strcat('Data/PCA_results/task',num2str(task),'/slow/T2/',num2str(subject_i),'.mat'));
+        if knn
+            resT2=load(strcat('Data/PCA_results/task',num2str(task),'/slow/T2/knn',num2str(knn),'/',num2str(subject_i),'.mat'));
+        else
+            resT2=load(strcat('Data/PCA_results/task',num2str(task),'/slow/T2/',num2str(subject_i),'.mat'));
+        end
     end
     [~,ind_max_T2]=max(resT2.result_accuracy);
 
@@ -78,19 +94,30 @@ for subject_i=1:size_of_subject
         trainTrialsT1=trainTrialsT1.';
         testTrialsT1=testTrialsT1.';
 
-        % SVM Classifier
-        if fast_check
-            SVMModelT1 = fitcsvm(trainTrialsT1,trainCuesT1,'Standardize',true,...
-                    'KernelFunction',KernelSVM,'KernelScale','auto');
+        % Classifier
+        if knn
+            ModelT1 = fitcknn(trainTrialsT1,trainCuesT1,'NumNeighbors',knn,'Standardize',1);% num_of neubors?
         else
-            opts = struct('ShowPlots',false,'MaxObjectiveEvaluations', 10);
-            SVMModelT1 = fitcsvm(trainTrialsT1, trainCuesT1,'Standardize',true,...
-                'KernelFunction',KernelSVM,'OptimizeHyperparameters','auto','HyperparameterOptimizationOptions',opts);
+            if fast_check
+                ModelT1 = fitcsvm(trainTrialsT1,trainCuesT1,'Standardize',true,...
+                        'KernelFunction',KernelSVM,'KernelScale','auto');
+            else
+                opts = struct('ShowPlots',false,'MaxObjectiveEvaluations', 10);
+                ModelT1 = fitcsvm(trainTrialsT1, trainCuesT1,'Standardize',true,...
+                    'KernelFunction',KernelSVM,'OptimizeHyperparameters','auto','HyperparameterOptimizationOptions',opts);
+            end
         end
-        predictT1 = SVMModelT1.predict(testTrialsT1);
+        
         %posterior
-        SVMModelT1_posterior = fitPosterior(SVMModelT1);
-        [~,predictT1_posterior] = predict(SVMModelT1_posterior,testTrialsT1);
+        if knn
+            [predictT1,predictT1_posterior,~] = predict(ModelT1,testTrialsT1);
+            %predictT1 = ModelT1.predict(testTrialsT1);
+        else
+            predictT1 = ModelT1.predict(testTrialsT1);
+            ModelT1_posterior = fitPosterior(ModelT1);
+            [~,predictT1_posterior] = predict(ModelT1_posterior,testTrialsT1);
+        end
+        
         
         %% T2
         FIdx_T2=resT2.Indexes{ind_max_T2}{1}; 
@@ -119,20 +146,27 @@ for subject_i=1:size_of_subject
         trainTrialsT2=trainTrialsT2.';
         testTrialsT2=testTrialsT2.';
 
-        % SVM Classifier
-        if fast_check
-            SVMModelT2 = fitcsvm(trainTrialsT2,trainCuesT2,'Standardize',true,...
-                    'KernelFunction',KernelSVM,'KernelScale','auto');
+        % Classifier
+        if knn
+            ModelT2 = fitcknn(trainTrialsT2,trainCuesT2,'NumNeighbors',knn,'Standardize',1);% num_of neubors?
         else
-            opts = struct('ShowPlots',false,'MaxObjectiveEvaluations', 10);
-            SVMModelT2 = fitcsvm(trainTrialsT2, trainCuesT2,'Standardize',true,...
-                'KernelFunction',KernelSVM,'OptimizeHyperparameters','auto','HyperparameterOptimizationOptions',opts);
+            if fast_check
+                ModelT2 = fitcsvm(trainTrialsT2,trainCuesT2,'Standardize',true,...
+                        'KernelFunction',KernelSVM,'KernelScale','auto');
+            else
+                opts = struct('ShowPlots',false,'MaxObjectiveEvaluations', 10);
+                ModelT2 = fitcsvm(trainTrialsT2, trainCuesT2,'Standardize',true,...
+                    'KernelFunction',KernelSVM,'OptimizeHyperparameters','auto','HyperparameterOptimizationOptions',opts);
+            end
         end
-        predictT2 = SVMModelT2.predict(testTrialsT2);
-        %posterior
-        SVMModelT2_posterior = fitPosterior(SVMModelT2);
-        [~,predictT2_posterior] = predict(SVMModelT2_posterior,testTrialsT2);
-                
+        if knn
+            [predictT2,predictT2_posterior,~] = predict(ModelT2,testTrialsT2);
+        else
+            predictT2 = ModelT2.predict(testTrialsT2);
+            %posterior
+            ModelT2_posterior = fitPosterior(ModelT2);
+            [~,predictT2_posterior] = predict(ModelT2_posterior,testTrialsT2);
+        end  
 
         for i=1:size(testCuesT1,1)
 
@@ -151,27 +185,28 @@ for subject_i=1:size_of_subject
             end
 
             %T1
+            good=sum(testCuesT1);
             if testCuesT1(i)==1 && predictT1(i)==0
-                errorIT1(f)=errorIT1(f)+1/size(testCuesT1,1);
+                errorIT1(f)=errorIT1(f)+1/good;
             end
             if testCuesT1(i)==0 && predictT1(i)==1
-                errorIIT1(f)=errorIIT1(f)+1/size(testCuesT1,1);
+                errorIIT1(f)=errorIIT1(f)+1/(size(testCuesT1,1)-good);
             end
 
             %T2
             if testCuesT2(i)==1 && predictT2(i)==0
-                errorIT2(f)=errorIT2(f)+1/size(testCuesT1,1);
+                errorIT2(f)=errorIT2(f)+1/good;
             end
             if testCuesT2(i)==0 && predictT2(i)==1
-                errorIIT2(f)=errorIIT2(f)+1/size(testCuesT1,1);
+                errorIIT2(f)=errorIIT2(f)+1/(size(testCuesT1,1)-good);
             end
             
             %both
             if testCuesT1(i)==1 && predict_both(i)==0
-                errorIboth(f)=errorIboth(f)+1/size(testCuesT1,1);
+                errorIboth(f)=errorIboth(f)+1/good;
             end
             if testCuesT1(i)==0 && predict_both(i)==1
-                errorIIboth(f)=errorIIboth(f)+1/size(testCuesT1,1);
+                errorIIboth(f)=errorIIboth(f)+1/(size(testCuesT1,1)-good);
             end
         end
         for i_label=1:length(testCuesT1)
@@ -190,7 +225,7 @@ for subject_i=1:size_of_subject
         %ylabel('True positive rate')
         %title('ROC for Classification by Logistic Regression')
         ACCT1(f) = mean(predictT1 == testCuesT1);
-        ACCT2(f) = mean(predictT2 == testCuesT1);
+        ACCT2(f) = mean(predictT2 == testCuesT2);
         ACC(f) = mean(predict_both.' == testCuesT1);
         iterator=1;
         for subject_i_test=1:size_of_subject
@@ -229,11 +264,11 @@ for subject_i=1:size_of_subject
                 
                 
                 %SVM
-                predictT1_test = SVMModelT1.predict(T1_test);
-                predictT2_test = SVMModelT2.predict(T2_test);
+                predictT1_test = ModelT1.predict(T1_test);
+                predictT2_test = ModelT2.predict(T2_test);
                 %posterior
-                [~,predictT1_test_posterior] = predict(SVMModelT1_posterior,T1_test);
-                [~,predictT2_test_posterior] = predict(SVMModelT2_posterior,T2_test);
+                %[~,predictT1_test_posterior] = predict(ModelT1_posterior,T1_test);
+                %[~,predictT2_test_posterior] = predict(ModelT2_posterior,T2_test);
                 
                 for i=1:size(predictT1_test,1)
                     if predictT1_test(i)==1 && predictT2_test(i)==1
@@ -298,7 +333,7 @@ xlabel('False positive rate')
 ylabel('True positive rate')
 title('ROC for Classification for two action')
 %save file
-outputjpgDir = strcat('figures/ROC/PCA/');
+outputjpgDir = strcat('figures/ROC/PCA/knn',num2str(knn),'/');
 if ~exist(outputjpgDir, 'dir')
         mkdir(outputjpgDir);
 end
@@ -311,11 +346,6 @@ plot(X_T1,Y_T1)
 xlabel('False positive rate') 
 ylabel('True positive rate')
 title('ROC for Classification for T1')
-%save file
-outputjpgDir = strcat('figures/ROC/PCA/');
-if ~exist(outputjpgDir, 'dir')
-        mkdir(outputjpgDir);
-end
 namefile=strcat('%s','-ROC-T1.jpg');
 outputjpgname = sprintf(namefile, outputjpgDir);
 saveas(gcf,outputjpgname);
@@ -326,11 +356,7 @@ plot(X_T2,Y_T2)
 xlabel('False positive rate') 
 ylabel('True positive rate')
 title('ROC for Classification for T2')
-%save file
-outputjpgDir = strcat('figures/ROC/PCA/');
-if ~exist(outputjpgDir, 'dir')
-        mkdir(outputjpgDir);
-end
+
 namefile=strcat('%s','-ROC-T2.jpg');
 outputjpgname = sprintf(namefile, outputjpgDir);
 saveas(gcf,outputjpgname);
@@ -342,10 +368,18 @@ ErrI_both=mean(ErrorI_both);ErrII_both=mean(ErrorII_both);
 %test
 ErrII_T1_test=mean(ErrorIIT1_test);ErrII_T2_test=mean(ErrorIIT2_test);ErrII_both_test=mean(ErrorIITboth_test);
 %% save
-if fast
-    outputDir = strcat('Data/PCA_final/task',num2str(task),'/fast/');
+if knn
+    if fast
+        outputDir = strcat('Data/PCA_final/task',num2str(task),'/fast/knn',num2str(knn),'/');
+    else
+        outputDir = strcat('Data/PCA_final/task',num2str(task),'/slow/knn',num2str(knn),'/');
+    end
 else
-    outputDir = strcat('Data/PCA_final/task',num2str(task),'/slow/');
+    if fast
+        outputDir = strcat('Data/PCA_final/task',num2str(task),'/fast/');
+    else
+        outputDir = strcat('Data/PCA_final/task',num2str(task),'/slow/');
+    end
 end
 % Check if the folder exists , and if not, make it...
 if ~exist(outputDir, 'dir')
@@ -353,10 +387,11 @@ if ~exist(outputDir, 'dir')
 end
 
 save(strcat(outputDir,'result_PCA.mat'),'AccT1','AccT2','AccBoth'...
-    ,'ErrI_T1','ErrII_T1'...
-    ,'ErrI_T2','ErrII_T2'...
-    ,'ErrI_both','ErrII_both'...
+    ,'ErrI_T1','ErrII_T1','ErrorI_T1','ErrorII_T1'...
+    ,'ErrI_T2','ErrII_T2','ErrorI_T2','ErrorII_T2'...
+    ,'ErrI_both','ErrII_both','ErrorI_both','ErrorII_both'...
     ,'ErrII_T1_test','ErrII_T2_test','ErrII_both_test'...
+    ,'ErrorIIT1_test','ErrorIIT2_test','ErrorIITboth_test'...
     ,'X_all','Y_all','X_T1','Y_T1','X_T2','Y_T2');
 
 end

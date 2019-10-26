@@ -6,10 +6,10 @@ preproces( task, folderpath );
 
 %% EMD
 type=0;% 1-emd from lena 2-emd from internet 3-NAMEMD, 0-original func
-number_of_IMFS=4;%set how many IMF left
+number_of_IMFS=5;%set how many IMF left
 Extract_EMD_feature(task, type, number_of_IMFS);
-
-%% Extract feature
+% 
+% %% Extract feature
 freq_feature( task );
 entropy_feature( task );
 Combine_features(task);
@@ -20,13 +20,14 @@ PCA_get( task, number_sub_channel);
 size_of_vector=220; % size of input for SVM (use all true data and rest add with random falses)
 PCA_make_data( task,  size_of_vector);
 
-Size_of_feat=10;%number of feature, when stop grid selection
+knn=0;
+Size_of_feat=20;%number of feature, when stop grid selection
 KernelSVM='rbf';%'rbf' or 'linear' optional
 fast=1;%if 1 run without optimization
-mean_result_T1 = PCA_SVM_T1( task, Size_of_feat, KernelSVM,  fast); %return mean accuracy
-mean_result_T2 = PCA_SVM_T2( task, Size_of_feat, KernelSVM,  fast); %return mean accuracy
+mean_result_T1 = PCA_SVM_T1( task, Size_of_feat, KernelSVM,  fast, knn); %return mean accuracy
+mean_result_T2 = PCA_SVM_T2( task, Size_of_feat, KernelSVM,  fast, knn); %return mean accuracy
 fast_check=1;%if 1 run without optimization
-PCA_check( task, fast, fast_check );
+PCA_check( task, fast, fast_check, knn );
 
 
 %% here Python should be run

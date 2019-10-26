@@ -4,7 +4,7 @@ function [ mean_result ] = SVM_after_NN_T2( task, KernelSVM, List_of_subject, nn
 
 for subject_i=1:size(List_of_subject,2)
     subject=List_of_subject{subject_i};
-    dat=loadjson(strcat('Data/NN_convoluted/',nn,'/data_for_svm_',subject,'.json'));
+    dat=loadjson(strcat('Data/NN_convoluted/',nn,'/task',num2str(task),'/data_for_svm_s',subject,'.json'));
 
     %make train model
 
@@ -50,9 +50,9 @@ for subject_i=1:size(List_of_subject,2)
      
     %% learn all others
     for Nofeat=2:Size_of_feat
-        if max_val==1
-            break
-        end
+%         if max_val==1
+%             break
+%         end
         %check all features
         accuracy=zeros(size(groups,2),size(dat.T2.train_sample{1},2));
         for Nchanel=1:size(dat.T2.train_sample{1},2)
@@ -103,15 +103,15 @@ for subject_i=1:size(List_of_subject,2)
         Indexes{Nofeat}=groups;
         result_accuracy(Nofeat)=max_val;
         
-        if max_val==1
-            break
-        end
+%         if max_val==1
+%             break
+%         end
     end
     %% save
     if fast
-        outputDir = strcat('Data/NN_results/nn',num2str(nn),'/task',num2str(task),'/fast/T2/');
+        outputDir = strcat('Data/NN_results/',num2str(nn),'/task',num2str(task),'/fast/T2/');
     else
-        outputDir = strcat('Data/NN_results/nn',num2str(nn),'/task',num2str(task),'/slow/T2/');
+        outputDir = strcat('Data/NN_results/',num2str(nn),'/task',num2str(task),'/slow/T2/');
     end
     % Check if the folder exists , and if not, make it...
     if ~exist(outputDir, 'dir')

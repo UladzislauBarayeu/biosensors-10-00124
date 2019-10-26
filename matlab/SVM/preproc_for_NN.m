@@ -1,7 +1,7 @@
-clear all;
+function [] = preproc_for_NN( task, size_of_vector)
+%PREPROC_FOR_NN Summary of this function goes here
+%   Detailed explanation goes here
 Size_of_subject=105;
-task=1;
-size_of_vector=220;
 for subject_i=1:Size_of_subject
     name_file=strcat('Data/Processed/Combined/task',num2str(task),'/',num2str(subject_i),'.mat');
     Submain=load(char(name_file));
@@ -44,13 +44,7 @@ for subject_i=1:Size_of_subject
     Subject.cues(1:end)=Subject.cues(idx);
     Subject.T1(1:end,:,:)=Subject.T1(idx,:,:);
     Subject.T2(1:end,:,:)=Subject.T2(idx,:,:);
-%     for i=1:size(Subject.T1,2)
-%         dat=Subject.T1(:,i,:);
-%         dat=reshape(dat,[64*220,1]);
-%         [max_val, ~]=max(dat)
-%         [min_val, ~]=min(dat)
-%     end
-    
+
     nbFolds = 5;
     uniqueTrials = (1:size(Subject.T1,1));
     nbTrials = numel(uniqueTrials);            
@@ -94,7 +88,10 @@ for subject_i=1:Size_of_subject
                 end
             end
         end
-        py.T2
+        py.T1.max{f}=max_train_T1;
+        py.T1.min{f}=min_train_T1;
+        py.T2.max{f}=max_train_T2;
+        py.T2.min{f}=min_train_T2;
         %all false
 %         py2.T1.all_false{f}=[];py3.T2.all_false{f}=[];
 %         for subject_i_test=1:Size_of_subject
@@ -134,60 +131,18 @@ for subject_i=1:Size_of_subject
 %             end
 %         end
     end
-    %hdf5write(strcat(num2str(subject_i),'.h5'), '/Data', py);
-    %hdf5write(strcat(num2str(subject_i),'all_false_T1.h5'), '/Data', py2);
-    %hdf5write(strcat(num2str(subject_i),'all_false_T2.h5'), '/Data', py3);
-    %savejson('data',py,strcat(num2str(subject_i),'.json'));
-    %savejson('data',py2,strcat(num2str(subject_i),'all_false_T1.json'));
-    %savejson('data',py3,strcat(num2str(subject_i),'all_false_T2.json'));
-%     jsonStr = jsonencode(py); 
-%     outputDir = strcat('Data/Result_json_cut/Task',num2str(task),'/');
-%     % Check if the folder exists , and if not, make it...
-%     if ~exist(outputDir, 'dir')
-%         mkdir(outputDir);
-%     end
-%     fid = fopen(strcat(outputDir, num2str(subject_i),'.json'), 'w'); 
-%     if fid == -1, error('Cannot create JSON file'); end 
-%     fwrite(fid, jsonStr, 'char'); 
-%     fclose(fid);
-%     
-%     jsonStr = jsonencode(py2); 
-%     outputDir = strcat('Data/Result_json_cut/Task',num2str(task),'/');
-%     % Check if the folder exists , and if not, make it...
-%     if ~exist(outputDir, 'dir')
-%         mkdir(outputDir);
-%     end
-%     fid = fopen(strcat(outputDir, num2str(subject_i),'all_false_T1.json'), 'w'); 
-%     if fid == -1, error('Cannot create JSON file'); end 
-%     fwrite(fid, jsonStr, 'char'); 
-%     fclose(fid);
-%     
-%     jsonStr = jsonencode(py3); 
-%     outputDir = strcat('Data/Result_json_cut/Task',num2str(task),'/');
-%     % Check if the folder exists , and if not, make it...
-%     if ~exist(outputDir, 'dir')
-%         mkdir(outputDir);
-%     end
-%     fid = fopen(strcat(outputDir, num2str(subject_i),'all_false_T2.json'), 'w'); 
-%     if fid == -1, error('Cannot create JSON file'); end 
-%     fwrite(fid, jsonStr, 'char'); 
-%     fclose(fid);
+
+    jsonStr = jsonencode(py); 
+    outputDir = strcat('Data/Result_json_cut/Task',num2str(task),'/');
+    % Check if the folder exists , and if not, make it...
+    if ~exist(outputDir, 'dir')
+        mkdir(outputDir);
+    end
+    fid = fopen(strcat(outputDir, num2str(subject_i),'.json'), 'w'); 
+    if fid == -1, error('Cannot create JSON file'); end 
+    fwrite(fid, jsonStr, 'char'); 
+    fclose(fid);
+
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+end
 
