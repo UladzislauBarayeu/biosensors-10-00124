@@ -218,10 +218,8 @@ def mean_accuracy(nn, subjects, allFalse=False, into_file=False, threshold_for_T
 
 if __name__ == '__main__':
 
+    array_all = [i for i in range(1, number_of_subjects + 1, 1)]
     print("inception_1_with_small_kernel, threshold 0.85")
-    array_all=[i for i in range(2, 31, 1)]
-    array_all.extend([i for i in range(81, 95, 1)])
-
     mean_accuracy("inception_1_with_small_kernel",array_all, into_file=False, allFalse=False,
                   threshold_for_T1=0.85, threshold_for_T2=0.85)
     #all False test
