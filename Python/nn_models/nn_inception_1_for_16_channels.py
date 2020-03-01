@@ -11,10 +11,10 @@ from configurations import *
 from network_utils import *
 
 
-input_shape = Input(shape=(18, 64, 1))
+input_shape = Input(shape=(18, 16, 1))
 dense_dim=36
 
-conv2d_1 = Conv2D(filters=32, kernel_size=(1, 3), activation='linear', strides=(1, 2), padding='same',
+conv2d_1 = Conv2D(filters=32, kernel_size=(1, 3), activation='linear', strides=(1, 1), padding='same',
                   name='conv2d_1',  bias_initializer="glorot_normal", kernel_initializer="glorot_normal")(input_shape)
 batch_normalization_1 = BatchNormalization(name='batch_normalization_1')(conv2d_1)
 activation_1 = Activation('relu', name='activation_1')(batch_normalization_1)
@@ -217,7 +217,6 @@ x = Conv2D(filters=192, kernel_size=(1, 3), activation='linear', strides=(1, 1),
 x = BatchNormalization(name="batch_normalization_42")(x)
 x = Activation('relu', name='activation_42')(x)
 
-x=MaxPooling2D(pool_size=(1, 2), strides=(1, 2), padding="same", name='max_pooling2d_4')(x)
 
 x = Conv2D(filters=96, kernel_size=(1, 1), activation='linear', strides=(1, 1), padding='same', name='conv2d_43')(x)
 x = BatchNormalization(name="batch_normalization_43")(x)
@@ -250,4 +249,4 @@ output = Dense(2, activation='sigmoid')(x)
 network = Model(input_shape, output, name="nn")
 network.summary()
 
-# save_network("inception_1_with_small_kernel", network, additional_folder_for_nn)
+save_network("inception_1_16_channels", network, additional_folder_for_nn)

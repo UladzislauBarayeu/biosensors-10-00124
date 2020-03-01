@@ -21,9 +21,9 @@ class EEGdata:
         return labels
 
     def load_raw_data(self, subject, global_task='Task1', task='T1', load_false_data_from_files=True, other=None,
-                      data_len=0):
+                      data_len=0, channels='16_channels'):
         file=str(subject) + '.json'
-        self.dir = repo_with_raw_data + global_task + '/'
+        self.dir = repo_with_raw_data + global_task +'/'+channels+ '/'
         self.file_path = self.dir + file
         json_data = open(self.file_path)
         d = json.load(json_data)

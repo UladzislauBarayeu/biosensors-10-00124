@@ -4,9 +4,9 @@ from sklearn.metrics import roc_curve, auc
 import matplotlib.pyplot as plt
 
 
-def read_predicted_file(nn, s, file='predicted_data.h5', threshold_for_T1=0.5, threshold_for_T2=0.5):
+def read_predicted_file(nn, s, file='predicted_data.h5', threshold_for_T1=0.5, threshold_for_T2=0.5, channels='16'):
 
-    aepath = python_repo_for_saving_predicted+ str(nn) + '/' + global_task + '/'
+    aepath = python_repo_for_saving_predicted+channels+'/nn_'+str(nn) + '/' + global_task + '/'
     sum_false_right_both = 0
     sum_true_right_both = 0
     sum_false_right_T1 = 0
@@ -88,7 +88,7 @@ def read_predicted_file(nn, s, file='predicted_data.h5', threshold_for_T1=0.5, t
     return sum_true_right_T1, sum_false_right_T1, sum_true_right_T2, sum_false_right_T2, sum_true_right_both, sum_false_right_both, len_of_true, len_of_false
 
 
-def mean_accuracy(nn, subjects, allFalse=False, into_file=False, threshold_for_T1=0.65, threshold_for_T2=0.65):
+def mean_accuracy(nn, subjects, allFalse=False, into_file=False, threshold_for_T1=0.65, threshold_for_T2=0.65, channels='16_channels'):
 
     sum_true_right_T1 = [0 for i in range(len(subjects))]
     sum_false_right_T1 = [0 for i in range(len(subjects))]
@@ -112,7 +112,7 @@ def mean_accuracy(nn, subjects, allFalse=False, into_file=False, threshold_for_T
             nn, subjects[subject],
             file=file,
             threshold_for_T1=threshold_for_T1,
-            threshold_for_T2=threshold_for_T2)
+            threshold_for_T2=threshold_for_T2, channels=channels)
 
     true_right_T1 = sum(sum_true_right_T1)
     false_right_T1 = sum(sum_false_right_T1)
@@ -220,9 +220,9 @@ if __name__ == '__main__':
 
     array_all = [i for i in range(1, number_of_subjects + 1, 1)]
     print("inception_1_with_small_kernel, threshold 0.85")
-    mean_accuracy("inception_1_with_small_kernel",array_all, into_file=False, allFalse=False,
-                  threshold_for_T1=0.85, threshold_for_T2=0.85)
+    mean_accuracy("inception_1_16_channels",[2], into_file=False, allFalse=False,
+                  threshold_for_T1=0.5, threshold_for_T2=0.5)
     #all False test
-    mean_accuracy("inception_1_with_small_kernel", array_all, into_file=False, allFalse=True,
-                  threshold_for_T1=0.85, threshold_for_T2=0.85)
-
+    # mean_accuracy("inception_1_with_small_kernel", array_all, into_file=False, allFalse=True,
+    #               threshold_for_T1=0.85, threshold_for_T2=0.85)
+    #
