@@ -21,7 +21,7 @@ if __name__ == '__main__':
         if int(args.arg2) == 1:
             from train_network import *
             train_both_tasks(nn, int(args.arg1), data_len=data_len, two_times=two_times, batch_size=batch_size, lr=lr, epoch=epoch,
-                             global_task=global_task, earlystop=earlystop)
+                             global_task=global_task, earlystop=earlystop, channels=channels)
 
         if int(args.arg2) == 2:
             from predict_data import *
@@ -29,7 +29,7 @@ if __name__ == '__main__':
 
         if int(args.arg2) == 3:
             from predict_data import *
-            predict_allFalse_two_tasks(nn, int(args.arg1), global_task=global_task)
+            predict_allFalse_two_tasks(nn, int(args.arg1), global_task=global_task, channels=channels)
 
         if int(args.arg2) == 4:
             from export_for_matlab import *

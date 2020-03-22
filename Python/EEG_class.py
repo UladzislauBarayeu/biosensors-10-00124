@@ -21,9 +21,9 @@ class EEGdata:
         return labels
 
     def load_raw_data(self, subject, global_task='Task1', task='T1', load_false_data_from_files=True, other=None,
-                      data_len=0):
+                      data_len=0, channels='16_channels', is_one_channel=False):
         file=str(subject) + '.json'
-        self.dir = repo_with_raw_data + global_task + '/'
+        self.dir = repo_with_raw_data + global_task +'/'+channels+ '/'
         self.file_path = self.dir + file
         json_data = open(self.file_path)
         d = json.load(json_data)
@@ -48,8 +48,6 @@ class EEGdata:
                 self.internal_id.append(i)
                 false_data.append(temp[i])
 
-            false_data = np.array(false_data)
-            false_data = np.transpose(false_data, (0, 2, 1))
 
 
         else:
@@ -64,12 +62,11 @@ class EEGdata:
                 false_data.append(temp[self.internal_id[j]])
                 j += 1
 
-            false_data = np.array(false_data)
-            false_data = np.transpose(false_data, (0, 2, 1))
-
-        true_data = np.transpose(true_data, (0, 2, 1))
+        false_data = np.array(false_data)
         self.all_data = np.concatenate((true_data, false_data), axis=0)
-        self.all_data = np.expand_dims(self.all_data, axis=3)
+        if is_one_channel is False:
+            self.all_data = np.transpose(self.all_data, (0, 2, 1))
+            self.all_data = np.expand_dims(self.all_data, axis=3)
         self.true_labels, self.false_labels = np.array([[1., 0.] for i in range(len(true_data))]), np.array(
             [[0., 1.] for i in range(len(false_data))])
         self.all_labels = np.concatenate((self.true_labels, self.false_labels), axis=0)

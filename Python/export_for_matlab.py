@@ -8,8 +8,8 @@ from configurations import *
 import h5py
 
 
-def export_nn_for_svm_two_tasks(nn, s, global_task='Task1'):
-    aepath = home_repo + 'nn_' + str(nn) + '/' + global_task + '/' + str(s) + '/'
+def export_nn_for_svm_two_tasks(nn, s, global_task='Task1', channels='16_channels'):
+    aepath = home_repo + '/'+channels+'/nn_' + str(nn) + '/' + global_task + '/' + str(s) + '/'
 
     with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
         test_x_1 = f["test_sample_T1"][:]
@@ -60,7 +60,7 @@ def export_nn_for_svm_two_tasks(nn, s, global_task='Task1'):
                'T2': {'train_sample': t2_train_data_predicted, 'test_sample': t2_test_data_predicted},
                'train_y': train_y, 'test_y': test_y}
 
-    dir_for_output = matlab_repo_for_saving_svm + str(nn) + '/' + str(global_task)
+    dir_for_output = matlab_repo_for_saving_svm+channels+'/nn_' + str(nn) + '/' + str(global_task)
 
     if not os.path.exists(dir_for_output):
         os.makedirs(dir_for_output)
@@ -70,7 +70,8 @@ def export_nn_for_svm_two_tasks(nn, s, global_task='Task1'):
 
 
 def create_json_for_ROC(nn, s):
-    file_repo = python_repo_for_saving_predicted + str(nn) + '/' + str(global_task) + '/predicted_data_s' + str(
+    
+    file_repo = python_repo_for_saving_predicted +'/'+channels+'/nn_' + str(nn) + '/' + str(global_task) + '/predicted_data_s' + str(
         s) + '.h5'
 
     with h5py.File(file_repo, 'r') as f:
@@ -91,7 +92,7 @@ def create_json_for_ROC(nn, s):
                'T2': t2_test_data.tolist(),
                'labels': labels}
 
-    dir_for_output = matlab_repo_for_saving_svm + str(nn) + '/' + str(global_task)
+    dir_for_output = matlab_repo_for_saving_svm +channels+'/nn_' + str(nn) + '/' + str(global_task)
 
     if not os.path.exists(dir_for_output):
         os.makedirs(dir_for_output)
@@ -101,8 +102,8 @@ def create_json_for_ROC(nn, s):
     outfile.close()
 
 
-def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1'):
-    aepath = home_repo + 'nn_' + str(nn) + '/' + global_task + '/' + str(s) + '/'
+def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1', channels='16_channels'):
+    aepath = home_repo +'/'+channels+'/nn_'  + str(nn) + '/' + global_task + '/' + str(s) + '/'
 
     with h5py.File(aepath + 'data_for_training.h5', 'r') as f:
         minmax_T1 = f["minmax_T1"][:]
@@ -140,7 +141,7 @@ def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1'):
     jsondic = {'T1': {'test_sample': t1_test_data_predicted},
                'T2': {'test_sample': t2_test_data_predicted}, 'test_y': test_y}
 
-    dir_for_output = matlab_repo_for_saving_svm + str(nn) + '/' + str(global_task) + '/'
+    dir_for_output = matlab_repo_for_saving_svm +channels+'/nn_'  +str(nn) + '/' + str(global_task) + '/'
 
     if not os.path.exists(dir_for_output):
         os.makedirs(dir_for_output)
@@ -148,7 +149,3 @@ def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1'):
     json.dump(jsondic, outfile)
     outfile.close()
 
-
-if __name__ == "__main__":
-    for s in [6]:
-        create_json_for_ROC(nn="simple_1_with_dropout_2", s=s)
