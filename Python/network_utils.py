@@ -24,7 +24,7 @@ def train_nn(h5file, train_data, labels, batch_size=32, callbacks_list=None, opt
         checkpoint = keras.callbacks.ModelCheckpoint(ae_name, monitor='val_loss', verbose=0, save_best_only=True,
                                                      save_weights_only=False, mode='auto', period=period)
 
-        earlycallback = keras.callbacks.EarlyStopping(monitor='val_loss', mode='auto', min_delta=0.00001, patience=5,
+        earlycallback = keras.callbacks.EarlyStopping(monitor='val_loss', mode='auto', min_delta=0, patience=5000,
                                                       verbose=1)
 
         if earlystop:
@@ -93,6 +93,45 @@ def normalize_data(x_array, minmax_arr=None):
                             out[trial][feature_row][el][t] = 0.0
         return out
 
+def normalize_data_one_channel(x_array, minmax_arr=None):
+    out = np.zeros(x_array.shape, x_array.dtype)
+
+    if minmax_arr is None:
+
+        l_min = []
+        l_max = []
+        div = []
+        for i, trial in enumerate(x_array):
+            loc_min = np.min(trial)
+            loc_max = np.max(trial)
+            l_min.append(loc_min)
+            l_max.append(loc_max)
+            div_real = loc_max - loc_min
+            div.append(div_real)
+            out[i]=(trial-loc_min)/div_real
+        return out, np.array([l_min, l_max])
+
+    else:
+
+        l_min = minmax_arr[0]
+        l_max = minmax_arr[1]
+
+        div = [(l_max[i] - l_min[i]) for i in range(len(l_max))]
+
+
+
+        for i, trial in enumerate(x_array):
+            out[i] = (trial - l_min[i]) / div[i]
+
+
+        for trial in range(out.shape[0]):
+            for feature_row in range(out.shape[1]):
+                if (out[trial][feature_row] > 1.0):
+                    out[trial][feature_row] = 1.0
+
+                if (out[trial][feature_row] < 0.0):
+                    out[trial][feature_row] = 0.0
+        return out
 
 def denorm_data(x_array, minmax_arr):
     out = np.zeros(x_array.shape, x_array.dtype)
@@ -113,8 +152,8 @@ def show_model(file, out_file):
     plot_model(model, to_file=out_file, show_layer_names=False, rankdir='LR')
 
 
-def save_network(name, nn, additional_folder_for_nn='', channels=16):
-    aepath = additional_folder_for_nn + home_repo + str(channels)+'_channels/nn_' + str(name) + '/'
+def save_network(name, nn, additional_folder_for_nn='', channels='16_channels'):
+    aepath = additional_folder_for_nn + home_repo + str(channels)+'/nn_' + str(name) + '/'
     if not os.path.exists(aepath):
         os.makedirs(aepath)
     file_raw = aepath + 'test_conv_ae.h5'

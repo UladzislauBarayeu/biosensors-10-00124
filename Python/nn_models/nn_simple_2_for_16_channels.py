@@ -47,29 +47,12 @@ x = Activation('relu')(x)
 
 x=MaxPooling2D(pool_size=(1, 2), strides=(1, 2), padding="same")(x)
 
-#
-# x = Conv2D(filters=32, kernel_size=(1, 3), activation='linear', strides=(1, 1), padding='same')(x)
-# x = BatchNormalization()(x)
-# x = Activation('relu')(x)
-#
-# x=Dropout(rate=0.2)(x)
-#
-# x = Conv2D(filters=32, kernel_size=(1, 3), activation='linear', strides=(1, 1), padding='same')(x)
-# x = BatchNormalization()(x)
-# x = Activation('relu')(x)
-#
-# x=MaxPooling2D(pool_size=(1, 2), strides=(1, 2), padding="same")(x)
-# x = Conv2D(filters=64, kernel_size=(1, 3), activation='linear', strides=(1, 1), padding='same')(x)
-# x = BatchNormalization()(x)
-# x = Activation('relu')(x)
-#
-# x = Conv2D(filters=64, kernel_size=(1, 3), activation='linear', strides=(1, 1), padding='same')(x)
-# x = BatchNormalization()(x)
-# x = Activation('relu')(x)
-#
-# x=MaxPooling2D(pool_size=(1, 2), strides=(1, 2), padding="same")(x)
 
 x = Conv2D(filters=16, kernel_size=(1, 1), activation='linear', strides=(1, 1), padding='same')(x)
+x = BatchNormalization()(x)
+x = Activation('relu')(x)
+
+x = Conv2D(filters=8, kernel_size=(1, 1), activation='linear', strides=(1, 1), padding='same')(x)
 x = BatchNormalization()(x)
 x = Activation('relu')(x)
 
@@ -90,4 +73,4 @@ output = Dense(2, activation='sigmoid')(x)
 network = Model(input_shape, output, name="nn")
 network.summary()
 
-save_network("simple_1_16_channels", network, additional_folder_for_nn)
+save_network("simple_2_16_channels", network, additional_folder_for_nn)

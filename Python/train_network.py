@@ -13,7 +13,7 @@ def train_both_tasks(nn, subject, number_of_folds=5, data_len=200, epoch=160, pe
 
     test2 = EEGdata()
     test2.load_raw_data(subject, global_task=global_task, task='T2', load_false_data_from_files=False, other=test1,
-                        data_len=data_len)
+                        data_len=data_len, channels=channels)
 
     train_data_T1, train_data_T2, labels = shuffle(np.copy(test1.all_data), np.copy(test2.all_data),
                                                    np.copy(test1.all_labels), random_state=0)
@@ -191,5 +191,5 @@ def train_both_tasks_from_fold(nn, s, n_fold, epoch=160, period=2, lr=0.0001, tw
 
 
 if __name__ == '__main__':
-    train_both_tasks("inception_1_16_channels", 2, data_len=220, two_times=False, batch_size=140, lr=0.001,
-                     epoch=2, number_of_folds=5)
+    train_both_tasks("inception_3_16_channels", 2, data_len=220, two_times=True, batch_size=140, lr=0.001,
+                     epoch=500, number_of_folds=5, channels="16_channels")

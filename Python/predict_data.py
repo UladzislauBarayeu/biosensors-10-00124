@@ -82,4 +82,4 @@ def predict_allFalse_two_tasks(nn, s, global_task='Task1', channels='16_channels
         d = f.create_dataset("test_labels", data=np.array(test_y, dtype=np.float64))
 
 if __name__ == '__main__':
-    predict_two_tasks("inception_1_16_channels", 2)
+    predict_two_tasks("inception_3_16_channels", 3, channels="16_channels")

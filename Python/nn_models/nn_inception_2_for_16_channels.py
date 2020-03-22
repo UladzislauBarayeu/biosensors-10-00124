@@ -11,10 +11,10 @@ from configurations import *
 from network_utils import *
 
 
-input_shape = Input(shape=(18, 64, 1))
+input_shape = Input(shape=(18, 16, 1))
 dense_dim=36
 
-conv2d_1 = Conv2D(filters=32, kernel_size=(1, 3), activation='linear', strides=(1, 2), padding='same',
+conv2d_1 = Conv2D(filters=32, kernel_size=(1, 3), activation='linear', strides=(1, 1), padding='same',
                   name='conv2d_1',  bias_initializer="glorot_normal", kernel_initializer="glorot_normal")(input_shape)
 batch_normalization_1 = BatchNormalization(name='batch_normalization_1')(conv2d_1)
 activation_1 = Activation('relu', name='activation_1')(batch_normalization_1)
@@ -154,40 +154,32 @@ activation_25 = Activation('relu', name='activation_25')(batch_normalization_25)
 activation_26 = Activation('relu', name='activation_26')(batch_normalization_26)
 mixed2 = Concatenate(name='mixed2')([activation_20, activation_22, activation_25, activation_26])
 
+conv2d_28 = Conv2D(filters=64, kernel_size=(1, 1), activation='linear', strides=(1, 1), padding='same',
+                   name='conv2d_28')(mixed2)
+batch_normalization_28 = BatchNormalization(name='batch_normalization_28')(conv2d_28)
+activation_28 = Activation('relu', name='activation_28')(batch_normalization_28)
 
-conv2d_35 = Conv2D(filters=128, kernel_size=(1, 1), activation='linear', strides=(1, 1), padding='same',
-                   name='conv2d_35')(mixed2)
-batch_normalization_35 = BatchNormalization(name='batch_normalization_35')(conv2d_35)
-activation_35 = Activation('relu', name='activation_35')(batch_normalization_35)
+conv2d_29 = Conv2D(filters=96, kernel_size=(1, 3), activation='linear', strides=(1, 1), padding='same',
+                   name='conv2d_29')(activation_28)
+batch_normalization_29 = BatchNormalization(name='batch_normalization_29')(conv2d_29)
+activation_29 = Activation('relu', name='activation_29')(batch_normalization_29)
 
-conv2d_32 = Conv2D(filters=128, kernel_size=(1, 3), activation='linear', strides=(1, 1), padding='same',
-                   name='conv2d_32')(mixed2)
-conv2d_37 = Conv2D(filters=128, kernel_size=(1, 1), activation='linear', strides=(1, 1), padding='same',
-                   name='conv2d_37')(activation_35)
-batch_normalization_32 = BatchNormalization(name='batch_normalization_32')(conv2d_32)
-batch_normalization_37 = BatchNormalization(name='batch_normalization_37')(conv2d_37)
-activation_32 = Activation('relu', name='activation_32')(batch_normalization_32)
-activation_37 = Activation('relu', name='activation_37')(batch_normalization_37)
+conv2d_27 = Conv2D(filters=384, kernel_size=(1, 3), activation='linear', strides=(1, 2), padding='same',
+                   name='conv2d_27')(mixed2)
+conv2d_30 = Conv2D(filters=96, kernel_size=(1, 3), activation='linear', strides=(1, 2), padding='same',
+                   name='conv2d_30')(activation_29)
+batch_normalization_27 = BatchNormalization(name='batch_normalization_27')(conv2d_27)
+batch_normalization_30 = BatchNormalization(name='batch_normalization_30')(conv2d_30)
+activation_27 = Activation('relu', name='activation_27')(batch_normalization_27)
+activation_30 = Activation('relu', name='activation_30')(batch_normalization_30)
 
-# average_pooling2d_4 = AveragePooling2D(pool_size=(1, 3), strides=(1, 1), padding='same',
-#                                        name='average_pooling2d_3')(mixed3)
+max_pooling2d_3 = MaxPooling2D(pool_size=(1, 3), strides=(1, 2), padding='same', name='max_pooling2d_3')(mixed2)
 
-conv2d_31 = Conv2D(filters=192, kernel_size=(1, 1), activation='linear', strides=(1, 1), padding='same',
-                   name='conv2d_31')(mixed2)
-conv2d_39 = Conv2D(filters=192, kernel_size=(1, 3), activation='linear', strides=(1, 1), padding='same',
-                   name='conv2d_39')(activation_32)
-conv2d_40 = Conv2D(filters=192, kernel_size=(1, 1), activation='linear', strides=(1, 1), padding='same',
-                   name='conv2d_40')(activation_37)
-batch_normalization_31 = BatchNormalization(name='batch_normalization_31')(conv2d_31)
-batch_normalization_39 = BatchNormalization(name='batch_normalization_39')(conv2d_39)
-batch_normalization_40 = BatchNormalization(name='batch_normalization_40')(conv2d_40)
-activation_31 = Activation('relu', name='activation_31')(batch_normalization_31)
-activation_39 = Activation('relu', name='activation_39')(batch_normalization_39)
-activation_40 = Activation('relu', name='activation_40')(batch_normalization_40)
+mixed3 = Concatenate(name='mixed3')([activation_27, activation_30, max_pooling2d_3])
 
-mixed4 = Concatenate(name='mixed4')([activation_31, activation_39, activation_40])
 
-x = Conv2D(filters=192, kernel_size=(1, 3), activation='linear', strides=(1, 1), padding='same', name='conv2d_41')(mixed4)
+
+x = Conv2D(filters=192, kernel_size=(1, 3), activation='linear', strides=(1, 1), padding='same', name='conv2d_41')(mixed3)
 x = BatchNormalization(name="batch_normalization_41")(x)
 x = Activation('relu', name='activation_41')(x)
 
@@ -195,7 +187,6 @@ x = Conv2D(filters=192, kernel_size=(1, 3), activation='linear', strides=(1, 1),
 x = BatchNormalization(name="batch_normalization_42")(x)
 x = Activation('relu', name='activation_42')(x)
 
-x=MaxPooling2D(pool_size=(1, 2), strides=(1, 2), padding="same", name='max_pooling2d_4')(x)
 
 x = Conv2D(filters=96, kernel_size=(1, 1), activation='linear', strides=(1, 1), padding='same', name='conv2d_43')(x)
 x = BatchNormalization(name="batch_normalization_43")(x)
@@ -228,4 +219,4 @@ output = Dense(2, activation='sigmoid')(x)
 network = Model(input_shape, output, name="nn")
 network.summary()
 
-# save_network("inception_1_with_small_kernel", network, additional_folder_for_nn)
+save_network("inception_2_16_channels", network, additional_folder_for_nn)
