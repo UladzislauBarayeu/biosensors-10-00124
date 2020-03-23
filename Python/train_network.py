@@ -191,5 +191,5 @@ def train_both_tasks_from_fold(nn, s, n_fold, epoch=160, period=2, lr=0.0001, tw
 
 
 if __name__ == '__main__':
-    train_both_tasks("inception_3_16_channels", 2, data_len=220, two_times=True, batch_size=140, lr=0.001,
+    train_both_tasks("inception_1_16_channels", 2, data_len=220, two_times=True, batch_size=140, lr=0.001,
                      epoch=500, number_of_folds=5, channels="16_channels")
