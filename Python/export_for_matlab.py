@@ -69,7 +69,7 @@ def export_nn_for_svm_two_tasks(nn, s, global_task='Task1', channels='16_channel
     outfile.close()
 
 
-def create_json_for_ROC(nn, s):
+def create_json_for_ROC(nn, s, channels='16_channels'):
     
     file_repo = python_repo_for_saving_predicted +'/'+channels+'/nn_' + str(nn) + '/' + str(global_task) + '/predicted_data_s' + str(
         s) + '.h5'
@@ -115,7 +115,7 @@ def export_allFalse_for_svm_two_tasks(nn, s, global_task='Task1', channels='16_c
     t2_test_data_predicted = [0 for i in range(number_of_folds)]
     test_y = [0 for i in range(number_of_folds)]
 
-    all_T1, all_T2 = load_allFalse(s, global_task)
+    all_T1, all_T2 = load_allFalse(s, global_task, channels=channels)
 
     for fold in range(number_of_folds):
         file1 = aepath + 'T1/test_conv_ae_' + str(fold) + '.h5'

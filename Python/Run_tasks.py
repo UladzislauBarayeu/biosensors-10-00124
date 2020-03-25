@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
         if int(args.arg2) == 2:
             from predict_data import *
-            predict_two_tasks(nn, int(args.arg1))
+            predict_two_tasks(nn, int(args.arg1), channels=channels)
 
         if int(args.arg2) == 3:
             from predict_data import *
@@ -34,9 +34,9 @@ if __name__ == '__main__':
         if int(args.arg2) == 4:
             from export_for_matlab import *
             export_nn_for_svm_two_tasks(nn, int(args.arg1), global_task=global_task)
-            create_json_for_ROC(nn, s=int(args.arg1))
+            create_json_for_ROC(nn, s=int(args.arg1), channels=channels)
 
         if int(args.arg2) == 5:
             from export_for_matlab import *
-            export_allFalse_for_svm_two_tasks(nn, int(args.arg1), global_task)
+            export_allFalse_for_svm_two_tasks(nn, int(args.arg1), global_task, channels=channels)
 
