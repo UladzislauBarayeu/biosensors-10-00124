@@ -160,13 +160,13 @@ def save_network(name, nn, additional_folder_for_nn='', channels='16_channels'):
     nn.save(file_raw)
 
 
-def load_allFalse(subject, global_task='Task1'):
+def load_allFalse(subject, global_task='Task1', channels='16_channels'):
     all_T1 = []
     all_T2 = []
 
     for falseSubject in range(1, number_of_subjects+1, 1):
         if falseSubject != subject:
-            directory = repo_with_raw_data + global_task + "/"
+            directory = repo_with_raw_data + global_task + "/"+channels+'/'
             h5file = str(falseSubject) + '.json'
             path = directory + h5file
             json_data = open(path)
