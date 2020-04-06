@@ -90,4 +90,4 @@ output = Dense(2, activation='sigmoid')(x)
 network = Model(input_shape, output, name="nn")
 network.summary()
 
-save_network("simple_1_8_channels", network, additional_folder_for_nn)
+save_network("simple_1_8_channels", network, additional_folder_for_nn, channels='8_channels')
