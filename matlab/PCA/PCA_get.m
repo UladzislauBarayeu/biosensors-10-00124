@@ -24,7 +24,7 @@ for Number_of_subject=1:size_of_subjects
     for number_trial=1:size(Subject.T1,2)
         for number_channel=1:size(data_PCA{1},2)
             for numer_feat=1:size(Subject.T1{1},2)
-                Subject_pca.T1{number_trial}((number_channel)+(numer_feat-1)*2)=data_PCA{numer_feat}(number_trial,number_channel);
+                Subject_pca.T1{number_trial}((number_channel)+(numer_feat-1)*number_sub_channel)=data_PCA{numer_feat}(number_trial,number_channel);
             end
         end
     end

@@ -17,7 +17,7 @@ fast=1;%if 1 run without optimization
 %mean_result_T1 = PCA_SVM_T1_new( task, Size_of_feat, KernelSVM,  fast, knn, selected_channels, number_sub_channel); %return mean accuracy
 %mean_result_T2 = PCA_SVM_T2_new( task, Size_of_feat, KernelSVM,  fast, knn, selected_channels, number_sub_channel); %return mean accuracy
 fast_check=1;%if 1 run without optimization
-PCA_check( task, fast, fast_check, knn, selected_channels, number_sub_channel );
+PCA_check( task, fast, fast_check, knn,selected_channels );
 
 
 %% here Python should be run

@@ -1,4 +1,4 @@
-function [] = Combine_features( task )
+function [] = Combine_features( task, selected_channels )
 %combine entropy and freq features
 
 size_of_subjects=105;
@@ -42,10 +42,47 @@ for Number_of_subject=1:size_of_subjects
         end 
         Subject.T2{nb_trial}=trial;
     end
+    %% select good
+    good_index=[];
+    for nb_channel=1:size(freq_feat.freqlabels,1)
+        for nb_channel_good=1:size(selected_channels,2)
+            if strcmp(entropy_feat.entropylabels{nb_channel,1}(1:4),selected_channels{nb_channel_good})
+                good_index=[good_index nb_channel];
+            end
+        end
+    end
+    Subject_new.result_label=cell(size(good_index,2),size(Subject.result_label,2));
+    for nb_channel=1:size( Subject_new.result_label,1)
+        for nb_feat=1:size( Subject_new.result_label,2)
+             Subject_new.result_label{nb_channel,nb_feat}=Subject.result_label{good_index(nb_channel),nb_feat};
+        end
+    end
     
+    for trial=1:size(Subject.T1,2)
+        for nb_channel=1:size( Subject_new.result_label,1)
+            for nb_feat=1:size( Subject_new.result_label,2)
+                 Subject_new.T1{trial}(nb_channel,nb_feat)=Subject.T1{trial}(good_index(nb_channel),nb_feat);
+            end
+        end
+    end
+    for trial=1:size(Subject.T2,2)
+        for nb_channel=1:size( Subject_new.result_label,1)
+            for nb_feat=1:size( Subject_new.result_label,2)
+                 Subject_new.T2{trial}(nb_channel,nb_feat)=Subject.T2{trial}(good_index(nb_channel),nb_feat);
+            end
+        end
+    end
+    clear Subject
+    Subject=Subject_new;
+    clear Subject_new
+    name_folder='';
+    for nb_channel=1:size( selected_channels,2)
+        name_folder=strcat(name_folder,selected_channels{nb_channel});
+    end
+    name_folder=strcat(name_folder,'end');
     %% Saving
     jsonStr = jsonencode(Subject); 
-    outputDir = strcat('Data/Result_json/Task',num2str(task),'/');
+    outputDir = strcat('Data/Result_json/Task',num2str(task),'/',name_folder,'/');
     % Check if the folder exists , and if not, make it...
     if ~exist(outputDir, 'dir')
         mkdir(outputDir);
@@ -55,7 +92,7 @@ for Number_of_subject=1:size_of_subjects
     fwrite(fid, jsonStr, 'char'); 
     fclose(fid);
     % Define the folder where to store the data
-    outputDir = strcat('Data/Processed/Combined/task',num2str(task),'/');
+    outputDir = strcat('Data/Processed/Combined/task',num2str(task),'/',name_folder,'/');
     % Check if the folder exists , and if not, make it...
     if ~exist(outputDir, 'dir')
         mkdir(outputDir);
@@ -64,6 +101,7 @@ for Number_of_subject=1:size_of_subjects
     outputfilename = sprintf('%s/%s.mat', outputDir, num2str(Number_of_subject));
     % Write it to disk
     save(outputfilename,'Subject');
+    clear Subject
 end
 
 end
