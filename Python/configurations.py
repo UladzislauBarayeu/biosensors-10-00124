@@ -19,8 +19,8 @@ batch_size = 140
 lr = 0.001
 epoch = 700
 # channels='16_channels'
-list_of_subjects = [i for i in range(1, number_of_subjects+1, 1)]
-#list_of_subjects = [5, 15, 25, 35, 45, 55,65, 75, 85, 95, 105]
+# list_of_subjects = [i for i in range(1, number_of_subjects+1, 1)]
+list_of_subjects = [5, 15, 25, 35, 45, 55,65, 75, 85, 95, 105]
 
 global_task = "Task1"
 
