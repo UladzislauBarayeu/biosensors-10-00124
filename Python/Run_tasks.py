@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
         if int(args.arg4) == 4:
             from export_for_matlab import *
-            export_nn_for_svm_two_tasks(args.arg2, int(args.arg1), global_task=global_task)
+            export_nn_for_svm_two_tasks(args.arg2, int(args.arg1),channels=args.arg3, global_task=global_task)
             create_json_for_ROC(args.arg2, s=int(args.arg1), channels=args.arg3)
 
         if int(args.arg4) == 5:
