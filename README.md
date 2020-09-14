@@ -24,11 +24,11 @@ conda install keras
 
 ## Running the code 
 
-Data preprocessing: 
+# Data preprocessing: 
 - To preprocess the data and perform feature extraction, run 'matlab/Run0.m' script in Matlab
 - To create data for NN and to perform PCA+SVM model training,run 'matlab/Run1.m' script in Matlab
 
-Training Neural Network 
+# Training Neural Network:
 - to create new neural network, cd to Python folder and run the following commands in the Command Prompt:
 ```
 cd Python/nn_models
@@ -46,10 +46,10 @@ cd ../
 python Run_subjects.py --arg2 inception_1_64_channels --arg3 64_channels --arg5 0 --arg6 104
 ```
 
-Training SVM for NN+SVM decoder
+# Training SVM for NN+SVM decoder:
 - To perform NN+SVM models, run 'matlab/Run2.m' script in Matlab
 
-Obtaining 
+# Obtaining the results:
 - To create ROC figures and box plots, run 'matlab/Run3.m' script in Matlab
 
 ## How to cite
