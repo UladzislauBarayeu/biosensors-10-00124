@@ -55,6 +55,6 @@ Obtaining
 ## How to cite
 
 Paper:
-Barayeu, U.; Horlava, N.; Libert, A.; Van Hulle, M. Robust Single-Trial EEG-Based Authentication Achieved with a 2-Stage Classifier. Biosensors 2020, 10, 124
+- Barayeu, U.; Horlava, N.; Libert, A.; Van Hulle, M. Robust Single-Trial EEG-Based Authentication Achieved with a 2-Stage Classifier. Biosensors 2020, 10, 124
 
 
