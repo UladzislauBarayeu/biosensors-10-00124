@@ -1,19 +1,23 @@
-
+%==========================================
+%Author: Uladzislau Barayeu
+%Github: @UladzislauBarayeu
+%Email: uladzislau.barayeu@ist.ac.at
+%==========================================
 %% calculate cross-corelation between channels, and return mean for all subjects
 clear all;
 task=1;%set number of task
 size_of_subjects=105;%set
-
+channels=8;
 
 %%
-load(char(strcat('Data/Processed/Combined/task',num2str(task),'/',num2str(1),'.mat')));
+load(char(strcat('Data/Processed/Combined/task',num2str(task),'/',num2str(channels),'_channels/',num2str(1),'.mat')));
 R=zeros(size(Subject.result_label,2),size(Subject.result_label,1),size(Subject.result_label,1));
 P=zeros(size(Subject.result_label,2),size(Subject.result_label,1),size(Subject.result_label,1));
 for Number_of_feat=1:size(Subject.result_label,2)
     matrix=[];
     for Number_of_subject=1:size_of_subjects
 
-        name_file=strcat('Data/Processed/Combined/task',num2str(task),'/',num2str(Number_of_subject),'.mat');
+        name_file=strcat('Data/Processed/Combined/task',num2str(task),'/',num2str(channels),'_channels/',num2str(Number_of_subject),'.mat');
         load(char(name_file));
         for Number_of_trail=1:size(Subject.T1,2)%set
             matrix=[matrix Subject.T1{Number_of_trail}(:,Number_of_feat)];
@@ -35,6 +39,6 @@ outputjpgDir='Data/cross/';
 if ~exist(outputjpgDir, 'dir')
     mkdir(outputjpgDir);
 end
-save('Data/cross/cross','Result_R','Std_R','R');
+save('Data/cross/cross','Result_R','Std_R','R','channels');
 
 

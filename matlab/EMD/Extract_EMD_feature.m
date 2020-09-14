@@ -1,6 +1,10 @@
 function [] = Extract_EMD_feature( task, type, number_of_IMFS )
 %EXTRACT_EMD_FEATURE 
-
+%==========================================
+%Author: Uladzislau Barayeu
+%Github: @UladzislauBarayeu
+%Email: uladzislau.barayeu@ist.ac.at
+%==========================================
 size_of_subjects=105;
 
 %%

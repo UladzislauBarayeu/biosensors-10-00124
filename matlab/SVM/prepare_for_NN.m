@@ -1,4 +1,9 @@
 clear all;
+%==========================================
+%Author: Uladzislau Barayeu
+%Github: @UladzislauBarayeu
+%Email: uladzislau.barayeu@ist.ac.at
+%==========================================
 Size_of_subject=105;
 task=1;
 size_of_vector=220;

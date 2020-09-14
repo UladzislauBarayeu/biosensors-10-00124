@@ -1,6 +1,10 @@
 function [] = preproc_for_NN( task, size_of_vector)
 %PREPROC_FOR_NN Summary of this function goes here
-%   Detailed explanation goes here
+%==========================================
+%Author: Uladzislau Barayeu
+%Github: @UladzislauBarayeu
+%Email: uladzislau.barayeu@ist.ac.at
+%==========================================
 Size_of_subject=105;
 for subject_i=1:Size_of_subject
     name_file=strcat('Data/Processed/Combined/task',num2str(task),'/',num2str(subject_i),'.mat');

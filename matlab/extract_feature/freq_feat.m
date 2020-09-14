@@ -1,5 +1,9 @@
 function [ features, freq_labels ] = freq_feat( T, labels, sample_rate )
-
+%==========================================
+%Author: Uladzislau Barayeu
+%Github: @UladzislauBarayeu
+%Email: uladzislau.barayeu@ist.ac.at
+%==========================================
     for Number_trial=1:size(T,2)
         trial=[];
         

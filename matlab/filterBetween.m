@@ -1,6 +1,10 @@
 function filteredRes = filterBetween(EEG, sampleRate, low, high, order) 
 
-
+%==========================================
+%Author: Uladzislau Barayeu
+%Github: @UladzislauBarayeu
+%Email: uladzislau.barayeu@ist.ac.at
+%==========================================
     low_rad=(2/sampleRate)*low;
     high_rad=(2/sampleRate)*high;
     %open quation about order

@@ -1,7 +1,10 @@
 function [ epochsEMD,labels ] = EMD( T, channel_names, type, number_of_IMFS)
 %END 
-%   Detailed explanation goes here
-%set number_of_IMFS
+%==========================================
+%Author: Uladzislau Barayeu
+%Github: @UladzislauBarayeu
+%Email: uladzislau.barayeu@ist.ac.at
+%==========================================
     epochsEMD={};
     labels={};
     for Number_trial=1:size(T,2)     
@@ -36,19 +39,20 @@ function [ epochsEMD,labels ] = EMD( T, channel_names, type, number_of_IMFS)
                     labeltrial{Number_chanel}{Num_of_label}=strcat(channel_names{Number_chanel}...
                         ,'_',num2str(Num_of_label));
                     %% test IMF power
-                    param.Fs=160;
-                    param.tapers=[3 5];
-                    param.fpass=[0.5 42];
-                    [~,~,~,S1,~,f]=coherencyc(IMFs(Num_of_label,:),IMFs(Num_of_label,:),param);
-                    plot(f,S1);
-                    title(strcat('spectrum IMF-',num2str(Num_of_label)),'FontSize',15)
-                    xlabel('frequency','FontSize',15)
-                    ylabel('PSD','FontSize',15)
-                    outputjpgDir = strcat('figures/IMF/');
-                    if ~exist(outputjpgDir, 'dir')
-                            mkdir(outputjpgDir);
-                    end
-                    saveas(gcf,strcat(outputjpgDir,num2str(Num_of_label),'.jpg'));
+%                     param.Fs=160;
+%                     param.tapers=[3 5];
+%                     param.fpass=[0.5 42];
+%                     [~,~,~,S1,~,f]=coherencyc(IMFs(Num_of_label,:),IMFs(Num_of_label,:),param);
+%                     plot(f,S1);
+%                     title(strcat('spectrum IMF-',num2str(Num_of_label)),'FontSize',15)
+%                     xlabel('frequency','FontSize',15)
+%                     ylabel('PSD','FontSize',15)
+%                     outputjpgDir = strcat('figures/IMF/');
+%                     if ~exist(outputjpgDir, 'dir')
+%                             mkdir(outputjpgDir);
+%                     end
+%                     saveas(gcf,strcat(outputjpgDir,num2str(Num_of_label),'.jpg'));
+%                     saveas(gcf,strcat(outputjpgDir,num2str(Num_of_label)),'epsc');
 
                 end
             end

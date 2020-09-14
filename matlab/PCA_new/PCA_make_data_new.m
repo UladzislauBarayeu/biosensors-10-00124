@@ -1,12 +1,15 @@
-function [] = PCA_make_data_new( task, size_of_vector, selected_channels )
+function [] = PCA_make_data_new( task, size_of_vector, selected_channels, Size_of_subject )
 
-
-Size_of_subject=105;
-name_folder='';
-for nb_channel=1:size( selected_channels,2)
-    name_folder=strcat(name_folder,selected_channels{nb_channel});
+%==========================================
+%Author: Uladzislau Barayeu
+%Github: @UladzislauBarayeu
+%Email: uladzislau.barayeu@ist.ac.at
+%==========================================
+if strcmp(selected_channels{1},'64_channels')
+    name_folder='64_channels';
+else
+    name_folder=strcat(num2str(length(selected_channels)),'_channels');
 end
-name_folder=strcat(name_folder,'end');
 
 for subject_i=1:Size_of_subject
     name_file=strcat('Data/Processed/Combined/task',num2str(task),'/',name_folder,'/',num2str(subject_i),'.mat');
@@ -56,6 +59,8 @@ for subject_i=1:Size_of_subject
     if ~exist(outputDir, 'dir')
         mkdir(outputDir);
     end
+    
+
     save(strcat(outputDir,num2str(subject_i),'.mat'),'Subject');
     clearvars -except subject_i task size_of_vector selected_channels name_folder Size_of_subject
 end

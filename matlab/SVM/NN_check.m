@@ -1,34 +1,24 @@
-function [] = NN_check( task, List_of_subject,  fast, nn,  fast_check, KernelSVM, Size_of_feat, threshold)
+function [] = NN_check( task, List_of_subject,  fast, nn,  fast_check, KernelSVM, threshold,channel_type)
 %NN_CHECK check results for NN+SVM
-
+%==========================================
+%Author: Uladzislau Barayeu
+%Github: @UladzislauBarayeu
+%Email: uladzislau.barayeu@ist.ac.at
+%==========================================
 predict_both_posterior_all=[];
-predict_T1_posterior_all=[];
-predict_T2_posterior_all=[];
 labels_all=[];
 
 
 %%
 for subject_i=1:size(List_of_subject,2)
     subject=List_of_subject{subject_i};
-    if fast
-        resT1=load(strcat('Data/NN_results/',nn,'/task',num2str(task),'/fast/T1/',subject,'.mat'));
-    else
-        resT1=load(strcat('Data/NN_results/',nn,'/task',num2str(task),'/slow/T1/',subject,'.mat'));
-    end
-    [~,ind_max_T1]=max(resT1.result_accuracy);
-    %ind_max_T1=Size_of_feat;
-    if fast
-        resT2=load(strcat('Data/NN_results/',nn,'/task',num2str(task),'/fast/T2/',subject,'.mat'));
-    else
-        resT2=load(strcat('Data/NN_results/',nn,'/task',num2str(task),'/slow/T2/',subject,'.mat'));
-    end
-    [~,ind_max_T2]=max(resT2.result_accuracy);
+
     %ind_max_T2=Size_of_feat;
     %make train model
-    data=loadjson(strcat('Data/NN_convoluted/',nn,'/task',num2str(task),'/data_for_svm_s',subject,'.json'));
+    data=loadjson(strcat('Data/NN_convoluted/',channel_type,'/',nn,'/task',num2str(task),'/data_for_svm_s',subject,'.json'));
     %data=load(strcat('Data/NN_convoluted/task',num2str(task),'/',num2str(subject_i),'.mat'));
     % test
-    test=loadjson(strcat('Data/NN_convoluted/',nn,'/task',num2str(task),'/predicted_data_for_SVM_all_false_subjects_s',subject,'.json'));
+    test=loadjson(strcat('Data/NN_convoluted/',channel_type,'/',nn,'/task',num2str(task),'/predicted_data_for_SVM_all_false_subjects_s',subject,'.json'));
     
     
     nbFolds = 5;
@@ -46,6 +36,27 @@ for subject_i=1:size(List_of_subject,2)
     errorIIboth_test=zeros(1,nbFolds);
 
     for f = 1 : nbFolds
+        if fast
+            resT1=load(strcat('Data/NN_results/',channel_type,'/',nn,'/task',...
+                num2str(task),'/fast/T1/',subject,'_',num2str(f),'.mat'));
+        else
+            resT1=load(strcat('Data/NN_results/',channel_type,'/',nn,'/task',...
+                num2str(task),'/slow/T1/',subject,'_',num2str(f),'.mat'));
+        end
+        %
+        resT1.result_accuracy(1:5)=0;
+        [~,ind_max_T1]=max(resT1.result_accuracy);
+        %ind_max_T1=Size_of_feat;
+        if fast
+            resT2=load(strcat('Data/NN_results/',channel_type,'/',nn,'/task',...
+                num2str(task),'/fast/T2/',subject,'_',num2str(f),'.mat'));
+        else
+            resT2=load(strcat('Data/NN_results/',channel_type,'/',nn,'/task',...
+                num2str(task),'/slow/T2/',subject,'_',num2str(f),'.mat'));
+        end
+        resT2.result_accuracy(1:5)=0;
+        [~,ind_max_T2]=max(resT2.result_accuracy);
+    
         XT1=data.T1.train_sample{f};
         XT2=data.T2.train_sample{f};
         Y=data.train_y{f};
@@ -78,7 +89,8 @@ for subject_i=1:size(List_of_subject,2)
             SVMModelT1 = fitcsvm(trainTrialsT1,trainCuesT1,'Standardize',true,...
                     'KernelFunction',KernelSVM,'KernelScale','auto');
         else
-            opts = struct('ShowPlots',false,'MaxObjectiveEvaluations', 10);
+            opts = struct('Optimizer','bayesopt','ShowPlots',false,...
+                'AcquisitionFunctionName','expected-improvement-plus','MaxObjectiveEvaluations',10);
             SVMModelT1 = fitcsvm(trainTrialsT1, trainCuesT1,'Standardize',true,...
                 'KernelFunction',KernelSVM,'OptimizeHyperparameters','auto','HyperparameterOptimizationOptions',opts);
         end
@@ -94,6 +106,7 @@ for subject_i=1:size(List_of_subject,2)
         end
         %% T2
         FIdx_T2=resT2.Indexes{ind_max_T2}{1}; 
+        
         trainCuesT2 = Y;
         testCuesT2=data.test_y{f}(:,1);
         trainTrialsT2 = XT2(:, FIdx_T2);
@@ -120,7 +133,8 @@ for subject_i=1:size(List_of_subject,2)
             SVMModelT2 = fitcsvm(trainTrialsT2,trainCuesT2,'Standardize',true,...
                     'KernelFunction',KernelSVM,'KernelScale','auto');
         else
-            opts = struct('ShowPlots',false,'MaxObjectiveEvaluations', 10);
+            opts = struct('Optimizer','bayesopt','ShowPlots',false,...
+                'AcquisitionFunctionName','expected-improvement-plus','MaxObjectiveEvaluations',10);
             SVMModelT2 = fitcsvm(trainTrialsT2, trainCuesT2,'Standardize',true,...
                 'KernelFunction',KernelSVM,'OptimizeHyperparameters','auto','HyperparameterOptimizationOptions',opts);
         end
@@ -182,7 +196,7 @@ for subject_i=1:size(List_of_subject,2)
             if testCuesT1(i_label)
                 labels{i_label}='subject'; 
             else
-                labels{i_label}='other'; 
+                labels{i_label}='others.'; 
             end
             
         end
@@ -246,9 +260,17 @@ for subject_i=1:size(List_of_subject,2)
                 predictT2_test(i)=0;
             end
         end
-            
+        
+        predict_both_test_posterior=[];
         for i=1:size(Y_test,1)
-
+            [~,more_sceptic]=min([predictT1_posterior_test(i,2) predictT2_posterior_test(i,2)]);
+            if more_sceptic==1
+                predict_both_test_posterior(i)=predictT1_posterior_test(i,2);
+            else
+                predict_both_test_posterior(i)=predictT2_posterior_test(i,2);
+            end
+                    
+                    
             if predictT1_test(i)==1 && predictT2_test(i)==1
                 predict_both_test(i)=1;
             else
@@ -276,9 +298,12 @@ for subject_i=1:size(List_of_subject,2)
         
         
         %ROC
+        for i=1:length(predict_both_posterior)
+            if strcmp(labels{i},'others.')
+                predict_both_posterior(i)=predict_both_test_posterior(randi([1 length(predict_both_test_posterior)]));
+            end
+        end
         predict_both_posterior_all=[predict_both_posterior_all predict_both_posterior];
-        predict_T1_posterior_all=[predict_T1_posterior_all predictT1_posterior(:,2).'];
-        predict_T2_posterior_all=[predict_T2_posterior_all predictT2_posterior(:,2).'];
         labels_all=[labels_all labels];
      
     end
@@ -305,50 +330,19 @@ for subject_i=1:size(List_of_subject,2)
 end
 
 
-[X_all,Y_all,~,~] = perfcurve(labels_all,predict_both_posterior_all,'subject');
+[X_all,Y_all,~,AUC_all] = perfcurve(labels_all,predict_both_posterior_all,'subject');
 plot(X_all,Y_all)
 xlabel('False positive rate') 
 ylabel('True positive rate')
 title('ROC for Classification for two action')
 %save file
-outputjpgDir = strcat('figures/ROC/NN/');
+outputjpgDir = strcat('figures/ROC/NN/',channel_type,'/',nn,'/task',num2str(task),'/');
 if ~exist(outputjpgDir, 'dir')
         mkdir(outputjpgDir);
 end
 namefile=strcat('%s','-ROC-both.jpg');
 outputjpgname = sprintf(namefile, outputjpgDir);
 saveas(gcf,outputjpgname);
-
-[X_T1,Y_T1,~,~] = perfcurve(labels_all,predict_T1_posterior_all,'subject');
-plot(X_T1,Y_T1)
-xlabel('False positive rate') 
-ylabel('True positive rate')
-title('ROC for Classification for T1')
-%save file
-outputjpgDir = strcat('figures/ROC/NN/');
-if ~exist(outputjpgDir, 'dir')
-        mkdir(outputjpgDir);
-end
-namefile=strcat('%s','-ROC-T1.jpg');
-outputjpgname = sprintf(namefile, outputjpgDir);
-saveas(gcf,outputjpgname);
-
-
-[X_T2,Y_T2,~,~] = perfcurve(labels_all,predict_T2_posterior_all,'subject');
-plot(X_T2,Y_T2)
-xlabel('False positive rate') 
-ylabel('True positive rate')
-title('ROC for Classification for T2')
-%save file
-outputjpgDir = strcat('figures/ROC/NN/');
-if ~exist(outputjpgDir, 'dir')
-        mkdir(outputjpgDir);
-end
-namefile=strcat('%s','-ROC-T2.jpg');
-outputjpgname = sprintf(namefile, outputjpgDir);
-saveas(gcf,outputjpgname);
-
-
 
 
 
@@ -400,7 +394,7 @@ boxplot(box_data,box_label)
 title('Distribution of the FAR all false')
 ylabel('FAR')
 ylim([0 0.6])
-outputjpgDir = strcat('figures/boxplot/');
+outputjpgDir = strcat('figures/boxplot/',channel_type,'/',nn,'/task',num2str(task),'/');
 if ~exist(outputjpgDir, 'dir')
         mkdir(outputjpgDir);
 end
@@ -411,22 +405,22 @@ saveas(gcf,outputjpgname);
 
 %% save
 if fast
-    outputDir = strcat('Data/NN_final/',nn,'/task',num2str(task),'/fast/');
+    outputDir = strcat('Data/NN_final/',channel_type,'/',nn,'/task',num2str(task),'/fast/');
 else
-    outputDir = strcat('Data/NN_final/',nn,'/task',num2str(task),'/slow/');
+    outputDir = strcat('Data/NN_final/',channel_type,'/',nn,'/task',num2str(task),'/slow/');
 end
 % Check if the folder exists , and if not, make it...
 if ~exist(outputDir, 'dir')
     mkdir(outputDir);
 end
 
-save(strcat(outputDir,'result_SVM.mat'),'AccT1','AccT2','AccBoth'...
+save(strcat(outputDir,'result_SVM.mat'),'AccT1','AccT2','AccBoth','accuracyT1','accuracyT2','accuracyBoth'...
     ,'ErrI_T1','ErrII_T1','ErrorI_T1','ErrorII_T1'...
     ,'ErrI_T2','ErrII_T2','ErrorI_T2','ErrorII_T2'...
     ,'ErrI_both','ErrII_both','ErrorI_both','ErrorII_both'...
     ,'ErrII_T1_test','ErrII_T2_test','ErrII_both_test'...
     ,'ErrorIIT1_test','ErrorIIT2_test','ErrorIITboth_test'...
-    ,'X_all','Y_all','X_T1','Y_T1','X_T2','Y_T2');
+    ,'X_all','Y_all','AUC_all');
 
 
 

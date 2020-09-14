@@ -1,6 +1,10 @@
 function [] = entropy_feature( task )
 % extract entropy features
-
+%==========================================
+%Author: Uladzislau Barayeu
+%Github: @UladzislauBarayeu
+%Email: uladzislau.barayeu@ist.ac.at
+%==========================================
 size_of_subjects=105;
 
 %%

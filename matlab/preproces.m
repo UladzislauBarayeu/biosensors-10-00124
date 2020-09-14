@@ -1,13 +1,19 @@
-function [] = preproces( task, folderpath )
+function [] = preproces( task, folderpath,min_trials )
 %% preproces data for task number T
-
+%==========================================
+%Author: Uladzislau Barayeu
+%Github: @UladzislauBarayeu
+%Email: uladzislau.barayeu@ist.ac.at
+%==========================================
 size_of_subjects=108;
 
 iterator_sub=0;
 for subject=1:size_of_subjects
+
     if subject==88 || subject==92 || subject==100 
         continue
     end
+
     iterator_sub=iterator_sub+1;
     filepath=strcat(folderpath,num2str(subject.','S%03d'),'/',num2str(subject.','S%03d'),'R');
     
@@ -30,7 +36,7 @@ for subject=1:size_of_subjects
             filename3=strcat(filepath,'14.edf');
     end
 
-    [data1, annotation1]=readEDF(filename1);
+    [data1, annotation1]=readEDF(filename1);    
     [data2, annotation2]=readEDF(filename2);
     [data3, annotation3]=readEDF(filename3);
 
@@ -162,8 +168,11 @@ for subject=1:size_of_subjects
         end
     end
     %%
+   
     clear T2 T1
-    T2=T2_new; T1=T1_new;
+    for i=1:min_trials
+    T2{i}=T2_new{i}; T1{i}=T1_new{i};
+    end
     clear T2_new T1_new
     %%  Save
     channel_names=annotation1.labels;
@@ -179,8 +188,7 @@ for subject=1:size_of_subjects
     % Write it to disk  
     save(outputfilename, 'T1', 'T2','channel_names','sample_rate');
     
-    
-    clearvars -except size_of_subjects task subject folderpath iterator_sub
+    clearvars -except size_of_subjects task subject folderpath iterator_sub min_trials
 end
 
 

@@ -1,3 +1,8 @@
+%==========================================
+%Author: Uladzislau Barayeu
+%Github: @UladzislauBarayeu
+%Email: uladzislau.barayeu@ist.ac.at
+%==========================================
 clear all
 %% upgrade results from NN
 List_of_subject={};
@@ -7,24 +12,43 @@ for i=1:105
 end
 
 
-knn=1;
-KernelSVM='rbf';%'rbf' or 'linear' optional
-fast=1;%if 1 run without optimization
-nn='nnsimple_1_with_dropout_2';%set type of NN,'nnsimple_1_with_dropout_2','nninception_1_with_small_kernel'
-Size_of_feat=20;%number of feature, when stop grid selection
-task=1;
-fast_check=1;threshold=0.5;
 
-mean_result_T1 = SVM_after_NN_T1( task, KernelSVM, List_of_subject, nn, Size_of_feat, fast, knn);%return mean accuracy
-mean_result_T2 = SVM_after_NN_T2( task, KernelSVM, List_of_subject, nn, Size_of_feat, fast, knn);%return mean accuracy
+types={'64_channels','8_channels','16_channels'};
+
+for i=1:length(types)
+    KernelSVM='rbf';%'rbf' or 'linear' optional
+    fast=1;%if 1 run without optimization
+    channel_type=types{i};
+    %nn_inception_1_
+    %nn_simple_1_
+    nn=strcat('nn_simple_1_',types{i});%set type of NN,'nnsimple_1_with_dropout_2','nninception_1_with_small_kernel'
+    Size_of_feat=10;%number of feature, when stop grid selection
+    task=1;
+    fast_check=1;threshold=0.62;
+
+    mean_result_T1 = SVM_after_NN_T1( task, KernelSVM, List_of_subject, nn, Size_of_feat, fast, channel_type);%return mean accuracy
+    mean_result_T2 = SVM_after_NN_T2( task, KernelSVM, List_of_subject, nn, Size_of_feat, fast, channel_type);%return mean accuracy
 
 
-NN_check( task, List_of_subject,  fast, nn,  fast_check, KernelSVM, Size_of_feat, threshold);  % check model
+    NN_check( task, List_of_subject,  fast, nn,  fast_check, KernelSVM, threshold, channel_type);  % check model
+end
+
+for i=1:length(types)
+    KernelSVM='rbf';%'rbf' or 'linear' optional
+    fast=1;%if 1 run without optimization
+    channel_type=types{i};
+    %nn_inception_1_
+    %nn_simple_1_
+    nn=strcat('nn_inception_1_',types{i});%set type of NN,'nnsimple_1_with_dropout_2','nninception_1_with_small_kernel'
+    Size_of_feat=10;%number of feature, when stop grid selection
+    task=1;
+    fast_check=1;threshold=0.62;
+
+    mean_result_T1 = SVM_after_NN_T1( task, KernelSVM, List_of_subject, nn, Size_of_feat, fast, channel_type);%return mean accuracy
+    mean_result_T2 = SVM_after_NN_T2( task, KernelSVM, List_of_subject, nn, Size_of_feat, fast, channel_type);%return mean accuracy
 
 
-
-%%
-fast=1;%if 1 run without optimization
-ROC_all( task, fast,  nn, List_of_subject);
-
+    NN_check( task, List_of_subject,  fast, nn,  fast_check, KernelSVM, threshold, channel_type);  % check model
+end
+    
 

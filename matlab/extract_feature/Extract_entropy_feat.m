@@ -1,6 +1,10 @@
 function [ result_feature, entropylabels ] = Extract_entropy_feat( T,labels)
 %EXTRACT_ENTROPY_FEAT Summary of this function goes here
-%   Detailed explanation goes here
+%==========================================
+%Author: Uladzislau Barayeu
+%Github: @UladzislauBarayeu
+%Email: uladzislau.barayeu@ist.ac.at
+%==========================================
     entropylabels={};
     for Number_of_trial=1:size(T,2)
         trial=[];

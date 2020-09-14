@@ -1,6 +1,10 @@
 function [ norm_array, max_val, min_val] = normalize_me( array )
-%NORMALIZE_ME Summary of this function goes here
-%   Detailed explanation goes here
+%NORMALIZE_ME 
+%==========================================
+%Author: Uladzislau Barayeu
+%Github: @UladzislauBarayeu
+%Email: uladzislau.barayeu@ist.ac.at
+%==========================================
     max_val=max(array);
     min_val=min(array);
     if max_val~=min_val

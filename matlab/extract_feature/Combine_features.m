@@ -1,6 +1,10 @@
 function [] = Combine_features( task, selected_channels )
 %combine entropy and freq features
-
+%==========================================
+%Author: Uladzislau Barayeu
+%Github: @UladzislauBarayeu
+%Email: uladzislau.barayeu@ist.ac.at
+%==========================================
 size_of_subjects=105;
 
 
@@ -44,13 +48,20 @@ for Number_of_subject=1:size_of_subjects
     end
     %% select good
     good_index=[];
-    for nb_channel=1:size(freq_feat.freqlabels,1)
-        for nb_channel_good=1:size(selected_channels,2)
-            if strcmp(entropy_feat.entropylabels{nb_channel,1}(1:4),selected_channels{nb_channel_good})
-                good_index=[good_index nb_channel];
+    if strcmp(selected_channels{1},'64_channels')
+        for nb_channel=1:size(freq_feat.freqlabels,1)
+            good_index=[good_index nb_channel];
+        end
+    else
+        for nb_channel=1:size(freq_feat.freqlabels,1)
+            for nb_channel_good=1:size(selected_channels,2)
+                if strcmp(entropy_feat.entropylabels{nb_channel,1}(1:4),selected_channels{nb_channel_good})
+                    good_index=[good_index nb_channel];
+                end
             end
         end
     end
+    
     Subject_new.result_label=cell(size(good_index,2),size(Subject.result_label,2));
     for nb_channel=1:size( Subject_new.result_label,1)
         for nb_feat=1:size( Subject_new.result_label,2)
@@ -75,11 +86,8 @@ for Number_of_subject=1:size_of_subjects
     clear Subject
     Subject=Subject_new;
     clear Subject_new
-    name_folder='';
-    for nb_channel=1:size( selected_channels,2)
-        name_folder=strcat(name_folder,selected_channels{nb_channel});
-    end
-    name_folder=strcat(name_folder,'end');
+    name_folder=strcat(num2str(length(good_index)),'_channels');
+
     %% Saving
     jsonStr = jsonencode(Subject); 
     outputDir = strcat('Data/Result_json/Task',num2str(task),'/',name_folder,'/');

@@ -1,5 +1,9 @@
 function [ norm_data, max_val, min_val ] = normalize_me_python(data)
-
+%==========================================
+%Author: Uladzislau Barayeu
+%Github: @UladzislauBarayeu
+%Email: uladzislau.barayeu@ist.ac.at
+%==========================================
     max_val=max(max(max(data)));
 
     min_val=min(min(min(data)));
