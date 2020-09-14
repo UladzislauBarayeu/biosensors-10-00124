@@ -1,3 +1,9 @@
+# ================================================
+# Author: Nastassya Horlava
+# Github: @HorlavaNastassya
+# Email: g.nasta.work@gmail.com
+# ===============================================
+
 import json
 import os
 import numpy as np

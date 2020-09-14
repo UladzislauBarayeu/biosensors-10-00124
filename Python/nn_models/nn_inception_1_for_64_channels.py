@@ -1,3 +1,10 @@
+# ================================================
+# Author: Nastassya Horlava
+# Github: @HorlavaNastassya
+# Email: g.nasta.work@gmail.com
+# ===============================================
+
+
 from keras.layers import Input
 from keras.models import Model
 from keras.layers import Conv2D, MaxPooling2D, UpSampling2D
@@ -11,7 +18,9 @@ from configurations import *
 from network_utils import *
 
 
-input_shape = Input(shape=(18, 16, 1))
+
+
+input_shape = Input(shape=(18, 64, 1))
 dense_dim=36
 
 conv2d_1 = Conv2D(filters=32, kernel_size=(1, 3), activation='linear', strides=(1, 2), padding='same',
@@ -140,19 +149,16 @@ conv2d_20 = Conv2D(filters=64, kernel_size=(1, 1), activation='linear', strides=
                    name='conv2d_20')(mixed0)
 conv2d_22 = Conv2D(filters=64, kernel_size=(1, 5), activation='linear', strides=(1, 1), padding='same',
                    name='conv2d_22')(activation_21)
-conv2d_25 = Conv2D(filters=96, kernel_size=(1, 3), activation='linear', strides=(1, 1), padding='same',
-                   name='conv2d_25')(activation_24)
+
 conv2d_26 = Conv2D(filters=64, kernel_size=(1, 1), activation='linear', strides=(1, 1), padding='same',
                    name='conv2d_26')(mixed1)
 batch_normalization_20 = BatchNormalization(name='batch_normalization_20')(conv2d_20)
 batch_normalization_22 = BatchNormalization(name='batch_normalization_22')(conv2d_22)
-batch_normalization_25 = BatchNormalization(name='batch_normalization_25')(conv2d_25)
 batch_normalization_26 = BatchNormalization(name='batch_normalization_26')(conv2d_26)
 activation_20 = Activation('relu', name='activation_20')(batch_normalization_20)
 activation_22 = Activation('relu', name='activation_22')(batch_normalization_22)
-activation_25 = Activation('relu', name='activation_25')(batch_normalization_25)
 activation_26 = Activation('relu', name='activation_26')(batch_normalization_26)
-mixed2 = Concatenate(name='mixed2')([activation_20, activation_22, activation_25, activation_26])
+mixed2 = Concatenate(name='mixed2')([activation_20, activation_22, activation_24, activation_26])
 
 conv2d_28 = Conv2D(filters=64, kernel_size=(1, 1), activation='linear', strides=(1, 1), padding='same',
                    name='conv2d_28')(mixed2)
@@ -217,6 +223,7 @@ x = Conv2D(filters=192, kernel_size=(1, 3), activation='linear', strides=(1, 1),
 x = BatchNormalization(name="batch_normalization_42")(x)
 x = Activation('relu', name='activation_42')(x)
 
+x=MaxPooling2D(pool_size=(1, 2), strides=(1, 2), padding="same", name='max_pooling2d_4')(x)
 
 x = Conv2D(filters=96, kernel_size=(1, 1), activation='linear', strides=(1, 1), padding='same', name='conv2d_43')(x)
 x = BatchNormalization(name="batch_normalization_43")(x)
@@ -248,4 +255,5 @@ output = Dense(2, activation='sigmoid')(x)
 
 network = Model(input_shape, output, name="nn")
 network.summary()
-save_network("inception_3_16_channels", network, additional_folder_for_nn)
+
+save_network("inception_1_64_channels", network, additional_folder_for_nn, channels='64_channels')

@@ -1,3 +1,9 @@
+# ================================================
+# Author: Nastassya Horlava
+# Github: @HorlavaNastassya
+# Email: g.nasta.work@gmail.com
+# ===============================================
+
 from keras.layers import Input
 from keras.models import Model
 from keras.layers import Conv2D, MaxPooling2D, UpSampling2D

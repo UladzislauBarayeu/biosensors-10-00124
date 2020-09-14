@@ -1,3 +1,9 @@
+# ================================================
+# Author: Nastassya Horlava
+# Github: @HorlavaNastassya
+# Email: g.nasta.work@gmail.com
+# ===============================================
+
 from keras.models import load_model
 from keras import *
 import numpy as np

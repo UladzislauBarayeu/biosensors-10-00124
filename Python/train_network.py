@@ -1,3 +1,9 @@
+# ================================================
+# Author: Nastassya Horlava
+# Github: @HorlavaNastassya
+# Email: g.nasta.work@gmail.com
+# ===============================================
+
 from EEG_class import *
 from network_utils import *
 from sklearn.utils import shuffle

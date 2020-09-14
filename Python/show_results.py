@@ -1,3 +1,9 @@
+# ================================================
+# Author: Nastassya Horlava
+# Github: @HorlavaNastassya
+# Email: g.nasta.work@gmail.com
+# ===============================================
+
 import h5py
 from configurations import *
 from sklearn.metrics import roc_curve, auc
@@ -219,10 +225,12 @@ def mean_accuracy(nn, subjects, allFalse=False, into_file=False, threshold_for_T
 if __name__ == '__main__':
 
     array_all = [i for i in range(1, number_of_subjects + 1, 1)]
-    print("inception_1_with_small_kernel, threshold 0.85")
-    mean_accuracy("inception_1_16_channels",[2], into_file=False, allFalse=False,
-                  threshold_for_T1=0.5, threshold_for_T2=0.5)
+    print("inception_2_16_channels, threshold 0.85")
+    mean_accuracy("inception_3_16_channels",[3], into_file=False, allFalse=False,
+                  threshold_for_T1=0.85, threshold_for_T2=0.85, channels='16_channels')
+
+
     #all False test
     # mean_accuracy("inception_1_with_small_kernel", array_all, into_file=False, allFalse=True,
     #               threshold_for_T1=0.85, threshold_for_T2=0.85)
-    #
+

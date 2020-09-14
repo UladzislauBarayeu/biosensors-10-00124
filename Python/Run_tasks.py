@@ -1,7 +1,15 @@
+# ================================================
+# Author: Nastassya Horlava
+# Github: @HorlavaNastassya
+# Email: g.nasta.work@gmail.com
+# ===============================================
+
 import subprocess as sp
 import sys
 import argparse
 from configurations import *
+import shutil
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -41,4 +49,11 @@ if __name__ == '__main__':
         if int(args.arg4) == 5:
             from export_for_matlab import *
             export_allFalse_for_svm_two_tasks(args.arg2, int(args.arg1), global_task, channels=args.arg3)
+            aepath = home_repo + str(args.arg3) + '/nn_' + str(args.arg2) + '/' + global_task + '/' + str(args.arg1) + '/'
+
+            # mydir = 'C:/authentification_system_EEG\Data/neural_network_models/nn_inception_1_with_small_kernel/Task1/2'
+            shutil.rmtree(aepath)
+
+
+
 

@@ -1,3 +1,9 @@
+# ================================================
+# Author: Nastassya Horlava
+# Github: @HorlavaNastassya
+# Email: g.nasta.work@gmail.com
+# ===============================================
+
 from keras.layers import Input
 from keras.models import Model
 from keras.layers import Conv2D, MaxPooling2D, UpSampling2D
@@ -88,4 +94,4 @@ output = Dense(2, activation='sigmoid')(x)
 network = Model(input_shape, output, name="nn")
 network.summary()
 
-save_network("simple_1_with_dropout_2", network, additional_folder_for_nn)
+save_network("simple_1_64_channels", network, additional_folder_for_nn, channels='64_channels')
