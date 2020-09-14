@@ -1,7 +1,7 @@
 # biosensors-10-00124
 
 This repository contains the implementation of Authentication System, described in the paper:
-- Barayeu, U.; Horlava, N.; Libert, A.; Van Hulle, M. 
+- [Barayeu, U.](https://github.com/UladzislauBarayeu); [Horlava, N.](https://github.com/HorlavaNastassya); Libert, A.; Van Hulle, M. 
 [*Robust Single-Trial EEG-Based Authentication Achieved with a 2-Stage Classifier* ](https://www.mdpi.com/2079-6374/10/9/124)
 Biosensors 2020, 10, 124.
 
