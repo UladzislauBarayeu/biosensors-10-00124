@@ -5,7 +5,7 @@ This repository contains the implementation of Authentication System, described 
 [*Robust Single-Trial EEG-Based Authentication Achieved with a 2-Stage Classifier* ](https://www.mdpi.com/2079-6374/10/9/124#cite)
 Biosensors 2020, 10, 124.
 
-Please [cite the paper(s)](#how-to-cite) if you are using this code in your research.
+Please [cite the paper and the code](#how-to-cite) if you are using this project in your research.
 
 ## Package dependencies
 1. For preprocessing, please install matlab2016 
