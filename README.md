@@ -26,7 +26,7 @@ conda install keras
 ``` 
 ## Dataset
 
-- Download data via the link https://archive.physionet.org/pn4/eegmmidb/ and put this data into your path/Data/input folder
+- Download data via the [link](https://archive.physionet.org/pn4/eegmmidb/) and put this data into your path/Data/input folder
 
 ## Running the code 
 
