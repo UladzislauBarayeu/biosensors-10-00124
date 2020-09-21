@@ -10,12 +10,12 @@ Please [cite the paper and the code](#how-to-cite) if you are using this project
 ## Package dependencies
 1. For preprocessing, please install matlab2016 
 - Please download and add the following open source functions/packages to Matlab:
-  - [SampEn] (https://de.mathworks.com/matlabcentral/fileexchange/35784-sample-entropy) - calcutates Sample Entropy
-  - [EMD] (https://titanwolf.org/Network/Articles/Article?AID=dff3bceb-589d-4768-a306-8de460f60928#gsc.tab=0) - performs Empirical Mode Decomposition
-  - [readEDF] (https://nl.mathworks.com/matlabcentral/mlc-downloads/downloads/submissions/38641/versions/4/previews/ReadEDF.m/index.html) - reads .edf files
-  - [ApEn] (https://la.mathworks.com/matlabcentral/mlc-downloads/downloads/submissions/50289/versions/1/previews/Entropy_measures/ApEn.m/index.html) - calculates Aproximate Entropy
-  - [jsonlab toolbox v1.5] (https://github.com/flatironinstitute/ironclust/tree/master/matlab/jsonlab-1.5) - reads .json files
-  - [Chronux toolbox v2.12] (http://chronux.org) - peforms Power Spectral Density estimation
+  - [SampEn](https://de.mathworks.com/matlabcentral/fileexchange/35784-sample-entropy) - calcutates Sample Entropy
+  - [EMD](https://titanwolf.org/Network/Articles/Article?AID=dff3bceb-589d-4768-a306-8de460f60928#gsc.tab=0) - performs Empirical Mode Decomposition
+  - [readEDF](https://nl.mathworks.com/matlabcentral/mlc-downloads/downloads/submissions/38641/versions/4/previews/ReadEDF.m/index.html) - reads .edf files
+  - [ApEn](https://la.mathworks.com/matlabcentral/mlc-downloads/downloads/submissions/50289/versions/1/previews/Entropy_measures/ApEn.m/index.html) - calculates Aproximate Entropy
+  - [jsonlab toolbox v1.5](https://github.com/flatironinstitute/ironclust/tree/master/matlab/jsonlab-1.5) - reads .json files
+  - [Chronux toolbox v2.12](http://chronux.org) - peforms Power Spectral Density estimation
 
 2. Please install Python 3.7 (or higher), better via Anaconda3
 3. Install numpy, tensorflow, scikit-learn and keras package via conda:
